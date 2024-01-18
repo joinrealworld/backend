@@ -61,14 +61,14 @@ THIRD_PARTY_APPS = (
     'corsheaders',
     'rest_framework',
     'ckeditor',
-    
     'rest_framework.authtoken',
     'rest_framework_simplejwt'
 )
 
 LOCAL_APPS = (
     'user',
-    'notification'
+    'notification',
+    'channel'
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

@@ -22,6 +22,7 @@ app_urls_v1 = [
     path('admin', admin.site.urls),
     path('api/v1/user/', include('user.urls.v1')),
     path('api/v1/notifications/', include('notification.urls.v1')),
+    path('api/v1/channel/', include('channel.urls.v1')),
 ]
 
 urlpatterns = app_urls_v1
