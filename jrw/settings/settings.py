@@ -185,6 +185,9 @@ STATICFILES_DIRS = (
     str(APPS_DIR.path('static')),
 )
 STATIC_URL = 'static/'
+
+MEDIA_ROOT = os.path.join(APPS_DIR, 'media')
+MEDIA_URL = '/media/'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 
