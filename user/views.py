@@ -28,6 +28,7 @@ from django.db.models import Q
 from datetime import datetime, timedelta, date
 import string
 from user.scripts import *
+from constants.response import KEY_MESSAGE, KEY_PAYLOAD
 
 # Create your views here.
 class LoginWithPasswordAPIView(GenericAPIView):
@@ -41,8 +42,13 @@ class LoginWithPasswordAPIView(GenericAPIView):
         email = request.data.get('email', None)
 
         if not email:
-            return Response({"error": "Please Enter Email or Username or contact number"},
-                            status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    KEY_MESSAGE: "error",
+                    KEY_PAYLOAD: "Please Enter Email or Username or contact number"
+                },
+            )
 
         if not password:
             return Response({"error": "Please Enter Password"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -56,12 +62,29 @@ class LoginWithPasswordAPIView(GenericAPIView):
             if user.check_password(password):
                 token = user.get_tokens_for_user()
                 user_serializer = UserSimpleSerializer(user, many=False)
-                return Response({"token": token, "user": user_serializer.data}, status=status.HTTP_201_CREATED)
+                return Response(
+                    status=status.HTTP_201_CREATED,
+                    data={
+                        KEY_MESSAGE: "user login successful.",
+                        KEY_PAYLOAD: {"token": token, "user": user_serializer.data}
+                    },
+                )
             else:
-                return Response({"error": "User Does Not Exist With This Credentials"},
-                                status.HTTP_422_UNPROCESSABLE_ENTITY)
+                return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "User Does Not Exist With This Credentials"
+                    },
+                )
         else:
-            return Response({"error": "User Doesn't Exist"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "User Doesn't Exist"
+                    },
+                )
 
 
 
@@ -76,17 +99,41 @@ class SignUpAPIViewAPIView(APIView):
         email = request.data.get("email", None)
         
         if not email:
-            return Response({"error": "Please Enter Email"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Enter Email"
+                    },
+                )
 
         if not first_name:
-            return Response({"error": "Please Enter First Name"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Enter First Name"
+                    },
+                )
 
         if not last_name:
-            return Response({"error": "Please Enter last Name"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Enter last Name"
+                    },
+                )
 
         user = User.objects.filter(email = email)
         if user:
-            return Response({"message": "Please make sign in."}, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please make sign in."
+                    },
+                )
 
         user = None
         if email:
@@ -94,10 +141,21 @@ class SignUpAPIViewAPIView(APIView):
             otp_to = f"{email}"
             otp_verification = OTPVerification.objects.get_or_create(otp_to=otp_to)[0]
             otp_verification.send_otp()
-            return Response({"message": "OTP is sent to your Email", "otp_verification_id": otp_verification.id}, status.HTTP_200_OK)
+            return Response(
+                    status=status.HTTP_200_OK,
+                    data={
+                        KEY_MESSAGE: "OTP is sent to your Email",
+                        KEY_PAYLOAD: {"otp_verification_id": otp_verification.id}
+                    },
+                )
         else:
-            return Response({"error": "Please Enter Email"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
-
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Enter Email"
+                    },
+                )
 
 class VerifyOTPAPIView(APIView):
     """End point To Verify the OTP. Send (contact_number and country_code[country_code: srt]) or email and otp in parameters"""
@@ -108,17 +166,35 @@ class VerifyOTPAPIView(APIView):
         otp = request.data.get("otp")
 
         if not email:
-            return Response({"error": "Please Enter Email"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Enter Email"
+                    },
+                )
 
         user = None
         if email != None:
             users = User.objects.filter(email=email) | User.objects.filter(username=email)
             user = users.first()
         else:
-            return Response({"error": "Please Enter Email"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Enter Email"
+                    },
+                )
 
         if otp == None:
-            return Response({"error": "Please Enter OTP"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Enter OTP"
+                    },
+                )
 
         if user:
             otp_obj = OTPVerification.objects.get(otp_to=email)
@@ -130,31 +206,57 @@ class VerifyOTPAPIView(APIView):
 
                 res = user.get_tokens_for_user()
                 user_serializer = UserSimpleSerializer(user, many=False)
-                return Response({"token": res['access'], "user": user_serializer.data}, status=status.HTTP_200_OK)
+                return Response(
+                    status=status.HTTP_200_OK,
+                    data={
+                        KEY_MESSAGE: "otp verfied successfully.",
+                        KEY_PAYLOAD: {"token": res['access'], "user": user_serializer.data}
+                    },
+                )
             else:
-                return Response({"error": "OTP is Incorrect or Expired"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
+                return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "OTP is Incorrect or Expired"
+                    },
+                )
         else:
-            return Response({"error": "User Doesn't Exist"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "User Doesn't Exist"
+                    },
+                )
 
 
 class SetPasswordAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        print("144-----")
         password = request.data.get("password")
         user = request.user
         user.set_password(password)
         user.save()
-        return Response({"res": "password stored successfully"}, status=status.HTTP_200_OK)
+        return Response(
+                    status=status.HTTP_200_OK,
+                    data={
+                        KEY_MESSAGE: "Password stored successfully",
+                    },
+                )
 
 class FetchProfileAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        print("Request User:", request.user)
-        print("Request Auth:", request.auth)
-        return Response({"res": UserSimpleSerializer(request.user, many=False).data}, status=status.HTTP_200_OK)
+        return Response(
+                    status=status.HTTP_200_OK,
+                    data={
+                        KEY_MESSAGE: "Profile fetched successfully",
+                        KEY_PAYLOAD: UserSimpleSerializer(request.user, many=False).data
+                    },
+                )
 
 
 
