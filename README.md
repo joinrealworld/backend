@@ -26,7 +26,7 @@ clone the project:
 git clone https://github.com/joinrealworld/backend.git
 
 get in to project
-cd joinrealworld
+cd backend
 
 create virtual environment
 virtualenv . --python=python3.11.4 #note: you can follow any type of virtual environment creation like conda, pyenv etc
