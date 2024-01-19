@@ -7,9 +7,11 @@ coreapi==2.3.3
 coreschema==0.0.4
 Django==3.2.4
 django-ckeditor==6.5.1
+django-cors-headers==4.3.1
 django-environ==0.4.5
+django-filter==23.5
 django-js-asset==2.0.0
-django-storages==1.9.1
+django-storages==1.14.2
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 drf-yasg==1.17.1
@@ -19,8 +21,10 @@ itypes==1.2.0
 Jinja2==2.11.2
 jmespath==1.0.1
 jsonfield==3.1.0
+Markdown==3.5.1
 MarkupSafe==1.1.1
 packaging==20.4
+pillow==10.2.0
 psycopg2-binary==2.9.6
 PyJWT==1.7.1
 pyparsing==2.4.7
