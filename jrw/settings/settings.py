@@ -85,7 +85,7 @@ MIDDLEWARE = [
 ]
 
 
-ALLOWED_HOST = env('ALLOWED_HOST').split(",")
+ALLOWED_HOSTS = env('ALLOWED_HOST').split(",")
 
 TEMPLATES = [
     {
