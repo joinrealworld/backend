@@ -37,10 +37,11 @@ class CoursesSerializer(serializers.ModelSerializer):
 	description = serializers.SerializerMethodField()
 	completed = serializers.SerializerMethodField()
 	course_pic = serializers.SerializerMethodField()
+	is_favorite = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Courses
-		fields = ('id', 'name', 'description', 'completed', 'course_pic',)
+		fields = ('id', 'name', 'description', 'completed', 'is_favorite', 'course_pic',)
 
 	def get_description(self, obj):
 		return "This is course description"
@@ -50,15 +51,19 @@ class CoursesSerializer(serializers.ModelSerializer):
 
 	def get_course_pic(self, obj):
 		return "media/course_pic/1/crypto-crash.jpeg"
+
+	def get_is_favorite(self, obj):
+		return False
 
 class CoursesDataSerializer(serializers.ModelSerializer):
 	description = serializers.SerializerMethodField()
 	completed = serializers.SerializerMethodField()
+	is_favorite = serializers.SerializerMethodField()
 	course_pic = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Courses
-		fields = ('id', 'name', 'description', 'completed', 'course_pic','data')
+		fields = ('id', 'name', 'description', 'completed', 'course_pic', 'is_favorite', 'data')
 
 	def get_description(self, obj):
 		return "This is course description"
@@ -68,6 +73,9 @@ class CoursesDataSerializer(serializers.ModelSerializer):
 
 	def get_course_pic(self, obj):
 		return "media/course_pic/1/crypto-crash.jpeg"
+
+	def get_is_favorite(self, obj):
+		return False
 
 class CourseQuizDataSerializer(serializers.ModelSerializer):
 
