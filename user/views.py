@@ -57,7 +57,6 @@ class LoginWithPasswordAPIView(GenericAPIView):
         if email:
             email = email.lower()
             user = User.objects.filter(email=email).first() or User.objects.filter(username=email).first()
-
         if user:
             if user.check_password(password):
                 token = user.get_tokens_for_user()
@@ -97,6 +96,7 @@ class SignUpAPIViewAPIView(APIView):
         first_name = request.data.get("first_name", None)
         last_name = request.data.get("last_name", None)
         email = request.data.get("email", None)
+        password = request.data.get("password", None)
         
         if not email:
             return Response(
@@ -104,6 +104,14 @@ class SignUpAPIViewAPIView(APIView):
                     data={
                         KEY_MESSAGE: "error",
                         KEY_PAYLOAD: "Please Enter Email"
+                    },
+                )
+        if not password:
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Enter Password."
                     },
                 )
 
@@ -138,6 +146,9 @@ class SignUpAPIViewAPIView(APIView):
         user = None
         if email:
             user = User.objects.create(email = email, first_name = first_name, last_name = last_name, referral_code = User.generate_random_string(7))
+            user.set_password(password)
+            user.email_verified = True
+            user.save()
             otp_to = f"{email}"
             otp_verification = OTPVerification.objects.get_or_create(otp_to=otp_to)[0]
             otp_verification.send_otp()
@@ -242,7 +253,8 @@ class SetPasswordAPIView(APIView):
         return Response(
                     status=status.HTTP_200_OK,
                     data={
-                        KEY_MESSAGE: "Password stored successfully",
+                        KEY_MESSAGE: "Success",
+                        KEY_PAYLOAD: "Password stored successfully"
                     },
                 )
 
