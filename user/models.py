@@ -11,6 +11,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from math import sin, cos, sqrt, atan2, radians
 from ckeditor.fields import RichTextField
 import string
+import uuid
 
 utc = pytz.UTC
 
@@ -92,7 +93,7 @@ class User(AbstractBaseUser):
 				self.email = self.email.lower()
 
 		super(User, self).save(*args, **kwargs)
-
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	username = models.CharField(max_length=255, unique=True, blank=False, null=False, )
 	email = models.EmailField(blank=True, null=True, unique=True, db_index=True)
 	first_name = models.CharField(max_length=255, unique=False, blank=False, null=False, )
@@ -101,6 +102,8 @@ class User(AbstractBaseUser):
 	email_otp_validity = models.DateTimeField(blank=True, null=True,)
 	email_verified = models.BooleanField(default=False)
 	bio = RichTextField(blank = True)
+	invisible = models.BooleanField(default=False)
+	status = models.CharField(max_length=255, unique=False, blank=True, null=True, )
 	avatar = models.ImageField(upload_to=avatar_path, blank=True, null=True)
 	background = models.ImageField(upload_to=background_path, blank=True, null=True)
 	is_active = models.BooleanField(default=True)

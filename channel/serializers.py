@@ -13,7 +13,7 @@ class CategorySerializer(serializers.ModelSerializer):
     
 	class Meta:
 		model = Category
-		fields = ('id', 'name', 'category_pic', 'description', 'no_of_courses', 'completed')
+		fields = ('id', 'uuid','name', 'category_pic', 'description', 'no_of_courses', 'completed')
 
 	# def get_category_pic(self, obj):
 		# # request = self.context.get('request')
@@ -41,7 +41,7 @@ class CoursesSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Courses
-		fields = ('id', 'name', 'description', 'completed', 'is_favorite', 'course_pic',)
+		fields = ('id', 'uuid','name', 'description', 'completed', 'is_favorite', 'course_pic',)
 
 	def get_description(self, obj):
 		return "This is course description"
@@ -63,7 +63,7 @@ class CoursesDataSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Courses
-		fields = ('id', 'name', 'description', 'completed', 'course_pic', 'is_favorite', 'data')
+		fields = ('id', 'uuid', 'name', 'description', 'completed', 'course_pic', 'is_favorite', 'data')
 
 	def get_description(self, obj):
 		return "This is course description"
@@ -81,4 +81,4 @@ class CourseQuizDataSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = CourseQuiz
-		fields = ('id', 'course', 'index', 'data')
+		fields = ('id', 'uuid', 'course', 'index', 'data')

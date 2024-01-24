@@ -29,6 +29,7 @@ from datetime import datetime, timedelta, date
 import string
 from user.scripts import *
 from constants.response import KEY_MESSAGE, KEY_PAYLOAD
+from rest_framework.parsers import MultiPartParser
 
 # Create your views here.
 class LoginWithPasswordAPIView(GenericAPIView):
@@ -269,6 +270,321 @@ class FetchProfileAPIView(APIView):
                         KEY_PAYLOAD: UserSimpleSerializer(request.user, many=False).data
                     },
                 )
+
+class ChangeUserNameAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request):
+        username = request.data.get("username", None)
+        user = request.user
+        if username is None:
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "Error",
+                        KEY_PAYLOAD: "Username can not be empty."
+                    },
+                )
+        user.username = username
+        user.save()
+        return Response(
+                    status=status.HTTP_200_OK,
+                    data={
+                        KEY_MESSAGE: "Success",
+                        KEY_PAYLOAD: "Username updated successfully."
+                    },
+                )
+
+class ChangePasswordAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request):
+        serializer = ChangePasswordSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": serializer.errors,
+                }
+            )
+
+        old_password = serializer.validated_data["old_password"]
+        new_password = serializer.validated_data["new_password"]
+        user = request.user
+
+        if user.check_password(old_password):
+            if old_password == new_password:
+                return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        "message": "Error",
+                        "payload": "New password can not be similar to the old password."
+                    },
+                )
+            user.set_password(new_password)
+            user.save()
+            return Response(
+                status=status.HTTP_200_OK,
+                data={
+                    "message": "Success",
+                    "payload": "Password updated successfully."
+                },
+            )
+        else:
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    "message": "Error",
+                    "payload": "Old Password doesn't match with the database."
+                },
+            )
+
+class ChangeStatusAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request):
+        serializer = ChangeStatusSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": serializer.errors,
+                }
+            )
+
+        user_status = serializer.validated_data["status"]
+        user = request.user
+        user.status = user_status
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "Status updated successfully."
+            }
+        )
+
+    def delete(self, request):
+        user = request.user
+
+        # Validate if the user has an existing status to delete
+        if not user.status:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": "User does not have an existing status to delete.",
+                }
+            )
+
+        # Update user status
+        user.status = ""
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "Status updated successfully.",
+            }
+        )
+
+
+class ChangeInvisibleAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request):
+        serializer = ChangeInvisibleSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": serializer.errors,
+                }
+            )
+        invisible = serializer.validated_data["invisible"]
+        user = request.user
+        user.invisible = invisible
+        user.save()
+        return Response(
+                    status=status.HTTP_200_OK,
+                    data={
+                        KEY_MESSAGE: "Success",
+                        KEY_PAYLOAD: "Inivisible updated successfully."
+                    },
+                )
+
+    
+class ChangeAvatarAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser]
+
+    def patch(self, request):
+        serializer = AvatarSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": serializer.errors,
+                }
+            )
+
+        # Update user avatar
+        user = request.user
+        user.avatar = serializer.validated_data['avatar']
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": UploadAvatarSerializer(user).data,
+            }
+        )
+
+    def delete(self, request):
+        user = request.user
+
+        # Validate if the user has an existing avatar to delete
+        if not user.avatar:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": "User does not have an existing avatar to remove.",
+                }
+            )
+
+        # Update user avatar
+        user.avatar = ""
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "Avatar removed successfully.",
+            }
+        )
+
+class ChangeBackgroundAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser]
+
+    def patch(self, request):
+        serializer = BackgroundSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": serializer.errors,
+                }
+            )
+
+        # Update user avatar
+        user = request.user
+        user.background = serializer.validated_data['background']
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": UploadBackgroundSerializer(user).data,
+            }
+        )
+
+    def delete(self, request):
+        user = request.user
+
+        # Validate if the user has an existing avatar to delete
+        if not user.background:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": "User does not have an existing background to remove.",
+                }
+            )
+
+        # Update user avatar
+        user.background = ""
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "Background removed successfully.",
+            }
+        )
+
+class ChangeBioAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request):
+        serializer = ChangeBioSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": serializer.errors,
+                }
+            )
+
+        bio = serializer.validated_data.get('bio', '').strip()
+
+        # Update user bio
+        user = request.user
+        user.bio = bio
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "Bio Updated Successfully.",
+            }
+        )
+
+    def delete(self, request):
+        user = request.user
+
+        # Validate if the user has an existing avatar to delete
+        if not user.bio:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": "User does not have an existing bio to remove.",
+                }
+            )
+
+        # Update user avatar
+        user.bio = ""
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "Bio removed successfully.",
+            }
+        )
+
+
+
+
+
+
+
 
 
 

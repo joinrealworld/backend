@@ -18,4 +18,11 @@ urlpatterns = [
     path('verify_otp', views.VerifyOTPAPIView.as_view(), name='verify-otp'),
     path('set_password', views.SetPasswordAPIView.as_view(), name='set-password'),
     path('profile', views.FetchProfileAPIView.as_view(), name='get-profile'),
+    path('change_username', views.ChangeUserNameAPIView.as_view(), name='change-username'),
+    path('change_password', views.ChangePasswordAPIView.as_view(), name='change-password'),
+    path('change_status', views.ChangeStatusAPIView.as_view(), name='change-status'),
+    path('change_invisible', views.ChangeInvisibleAPIView.as_view(), name='change-invisible'),
+    path('change_avatar', views.ChangeAvatarAPIView.as_view(), name='change-avatar'),
+    path('change_background', views.ChangeBackgroundAPIView.as_view(), name='change-background'),
+    path('change_bio', views.ChangeBioAPIView.as_view(), name='change-bio'),
 	]
