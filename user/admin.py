@@ -89,3 +89,12 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+
+
+
+class FeebackAdmin(admin.ModelAdmin):
+    fields = ['user', 'message']
+    list_display = ('id','user', 'message', 'created_at')
+    list_per_page = 25
+
+admin.site.register(FeedBack, FeebackAdmin)

@@ -58,5 +58,6 @@ class UploadBackgroundSerializer(serializers.ModelSerializer):
 class ChangeBioSerializer(serializers.Serializer):
     bio = serializers.CharField(max_length=500, allow_blank=True)
 
-
+class FeedbackSerializer(serializers.Serializer):
+    message = serializers.CharField(max_length=255, required=True)
 

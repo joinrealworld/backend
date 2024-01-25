@@ -204,3 +204,12 @@ class OTPVerification(models.Model):
 
 
 
+class FeedBack(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	message = RichTextField()
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return f'Feedback from {self.user.username} at {self.created_at}'
+
+

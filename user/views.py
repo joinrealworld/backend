@@ -30,6 +30,7 @@ import string
 from user.scripts import *
 from constants.response import KEY_MESSAGE, KEY_PAYLOAD
 from rest_framework.parsers import MultiPartParser
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 
 # Create your views here.
 class LoginWithPasswordAPIView(GenericAPIView):
@@ -579,12 +580,60 @@ class ChangeBioAPIView(APIView):
             }
         )
 
+class SingleDeviceLogoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        user = request.user
+        user_tokens = AccessToken.objects.filter(user=user)
+        print(user_tokens)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "On working Mode.",
+            }
+        )
 
+class AllDeviceLogoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        user = request.user
+        user_tokens = AccessToken.objects.filter(user=user)
+        print(user_tokens)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "On working Mode.",
+            }
+        )
 
+class UserFeedbackAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def post(self, request):
+        # Use the serializer for input validation
+        serializer = FeedbackSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": serializer.errors,
+                }
+            )
 
+        # If validation passes, create a Feedback instance
+        FeedBack.objects.create(user=request.user, message=serializer.validated_data['message'])
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "Feedback sent successfully.",
+            }
+        )
 
 
 
