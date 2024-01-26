@@ -25,7 +25,6 @@ urlpatterns = [
     path('change_avatar', views.ChangeAvatarAPIView.as_view(), name='change-avatar'),
     path('change_background', views.ChangeBackgroundAPIView.as_view(), name='change-background'),
     path('change_bio', views.ChangeBioAPIView.as_view(), name='change-bio'),
-    path('logout', views.SingleDeviceLogoutAPIView.as_view(), name='sigle-device-logout'),
     path('all_logout', views.AllDeviceLogoutAPIView.as_view(), name='all-devices-logout'),
     path('feedback', views.UserFeedbackAPIView.as_view(), name='user-feedback'),
 	]

@@ -166,7 +166,7 @@ class User(AbstractBaseUser):
 
 	def get_tokens_for_user(self):
 	    refresh = RefreshToken.for_user(self)
-	    
+	    AccessTokenLog.log_access_token(self, str(refresh.access_token))
 	    return {
 	        'refresh': str(refresh),
 	        'access': str(refresh.access_token),
@@ -202,8 +202,15 @@ class OTPVerification(models.Model):
             self.delete()
         return valid
 
+class AccessTokenLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-
+    @classmethod
+    def log_access_token(cls, user, token):
+        return cls.objects.create(user=user, token=token)
+        
 class FeedBack(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	message = RichTextField()
@@ -211,5 +218,13 @@ class FeedBack(models.Model):
 
 	def __str__(self):
 		return f'Feedback from {self.user.username} at {self.created_at}'
+
+class Referral(models.Model):
+    referring_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='referrals', null=True)
+    referred_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='referred_by', null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.referring_user.username} referred {self.referred_user.username}"
 
 

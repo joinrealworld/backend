@@ -18,6 +18,7 @@ from user.models import *
 from user.permissions import (
     IsLoggedInUserOrAdmin,
     IsLoggedInUser,
+    IsUserAuthenticated
 )
 from user.serializers import *
 from rest_framework.pagination import LimitOffsetPagination
@@ -30,7 +31,7 @@ import string
 from user.scripts import *
 from constants.response import KEY_MESSAGE, KEY_PAYLOAD
 from rest_framework.parsers import MultiPartParser
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from rest_framework_simplejwt.tokens import OutstandingToken
 
 # Create your views here.
 class LoginWithPasswordAPIView(GenericAPIView):
@@ -245,7 +246,7 @@ class VerifyOTPAPIView(APIView):
 
 
 class SetPasswordAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
 
     def post(self, request):
         password = request.data.get("password")
@@ -261,7 +262,7 @@ class SetPasswordAPIView(APIView):
                 )
 
 class FetchProfileAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
 
     def get(self, request):
         return Response(
@@ -273,7 +274,7 @@ class FetchProfileAPIView(APIView):
                 )
 
 class ChangeUserNameAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
 
     def patch(self, request):
         username = request.data.get("username", None)
@@ -297,7 +298,7 @@ class ChangeUserNameAPIView(APIView):
                 )
 
 class ChangePasswordAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
 
     def patch(self, request):
         serializer = ChangePasswordSerializer(data=request.data)
@@ -342,7 +343,7 @@ class ChangePasswordAPIView(APIView):
             )
 
 class ChangeStatusAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
 
     def patch(self, request):
         serializer = ChangeStatusSerializer(data=request.data)
@@ -395,7 +396,7 @@ class ChangeStatusAPIView(APIView):
 
 
 class ChangeInvisibleAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
 
     def patch(self, request):
         serializer = ChangeInvisibleSerializer(data=request.data)
@@ -421,7 +422,7 @@ class ChangeInvisibleAPIView(APIView):
 
     
 class ChangeAvatarAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
     parser_classes = [MultiPartParser]
 
     def patch(self, request):
@@ -474,7 +475,7 @@ class ChangeAvatarAPIView(APIView):
         )
 
 class ChangeBackgroundAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
     parser_classes = [MultiPartParser]
 
     def patch(self, request):
@@ -527,7 +528,7 @@ class ChangeBackgroundAPIView(APIView):
         )
 
 class ChangeBioAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
 
     def patch(self, request):
         serializer = ChangeBioSerializer(data=request.data)
@@ -580,38 +581,21 @@ class ChangeBioAPIView(APIView):
             }
         )
 
-class SingleDeviceLogoutAPIView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        user = request.user
-        user_tokens = AccessToken.objects.filter(user=user)
-        print(user_tokens)
-        return Response(
-            status=status.HTTP_200_OK,
-            data={
-                "message": "Success",
-                "payload": "On working Mode.",
-            }
-        )
-
 class AllDeviceLogoutAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
 
     def get(self, request):
-        user = request.user
-        user_tokens = AccessToken.objects.filter(user=user)
-        print(user_tokens)
+        OutstandingToken.objects.filter(user_id=request.user.id).delete()
         return Response(
             status=status.HTTP_200_OK,
             data={
                 "message": "Success",
-                "payload": "On working Mode.",
+                "payload": "Logout from All device successful",
             }
         )
 
 class UserFeedbackAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
 
     def post(self, request):
         # Use the serializer for input validation
