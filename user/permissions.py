@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
 from rest_framework.exceptions import APIException
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
+from user.models import AccessTokenLog
 
 class InvalidTokenException(APIException):
     status_code = 401
@@ -21,31 +21,22 @@ class InvalidTokenException(APIException):
 
 class IsUserAuthenticated(permissions.IsAuthenticated):
     def has_permission(self, request, view):
-        user = request.user
+        authorization_header = request.headers.get('Authorization')
+        if authorization_header:
+            # Authorization header usually looks like "Bearer <token>"
+            # Splitting to extract the token part
+            _, token = authorization_header.split(' ', 1)
 
-        # Assuming you're using SimpleJWT for token authentication
-        access_token = request.auth
-        print(access_token)
-        refresh_token = JWTAuthentication().get_validated_token(access_token).get('refresh', None)
-        print(refresh_token)
-        # Check if the access token exists in OutstandingToken for the user
-        outstanding_token = OutstandingToken.objects.filter(user=user, token=access_token).first()
-        print(OutstandingToken.objects.last().__dict__)
-        if outstanding_token:
-            return True
+            # Now, you have the token, and you can use it as needed
+            # For example, you can print it or perform custom validation
+            user = request.user  # Assuming user is authenticated using IsAuthenticated permission
+            print(token)
+            print(AccessTokenLog.objects.filter(user=user, token=token))
+            if AccessTokenLog.objects.filter(user=user, token=token).exists():
+                return True
 
         raise InvalidTokenException()
 
-# class IsUserAuthenticated(permissions.IsAuthenticated):
-#     def has_permission(self, request, view):
-#         user = request.user
-#         # jwt_authentication = JWTAuthentication()
-#         # access_token = jwt_authentication.get_validated_token(request)
-#         outstanding_tokens = OutstandingToken.objects.filter(user=user)
-#         print(outstanding_tokens)
-#         if outstanding_tokens.exists():
-#             return True
-#         raise InvalidTokenException()
 
 class IsLoggedInUserOrAdmin(permissions.BasePermission):
 

@@ -580,12 +580,26 @@ class ChangeBioAPIView(APIView):
                 "payload": "Bio removed successfully.",
             }
         )
+class SingleDeviceLogoutAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    def get(self, request):
+        authorization_header = request.headers.get('Authorization')
+        _, token = authorization_header.split(' ', 1)
+        AccessTokenLog.objects.filter(user=request.user, token=token).delete()
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "Logout from All device successful",
+            }
+        )
 
 class AllDeviceLogoutAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
     def get(self, request):
-        OutstandingToken.objects.filter(user_id=request.user.id).delete()
+        AccessTokenLog.objects.filter(user=request.user).delete()
         return Response(
             status=status.HTTP_200_OK,
             data={

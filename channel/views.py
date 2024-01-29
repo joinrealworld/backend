@@ -29,10 +29,10 @@ from datetime import datetime, timedelta, date
 import string
 from channel.scripts import *
 from constants.response import KEY_MESSAGE, KEY_PAYLOAD
-
+from user.permissions import IsUserAuthenticated
 
 class FetchCategoryAPIView(APIView):
-	permission_classes = [IsAuthenticated]
+	permission_classes = [IsUserAuthenticated]
 
 	def get(self, request):
 		category = Category.objects.all()
@@ -45,7 +45,7 @@ class FetchCategoryAPIView(APIView):
             )
 
 class FetchCourseCategoryAPIView(APIView):
-	permission_classes = [IsAuthenticated]
+	permission_classes = [IsUserAuthenticated]
 
 	def get(self, request, category_id):
 		courses = Courses.objects.filter(category__id = category_id)
@@ -58,7 +58,7 @@ class FetchCourseCategoryAPIView(APIView):
             )
 
 class FetchCourseDataAPIView(APIView):
-	permission_classes = [IsAuthenticated]
+	permission_classes = [IsUserAuthenticated]
 
 	def get(self, request, course_id):
 		courses = Courses.objects.get(pk = course_id)
@@ -71,7 +71,7 @@ class FetchCourseDataAPIView(APIView):
             )
 
 class FetchCourseQuizAPIView(APIView):
-	permission_classes = [IsAuthenticated]
+	permission_classes = [IsUserAuthenticated]
 
 	def get(self, request, course_id, quiz_index):
 		course_quiz = CourseQuiz.objects.get(course__id = course_id, index = quiz_index)

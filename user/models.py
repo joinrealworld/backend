@@ -166,11 +166,12 @@ class User(AbstractBaseUser):
 
 	def get_tokens_for_user(self):
 	    refresh = RefreshToken.for_user(self)
-	    AccessTokenLog.log_access_token(self, str(refresh.access_token))
-	    return {
+	    data = {
 	        'refresh': str(refresh),
 	        'access': str(refresh.access_token),
-	    }
+	    }	
+	    AccessTokenLog.log_access_token(self, str(data['access']))
+	    return data
 
 	def generate_random_string(length):
 	    characters = string.ascii_letters + string.digits  # include both letters and digits
@@ -203,13 +204,15 @@ class OTPVerification(models.Model):
         return valid
 
 class AccessTokenLog(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    token = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	token = models.CharField(max_length=255)
+	created_at = models.DateTimeField(auto_now_add=True)
 
-    @classmethod
-    def log_access_token(cls, user, token):
-        return cls.objects.create(user=user, token=token)
+	@classmethod
+	def log_access_token(cls, user, token):
+		print(user)
+		print(token)
+		return cls.objects.create(user=user, token=token)
         
 class FeedBack(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
