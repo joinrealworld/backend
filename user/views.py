@@ -635,3 +635,58 @@ class UserFeedbackAPIView(APIView):
 
 
 
+class UpdateThemeAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    def patch(self, request):
+        serializer = UpdateThemeSerializer(data=request.data)
+        
+        if not serializer.is_valid():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": serializer.errors,
+                }
+            )
+
+        # If validation passes, update the user's theme
+        user = request.user
+        user.theme = serializer.validated_data['theme']
+        user.save()
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "Theme updated successfully.",
+            }
+        )
+
+class UpdateSoundEffectAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    def patch(self, request):
+        serializer = UpdateSoundEffectSerializer(data=request.data)
+        
+        if not serializer.is_valid():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Validation Error",
+                    "payload": serializer.errors,
+                }
+            )
+
+        # If validation passes, update the user's sound_effect
+        user = request.user
+        user.sound_effect = serializer.validated_data['sound_effect']
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "message": "Success",
+                "payload": "Sound Effect updated successfully.",
+            }
+        )
+

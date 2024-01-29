@@ -62,7 +62,10 @@ def background_path(instance, filename):
 
 class User(AbstractBaseUser):
 	CHEAT_OTP = ['000000', '123456', '111111']
-    
+	THEME_CHOICES = [
+		('dark', 'Dark'),
+		('light', 'Light'),
+	]
 	def save(self, *args, **kwargs):
 		if self.pk == None:
 			if not (self.email == None or self.email == ""):
@@ -115,6 +118,8 @@ class User(AbstractBaseUser):
 	groups = models.ManyToManyField('auth.Group', blank=True, related_name="cutom_user_group")
 	referral_code = models.CharField(max_length=128, null=True, blank=True)
 	last_login = models.DateTimeField(blank=True, auto_now=True)
+	theme = models.CharField( max_length=20,choices=THEME_CHOICES,default='dark',)
+	sound_effect = models.BooleanField(default=False)
 
 	objects = UserManager()
 

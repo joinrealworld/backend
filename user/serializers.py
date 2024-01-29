@@ -61,3 +61,10 @@ class ChangeBioSerializer(serializers.Serializer):
 class FeedbackSerializer(serializers.Serializer):
     message = serializers.CharField(max_length=255, required=True)
 
+class UpdateThemeSerializer(serializers.Serializer):
+    theme = serializers.ChoiceField(choices=User.THEME_CHOICES)
+
+class UpdateSoundEffectSerializer(serializers.Serializer):
+    sound_effect = serializers.BooleanField()
+    
+

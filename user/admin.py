@@ -69,7 +69,7 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password', 'referral_code')}),
         ('Profile Picture', {'fields': ('avatar', 'background')}),
-        ('Additional Info', {'fields': ('first_name', 'last_name','bio')}),
+        ('Additional Info', {'fields': ('first_name', 'last_name','bio', 'theme', 'sound_effect')}),
         ('Permissions', {'fields': ('is_staff', 'is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -89,7 +89,7 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
-admin.site.register(AccessTokenLog)
+# admin.site.register(AccessTokenLog)
 
 
 

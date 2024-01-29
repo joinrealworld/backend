@@ -28,4 +28,6 @@ urlpatterns = [
     path('logout', views.SingleDeviceLogoutAPIView.as_view(), name='sigle-device-logout'),
     path('all_logout', views.AllDeviceLogoutAPIView.as_view(), name='all-devices-logout'),
     path('feedback', views.UserFeedbackAPIView.as_view(), name='user-feedback'),
+    path('theme', views.UpdateThemeAPIView.as_view(), name='update-theme'),
+    path('sound_effect', views.UpdateSoundEffectAPIView.as_view(), name='sound-effect'),
 	]

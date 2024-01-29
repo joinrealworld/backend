@@ -29,6 +29,7 @@ class Courses(models.Model):
 	category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
 	name = models.CharField(max_length=128,null=True, blank=True)
 	data = models.JSONField(null=True, blank=True)
+	is_favorite = models.BooleanField(default=False)
 
 	def __str__(self):
 		return f"{self.category.name} -- {self.name}"

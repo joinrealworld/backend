@@ -30,8 +30,6 @@ class IsUserAuthenticated(permissions.IsAuthenticated):
             # Now, you have the token, and you can use it as needed
             # For example, you can print it or perform custom validation
             user = request.user  # Assuming user is authenticated using IsAuthenticated permission
-            print(token)
-            print(AccessTokenLog.objects.filter(user=user, token=token))
             if AccessTokenLog.objects.filter(user=user, token=token).exists():
                 return True
 
