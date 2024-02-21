@@ -48,7 +48,7 @@ class FetchCourseCategoryAPIView(APIView):
 	permission_classes = [IsUserAuthenticated]
 
 	def get(self, request, category_id):
-		courses = Courses.objects.filter(category__id = category_id)
+		courses = Courses.objects.filter(category__uuid = category_id) | Courses.objects.filter(category__pk = category_id)
 		return Response(
                 status=status.HTTP_200_OK,
                 data={
@@ -58,15 +58,16 @@ class FetchCourseCategoryAPIView(APIView):
             )
 
 class FetchCourseDataAPIView(APIView):
-	permission_classes = [IsUserAuthenticated]
+    permission_classes = [IsUserAuthenticated]
 
-	def get(self, request, course_id):
-		courses = Courses.objects.get(pk = course_id)
-		return Response(
+    def get(self, request, course_id):
+        courses = Courses.objects.filter(pk = course_id)
+        print("65-----", courses)
+        return Response(
                 status=status.HTTP_200_OK,
                 data={
                     KEY_MESSAGE: "course data sent successfully.",
-                    KEY_PAYLOAD: CoursesDataSerializer(courses).data
+                    KEY_PAYLOAD: CoursesDataSerializer(courses.last()).data
                 },
             )
 
@@ -74,7 +75,7 @@ class FetchCourseQuizAPIView(APIView):
 	permission_classes = [IsUserAuthenticated]
 
 	def get(self, request, course_id, quiz_index):
-		course_quiz = CourseQuiz.objects.get(course__id = course_id, index = quiz_index)
+		course_quiz = CourseQuiz.objects.get(course__id = course_id, index = quiz_index) | CourseQuiz.objects.get(course__uuid = course_id, index = quiz_index)
 		return Response(
                 status=status.HTTP_200_OK,
                 data={
@@ -89,9 +90,11 @@ class AddFavouriteAPIView(APIView):
     def post(self, request):
         course_id = request.data.get("course_id")
         content_uuid = request.data.get("content_uuid")
-        course = Courses.objects.get(pk=course_id)
+        course = Courses.objects.get(uuid=course_id)
         course_data = course.data
-        print("94------",course_data)
+        for data in course_data:
+            if data['uuid'] == content_uuid:
+                print("97-----", data)
         return Response(
                 status=status.HTTP_200_OK,
                 data={

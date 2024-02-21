@@ -151,25 +151,6 @@ class User(AbstractBaseUser):
 	    "Does the user have permissions to view the app `app_label`?"
 	    return True
 
-	# def send_otp_to_user(self, action="SIGN_UP_MSG"):
-	#     expiry_time = datetime.now() + timedelta(minutes=10)
-	#     otp = random.randrange(99999, 999999, 12)
-	#     self.email_otp = otp
-	#     self.email_otp_validity = expiry_time
-	#     self.save()
-
-	#     if self.email:
-	#         if action == "SIGN_IN_MSG":
-	#         	pass
-	#             # send_login_otp(otp, [self.email])
-	#         if action == "SIGN_UP_MSG":
-	#         	pass
-	#             # send_signup_otp(otp, [self.email])
-	#         pass
-
-	#     return True
-
-
 	def get_tokens_for_user(self):
 	    refresh = RefreshToken.for_user(self)
 	    data = {

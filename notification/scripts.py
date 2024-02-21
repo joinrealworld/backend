@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template import Context
-# from notification.consts import EMAIL_MESSAGES
 from django.template.loader import get_template
 from django.conf import settings
 
@@ -16,7 +15,7 @@ def send_mail_with_template(mail_content, txt_template_path, html_template_path,
         message.attach_alternative(html_template, 'text/html')
         message.send()
     except Exception as e:
-        print("23----",e)
+        print("Exception in send_mail_with_template -->", e)
 
 
 def send_account_verification_mail(first_name, verification_link, to_emails, from_email=settings.EMAIL_HOST_USER):

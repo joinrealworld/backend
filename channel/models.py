@@ -8,6 +8,7 @@ from math import sin, cos, sqrt, atan2, radians
 from ckeditor.fields import RichTextField
 import string
 import uuid
+from user.models import User
 
 def category_pic_path(instance, filename):
     return 'category_pic/{}/{}'.format(
@@ -42,3 +43,12 @@ class CourseQuiz(models.Model):
 
 	def __str__(self):
 		return f"{self.course.name} -- {self.index}"
+
+class FavoriteCourseContent(models.Model):
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+	course = models.ForeignKey(Courses, null=False, blank=False, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
+	content_uuid = models.CharField(max_length=128,null=False, blank=False)
+	
+	def __str__(self):
+		return f"{self.course.name} -- {self.user.id}"
