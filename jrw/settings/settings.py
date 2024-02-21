@@ -200,6 +200,7 @@ DATABASES = {'default': env.db('DATABASE_URL', default='postgresql://postgres:@l
 
 STATICFILES_DIRS = (
     str(APPS_DIR.path('static')),
+    os.path.join(APPS_DIR, 'attachments')
 )
 STATIC_URL = 'static/'
 
@@ -210,3 +211,13 @@ MEDIA_URL = '/media/'
 
 AWS_DEFAULT_ACL = None
 
+
+
+#Email Config
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')

@@ -12,6 +12,7 @@ from math import sin, cos, sqrt, atan2, radians
 from ckeditor.fields import RichTextField
 import string
 import uuid
+from django.utils import timezone
 
 utc = pytz.UTC
 
@@ -150,23 +151,23 @@ class User(AbstractBaseUser):
 	    "Does the user have permissions to view the app `app_label`?"
 	    return True
 
-	def send_otp_to_user(self, action="SIGN_UP_MSG"):
-	    expiry_time = datetime.now() + timedelta(minutes=10)
-	    otp = random.randrange(99999, 999999, 12)
-	    self.email_otp = otp
-	    self.email_otp_validity = expiry_time
-	    self.save()
+	# def send_otp_to_user(self, action="SIGN_UP_MSG"):
+	#     expiry_time = datetime.now() + timedelta(minutes=10)
+	#     otp = random.randrange(99999, 999999, 12)
+	#     self.email_otp = otp
+	#     self.email_otp_validity = expiry_time
+	#     self.save()
 
-	    if self.email:
-	        if action == "SIGN_IN_MSG":
-	        	pass
-	            # send_login_otp(otp, [self.email])
-	        if action == "SIGN_UP_MSG":
-	        	pass
-	            # send_signup_otp(otp, [self.email])
-	        pass
+	#     if self.email:
+	#         if action == "SIGN_IN_MSG":
+	#         	pass
+	#             # send_login_otp(otp, [self.email])
+	#         if action == "SIGN_UP_MSG":
+	#         	pass
+	#             # send_signup_otp(otp, [self.email])
+	#         pass
 
-	    return True
+	#     return True
 
 
 	def get_tokens_for_user(self):
@@ -183,30 +184,22 @@ class User(AbstractBaseUser):
 	    random_string = ''.join(random.choice(characters) for _ in range(length))
 	    return random_string
 
-class OTPVerification(models.Model):
-    CHEAT_OTP = ["123456", "001100", "000111"]
-    otp_to = models.CharField(max_length=50)
-    otp = models.IntegerField(blank=True, null=True, )
-    otp_validity = models.DateTimeField(blank=True, null=True, )
+class EmailVerification(models.Model):
+	email_to = models.ForeignKey(User, on_delete=models.CASCADE, null = False, blank = False)
+	verification_token = models.CharField(max_length=255, blank=False, null=False, )
+	validity = models.DateTimeField(blank=True, null=True, )
 
-    def send_otp(self):
-        expiry_time = datetime.now() + timedelta(minutes=10)
-        otp = random.randrange(99999, 999999, 12)
-        self.otp = otp
-        self.otp_validity = expiry_time
-        self.save()
-        print("192----", otp)
-        # send_email_verify_otp(otp, [self.otp_to])
-        return True
+	def validate_email(self, email_to, verification_token):
+		# Checking if the email and verification token match the instance
+		valid = (self.email_to == email_to and 
+				self.verification_token == verification_token and 
+				self.validity >= timezone.now())
 
-    def validate_otp(self, otp_to, otp):
-        valid = ((self.otp == int(otp) and self.otp_validity >= utc.localize(datetime.now())) and self.otp_to == otp_to) or otp in OTPVerification.CHEAT_OTP
-        if settings.SYS_ENV != 'PROD' and not valid:
-            if otp in self.CHEAT_OTP:
-                valid = True
-        if valid:
-            self.delete()
-        return valid
+		# Deleting the instance if validation is successful
+		if valid:
+			self.delete()
+
+		return valid
 
 class AccessTokenLog(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)

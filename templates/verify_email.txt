@@ -1,0 +1,1 @@
+Your Verification link is : {{verification_link}} for login, link will be valid for next 24 hrs.

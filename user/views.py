@@ -32,6 +32,7 @@ from user.scripts import *
 from constants.response import KEY_MESSAGE, KEY_PAYLOAD
 from rest_framework.parsers import MultiPartParser
 from rest_framework_simplejwt.tokens import OutstandingToken
+from notification.scripts import send_account_verification_mail
 
 # Create your views here.
 class LoginWithPasswordAPIView(GenericAPIView):
@@ -138,6 +139,15 @@ class SignUpAPIViewAPIView(APIView):
 
         user = User.objects.filter(email = email)
         if user:
+            if user.last().email_verified == False:
+                return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Verify Your Email."
+                    },
+                )
+
             return Response(
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
@@ -150,16 +160,18 @@ class SignUpAPIViewAPIView(APIView):
         if email:
             user = User.objects.create(email = email, first_name = first_name, last_name = last_name, referral_code = User.generate_random_string(7))
             user.set_password(password)
-            user.email_verified = True
+            user.email_verified = False
             user.save()
-            otp_to = f"{email}"
-            otp_verification = OTPVerification.objects.get_or_create(otp_to=otp_to)[0]
-            otp_verification.send_otp()
+            verification_token = generate_verification_token()
+            verification_link = generate_user_account_verification_link(verification_token, "verify_email")
+            EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
+            send_account_verification_mail(first_name, verification_link, email)
+
             return Response(
                     status=status.HTTP_200_OK,
                     data={
-                        KEY_MESSAGE: "OTP is sent to your Email",
-                        KEY_PAYLOAD: {"otp_verification_id": otp_verification.id}
+                        KEY_MESSAGE: "Sucess",
+                        KEY_PAYLOAD: "Please Verify Your Email Address through sent email"
                     },
                 )
         else:
@@ -171,49 +183,47 @@ class SignUpAPIViewAPIView(APIView):
                     },
                 )
 
-class VerifyOTPAPIView(APIView):
+class VerifyEmailAPIView(APIView):
     """End point To Verify the OTP. Send (contact_number and country_code[country_code: srt]) or email and otp in parameters"""
     permission_classes = [AllowAny]
 
-    def post(self, request):
-        email = request.data.get("email")
-        otp = request.data.get("otp")
+    def get(self, request):
+        token = request.query_params.get("token")
 
-        if not email:
+        if not token:
             return Response(
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter Email"
+                        KEY_PAYLOAD: "Please Provide Token"
                     },
                 )
 
         user = None
-        if email != None:
-            users = User.objects.filter(email=email) | User.objects.filter(username=email)
-            user = users.first()
+        if token != None:
+            email_verification = EmailVerification.objects.filter(verification_token=token)
         else:
             return Response(
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter Email"
+                        KEY_PAYLOAD: "Please Provide Token"
                     },
                 )
 
-        if otp == None:
+        if not email_verification:
             return Response(
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter OTP"
+                        KEY_PAYLOAD: "Please Verify Email through Signup or Forgot Password."
                     },
                 )
-
+        user = email_verification.last().email_to
         if user:
-            otp_obj = OTPVerification.objects.get(otp_to=email)
-            if otp_obj.validate_otp(email, str(otp)):
-                if email:
+            email_verification = email_verification.last()
+            if email_verification.validate_email(user, token):
+                if token:
                     if not user.email_verified:
                         user.email_verified = True
                         user.save()
@@ -223,7 +233,7 @@ class VerifyOTPAPIView(APIView):
                 return Response(
                     status=status.HTTP_200_OK,
                     data={
-                        KEY_MESSAGE: "otp verfied successfully.",
+                        KEY_MESSAGE: "Email verfied successfully.",
                         KEY_PAYLOAD: {"token": res['access'], "user": user_serializer.data}
                     },
                 )
@@ -232,7 +242,7 @@ class VerifyOTPAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "OTP is Incorrect or Expired"
+                        KEY_PAYLOAD: "Link is Incorrect or Expired"
                     },
                 )
         else:
@@ -246,11 +256,67 @@ class VerifyOTPAPIView(APIView):
 
 
 class SetPasswordAPIView(APIView):
-    permission_classes = [IsUserAuthenticated]
+    permission_classes = [AllowAny]
 
     def post(self, request):
-        password = request.data.get("password")
+        password = request.data.get("password", None)
         user = request.user
+        if password is None:
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please provide the New Password."
+                    },
+                )
+
+        if not request.user.is_authenticated:
+            token = request.data.get("token", None)
+            if token is None:
+                return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Token is not Provided."
+                    },
+                )
+            email_verification = EmailVerification.objects.filter(verification_token=token)
+            if not email_verification:
+                return Response(
+                        status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                        data={
+                            KEY_MESSAGE: "error",
+                            KEY_PAYLOAD: "Please Verify Email through Signup or Forgot Password."
+                        },
+                    )
+            user = email_verification.last().email_to
+            if user:
+                email_verification = email_verification.last()
+                if email_verification.validate_email(user, token):
+                    if token:
+                        if not user.email_verified:
+                            user.email_verified = True
+                        user.set_password(password)
+                        user.save()
+
+                        res = user.get_tokens_for_user()
+                        user_serializer = UserSimpleSerializer(user, many=False)
+                        return Response(
+                            status=status.HTTP_200_OK,
+                            data={
+                                KEY_MESSAGE: "Email verfied successfully.",
+                                KEY_PAYLOAD: {"token": res['access'], "user": user_serializer.data}
+                            },
+                        )
+                else:
+                    return Response(
+                        status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                        data={
+                            KEY_MESSAGE: "error",
+                            KEY_PAYLOAD: "Link is Incorrect or Expired"
+                        },
+                    )
+
         user.set_password(password)
         user.save()
         return Response(
@@ -260,6 +326,50 @@ class SetPasswordAPIView(APIView):
                         KEY_PAYLOAD: "Password stored successfully"
                     },
                 )
+
+class ForgotPasswordAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        email = request.query_params.get("email", None)
+        if email is None:
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Provide Email"
+                    },
+                )
+        user = User.objects.filter(email = email)
+        if not user:
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please make sign up."
+                    },
+                )
+        user = user.last()
+        if user.email_verified == False:
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please verify email."
+                    },
+                )
+        verification_token = generate_verification_token()
+        verification_link = generate_user_account_verification_link(verification_token, "reset_password")
+        EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
+        send_account_verification_mail(user.first_name, verification_link, email)
+
+        return Response(
+                status=status.HTTP_200_OK,
+                data={
+                    KEY_MESSAGE: "Sucess",
+                    KEY_PAYLOAD: "Password Reset Link sent to your mail box"
+                },
+            )
 
 class FetchProfileAPIView(APIView):
     permission_classes = [IsUserAuthenticated]

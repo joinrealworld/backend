@@ -83,10 +83,20 @@ class FetchCourseQuizAPIView(APIView):
                 },
             )
 
+class AddFavouriteAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
 
-
-
-
-
-
+    def post(self, request):
+        course_id = request.data.get("course_id")
+        content_uuid = request.data.get("content_uuid")
+        course = Courses.objects.get(pk=course_id)
+        course_data = course.data
+        print("94------",course_data)
+        return Response(
+                status=status.HTTP_200_OK,
+                data={
+                    KEY_MESSAGE: "Success",
+                    KEY_PAYLOAD: "Content Added to Favourite."
+                },
+            )
 
