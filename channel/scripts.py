@@ -58,3 +58,26 @@ def get_channel_data():
 							add_quiz_data(quiz_json_data, d)
 
 	return channels_dict
+
+def count_completed_course(user, course):
+	try:
+		course_data = course.data
+		data_len = len(course_data)
+		completed_content = CompleteContent.objects.filter(course = course, user = user)
+		len_compeleted_content =  len(completed_content)
+		return round((100*len_compeleted_content)/data_len,2)
+	except Exception as e:
+		return 0
+
+def count_completed_category(user, category):
+	courses = Courses.objects.filter(category = category)
+	compeleted_cat = 0
+	for course in courses:
+		compeleted_cat = compeleted_cat +count_completed_course(user, course)
+	return round(compeleted_cat/len(courses),2)
+
+
+
+
+
+

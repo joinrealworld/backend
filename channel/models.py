@@ -16,11 +16,17 @@ def category_pic_path(instance, filename):
         filename
     )
 
+def course_pic_path(instance, filename):
+    return 'course_pic/{}/{}'.format(
+        instance.id,
+        filename
+    )
+
 class Category(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	name = models.CharField(max_length=128)
 	category_pic = models.ImageField(upload_to=category_pic_path, blank=True, null=True)
-	description = models.CharField(max_length=255)
+	description = RichTextField(blank = True)
 
 	def __str__(self):
 	    return f"{self.name}"
@@ -31,6 +37,8 @@ class Courses(models.Model):
 	name = models.CharField(max_length=128,null=True, blank=True)
 	data = models.JSONField(null=True, blank=True)
 	is_favorite = models.BooleanField(default=False)
+	description = RichTextField(blank = True)
+	pic = models.ImageField(upload_to=course_pic_path, blank=True, null=True)
 
 	def __str__(self):
 		return f"{self.category.name} -- {self.name}"
@@ -45,6 +53,23 @@ class CourseQuiz(models.Model):
 		return f"{self.course.name} -- {self.index}"
 
 class FavoriteCourseContent(models.Model):
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+	course = models.ForeignKey(Courses, null=False, blank=False, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
+	content_uuid = models.CharField(max_length=128,null=False, blank=False)
+	
+	def __str__(self):
+		return f"{self.course.name} -- {self.user.id}"
+
+class FavoriteCourse(models.Model):
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+	course = models.ForeignKey(Courses, null=False, blank=False, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
+	
+	def __str__(self):
+		return f"{self.course.name} -- {self.user.id}"
+
+class CompleteContent(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	course = models.ForeignKey(Courses, null=False, blank=False, on_delete=models.CASCADE)
 	user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)

@@ -62,7 +62,6 @@ def background_path(instance, filename):
     )
 
 class User(AbstractBaseUser):
-	CHEAT_OTP = ['000000', '123456', '111111']
 	THEME_CHOICES = [
 		('dark', 'Dark'),
 		('light', 'Light'),
@@ -189,8 +188,6 @@ class AccessTokenLog(models.Model):
 
 	@classmethod
 	def log_access_token(cls, user, token):
-		print(user)
-		print(token)
 		return cls.objects.create(user=user, token=token)
         
 class FeedBack(models.Model):

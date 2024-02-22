@@ -10,8 +10,8 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 class CoursesAdmin(admin.ModelAdmin):
-    fields = ['category', 'name', 'data']
-    list_display = ('id','category', 'name',)
+    fields = ['category', 'name', 'pic', 'data', 'description']
+    list_display = ('id','category', 'name', 'pic', 'description')
     list_per_page = 25
 
 admin.site.register(Courses, CoursesAdmin)
@@ -22,3 +22,7 @@ class CourseQuizAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 admin.site.register(CourseQuiz, CourseQuizAdmin)
+
+admin.site.register(FavoriteCourseContent)
+admin.site.register(FavoriteCourse)
+admin.site.register(CompleteContent)

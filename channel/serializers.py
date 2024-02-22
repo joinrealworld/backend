@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.conf import settings
 import string
 import random
+from user.models import User
+from channel.scripts import count_completed_category, count_completed_course
 
 class CategorySerializer(serializers.ModelSerializer):
 	# category_pic = serializers.SerializerMethodField()
@@ -31,51 +33,65 @@ class CategorySerializer(serializers.ModelSerializer):
 		return Courses.objects.filter(category = obj).count()
 
 	def get_completed(self, obj):
-		return str(random.randrange(0, 100))
+		user_id = self.context.get('user_id')
+		user = User.objects.get(pk=user_id)
+		return count_completed_category(user, obj)
 
 class CoursesSerializer(serializers.ModelSerializer):
-	description = serializers.SerializerMethodField()
 	completed = serializers.SerializerMethodField()
-	course_pic = serializers.SerializerMethodField()
 	is_favorite = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Courses
-		fields = ('id', 'uuid','name', 'description', 'completed', 'is_favorite', 'course_pic',)
-
-	def get_description(self, obj):
-		return "This is course description"
+		fields = ('id', 'uuid','name', 'completed', 'is_favorite', 'pic',)
 
 	def get_completed(self, obj):
-		return str(random.randrange(0, 100))
-
-	def get_course_pic(self, obj):
-		return "media/course_pic/1/crypto-crash.jpeg"
+		user_id = self.context.get('user_id')
+		user = User.objects.get(pk=user_id)
+		return count_completed_course(user, obj)
 
 	def get_is_favorite(self, obj):
+		user_id = self.context.get('user_id')
+		favourite = FavoriteCourse.objects.filter(user = User.objects.get(pk=user_id), course = obj)
+		if favourite.exists():
+			return True
 		return False
 
 class CoursesDataSerializer(serializers.ModelSerializer):
-	description = serializers.SerializerMethodField()
 	completed = serializers.SerializerMethodField()
 	is_favorite = serializers.SerializerMethodField()
-	course_pic = serializers.SerializerMethodField()
+	data = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Courses
-		fields = ('id', 'uuid', 'name', 'description', 'completed', 'course_pic', 'is_favorite', 'data')
-
-	def get_description(self, obj):
-		return "This is course description"
+		fields = ('id', 'uuid', 'name', 'description', 'completed', 'pic', 'is_favorite', 'data')
 
 	def get_completed(self, obj):
-		return str(random.randrange(0, 100))
-
-	def get_course_pic(self, obj):
-		return "media/course_pic/1/crypto-crash.jpeg"
+		user_id = self.context.get('user_id')
+		user = User.objects.get(pk=user_id)
+		return count_completed_course(user, obj)
 
 	def get_is_favorite(self, obj):
+		user_id = self.context.get('user_id')
+		favourite = FavoriteCourse.objects.filter(user = User.objects.get(pk=user_id), course = obj)
+		if favourite.exists():
+			return True
 		return False
+
+	def fomat_data(self, data, obj):
+		user_id = self.context.get('user_id')
+		user = User.objects.get(pk=user_id)
+		formated_data = []
+		for data_obj in data:
+			uuid = data_obj['uuid']
+			favourite = FavoriteCourseContent.objects.filter(content_uuid = uuid, user = user, course = obj)
+			if favourite.exists():
+				data_obj["is_favourite"] = True
+			formated_data.append(data_obj)
+		return formated_data
+
+	def get_data(self, obj):
+		return self.fomat_data(obj.data, obj)
 
 class CourseQuizDataSerializer(serializers.ModelSerializer):
 
