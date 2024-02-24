@@ -1,0 +1,131 @@
+{
+   "name":"quiz4",
+   "que0":[
+      {
+         "question":"How should you feel after you make your first dollar?",
+         "options":{
+            "a":"Ecstatic! This is the first time you made money on your own!",
+            "b":"Eh, it's only a dollar."
+         },
+         "answer":"a"
+      }
+   ],
+   "que1":[
+      {
+         "question":"Are you Broke or Poor?",
+         "options":{
+            "a":"Broke",
+            "b":"Poor"
+         },
+         "answer":"a"
+      }
+   ],
+   "que2":[
+      {
+         "question":"Why is it important to make your first dollar?",
+         "options":{
+            "a":"Because now I can buy cool things to impress others!",
+            "b":"More money is always good",
+            "c":"The reason it is important is now I know if I can make $1, I can make whatever I need if I put in the effort"
+         },
+         "answer":"c"
+      }
+   ],
+   "que3":[
+      {
+         "question":"Are you implementing the knowledge inside these videos?",
+         "options":{
+            "a":"yes",
+            "b":"no"
+         },
+         "answer":"a"
+      }
+   ],
+   "que4":[
+      {
+         "question":"What items should you sell?",
+         "options":{
+            "a":"Anything as long as you get it for free",
+            "b":"Anything that you know sells well"
+         },
+         "answer":"b"
+      }
+   ],
+   "que5":[
+      {
+         "question":"What makes you rich?",
+         "options":{
+            "a":"Unfair Advantages",
+            "b":"Shitcoins"
+          },
+         "answer":"a"
+      }
+   ],
+   "que6":[
+      {
+         "question":"What do you do if you don't have craigslist in your country?",
+         "options":{
+            "a":"Give up",
+            "b":"Search for alternatives"
+         },
+         "answer":"b"
+      }
+   ],
+   "que7":[
+      {
+         "question":"What do I do If I Don\u2019t Have A Car?",
+         "options":{
+            "a":"Give up",
+            "b":"Go to the Millionaire Access general chat and complain this doesn't work.",
+            "c":"Use your parent's,friend's,rent or UBER. There is always a way."
+         },
+         "answer":"c"
+      }
+   ],
+   "que8":[
+      {
+         "question":"What is flipping?",
+         "options":{
+            "a":"just a way to make money.",
+            "b":"Taking a free item or item you get for less and selling for profit.",
+            "c":"Clocking in for a paycheck."
+         },
+         "answer":"b"
+      },
+      {
+         "question":"Should I post to only one platform or many?",
+         "options":{
+            "a":"Nah just one is good.",
+            "b":"I should post to many as it increases the likelihood of who will buy my items."
+         },
+         "answer":"b"
+      }
+   ],
+   "que9":[
+      {
+         "question":"Why is it important to have good pictures/titles for your products?",
+         "options":{
+            "a":"To make it look fancy.",
+            "b":"To make your products more attractive for your potential buyers."
+         },
+         "answer":"b"
+      },
+      {
+         "question":"Should I post to only one platform or many?",
+         "options":{
+            "a":"I should post to many as it increases the likelihood of who will buy my items.",
+            "b":"Nah just one is good."
+         },
+         "answer":"a"
+      }
+   ],
+   "que10":[
+      {
+         "question":"Are you going to implement the Flipping Course?",
+         "options":{
+            "a":"Yes, I'm ready to make my first $100"
+         },
+         "answer":"a"
+      }
+   ]
+}

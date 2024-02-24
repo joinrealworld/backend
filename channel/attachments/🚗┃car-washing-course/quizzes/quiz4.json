@@ -1,0 +1,21 @@
+{
+   "name":"quiz4",
+   "que0":[
+      {
+         "question":"How do you find clients?",
+         "options":{
+            "a":"Business Cards, Youtube and TIkTok.",
+            "b":"Family & Neighbors, Door Knocking and Social Media.",
+            "c":"Google, at your local dog park and friends."
+         },
+         "answer":"c"
+      },
+      {
+         "question":"Are you going to implement the Car Washing Course?",
+         "options":{
+            "a":"Yes, I'm ready to make my first $100"
+         },
+         "answer":"a"
+      }
+   ]
+}

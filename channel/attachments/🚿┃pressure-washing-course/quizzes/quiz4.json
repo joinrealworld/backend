@@ -1,0 +1,30 @@
+{
+   "name":"quiz4",
+   "que0":[
+      {
+         "question":"How much should you charge?",
+         "options":{
+            "a":"$150-$400",
+            "b":"$70-$100",
+            "c":"$50-$75"
+         },
+         "answer":"b"
+      },
+      {
+         "question":"How do you find clients?",
+         "options":{
+            "a":"Business Cards, Youtube and TIkTok.",
+            "b":"Family & Neighbors, Door Knocking and Social Media.",
+            "c":"Google, at your local dog park and friends."
+         },
+         "answer":"b"
+      },
+      {
+         "question":"Are you going to implement the Pressure Washing Course?",
+         "options":{
+            "a":"Yes, I'm ready to make my first $500"
+         },
+         "answer":"a"
+      }
+   ]
+}

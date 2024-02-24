@@ -1,0 +1,18 @@
+{
+   "channel_id":1152305426541576192,
+   "channel_name":"📋┃social-media-mastery-checklist",
+   "sections":[
+    {
+        "content": "",
+        "section_url": null,
+        "section": "attachment",
+        "image_path": "attachments/\ud83d\udccb\u2503social-media-mastery-checklist/mbag.jpg",
+        "delete":"0"
+    },
+    {
+        "content": "**Social Media Mastery Checklist**\n\n>  \u2043 Do 1 post (could be reel, photo, tweet, etc)\n>  \u2043 Find 10 prospects per platform\n>  \u2043 Interact with prospects via liking, commenting, etc \n>  \u2043 Send 10 DMs per platform\n>  \u2043 Follow up with prospects who did not reply",
+        "section_url": null,
+        "section": "general",
+        "delete": "1"
+    }
+]}

@@ -1,0 +1,109 @@
+{
+   "channel_id":1151183737002926190,
+   "channel_name":"💻┃research-niche",
+   "sections":[
+    {
+        "content": "",
+        "section_url": null,
+        "section": "attachment",
+        "image_path": "attachments/\ud83d\udcbb\u2503research-niche/research_niche.jpg",
+        "delete":"0"
+    },
+    {
+        "content": "A niche is a select portion of a market. \n\nWe target a specific niche to narrow down who our prospects (potential clients) are.",
+        "section_url": null,
+        "section": "general",
+        "image_path": null,
+        "delete":"1"
+    },
+    {
+        "content": "\u2022\n\n\n\ud83d\udcbb **Research Niche** \ud83d\udcbb \n\n\"How to Pick Your Niche\"",
+        "section_url": "https://vimeo.com/862478658/f46ffb340e?share=copy",
+        "section": "video",
+        "delete":"1"
+    },
+    {
+        "content": "**Summary:**\n- A prospect needs to have an audience, engagement, and something to sell\n- Build a spreadsheet to track prospects\n- You can find more prospects by going through who one of your prospects is following\n\n**Action steps:**\n- Create a spreadsheet with your prospects\n- Go through who your prospects are following",
+        "section_url": null,
+        "section": "summary",
+        "delete":"0"
+    },
+    {
+        "content": "\u2022\n\n\n\n\n\"The Difference Between a Skill and a Niche\"",
+        "section_url": "https://vimeo.com/862487636/bcb6a9693f?share=copy",
+        "section": "video",
+        "delete":"1"
+    },
+    {
+        "content": "**Summary:**\n- Skill = how you get results for your clients\n- Niche = the market you are working with\n\n**Example:**\n- Skill = Email copywriting\n- Niche = Ecommerce entrepreneurs \n\n**Action steps:**\n- Understand the difference between a skill and a niche",
+        "section_url": null,
+        "section": "summary",
+        "delete":"0"
+    },
+    {
+        "content": "\u2022\n\n\n\n\n\"Forget Your Niche\"",
+        "section_url": "https://vimeo.com/862475083/b788c66869?share=copy",
+        "section": "video",
+        "delete":"1"
+    },
+    {
+        "content": "**Update:** There is now a NICHE LIST channel. Pick a niche from the list.\n\n**Summary:**\n- Don\u2019t overthink picking your niche - a niche is only to have a direction\n- All someone needs to be considered a prospect is:\n- They have an audience\n- They get good engagement\n- They have something to sell\n\n**Action steps:**\n- Understand the difference between a skill and a niche",
+        "section_url": null,
+        "section": "summary",
+        "delete":"0"
+    },
+    {
+        "content": "What is a niche?\n\na your ability/knowledge of doing something well\nB a select portion of a market -\nc the specific assistance you provide clients",
+        "section":"quiz",
+         "quiz_id":"quiz4",
+         "delete":"1"
+    },
+    {
+        "content": "\u2022\n\n\n\ud83e\udd16 **AI Application for Niche** \ud83e\udd16 \n\n\"How to Use AI to Pick Your Niche\"",
+        "section_url": "https://vimeo.com/862479905/23b8d1fb52?share=copy",
+        "section": "video",
+        "delete": "1"
+    },
+    {
+        "content": "**Summary:**\n- Picking a client transcends picking a niche - don\u2019t limit yourself to your niche because every niche works\n- Be specific - ask it for the best niches to offer your skill to\n- Ask it to give you businesses within that niche that need your offer\n\n**Action steps:**\n- Ask ChatGPT for the best niches for your skill\n- Stick to the video and play around with different prompts",
+        "section_url": null,
+        "section": "summary",
+        "delete": "0"
+    },
+    {
+        "content": "\u2022\n\n\n\n\n\"How to Summarize Your Niche (ChatGPT)\"",
+        "section_url": "https://vimeo.com/862479646/654e295287?share=copy",
+        "section": "video",
+        "delete": "1"
+    },
+    {
+        "content": "**Summary:**\n- Once you pick a niche, you can ask ChatGPT for a summary of the niche\n- It can give you services that your niche needs that you can offer to them\n- The more specific you are, the better results you will get\n\n**Action steps:**\n- Ask ChatGPT to summarize your niche",
+        "section_url": null,
+        "section": "summary",
+        "delete": "0"
+    },
+    {
+        "content": "\u2022\n\n\n\n\n\"What Are the Desires of People in this Niche? (ChatGPT)\"",
+        "section_url": "https://vimeo.com/862489102/7cfb115cca?share=copy",
+        "section": "video",
+        "delete": "1"
+    },
+    {
+        "content": "**Summary:**\n- Do not just choose the niche given in the video, there are hundreds that you can use\n- Once you have an idea about your niche, you can dig deeper to find out the pain points in your niche\n- Once you find pain points, you can ask it how your service can solve these pain points\n\n**Action steps:**\n- Use ChatGPT to dig deep into your niche and identify how you can help them",
+        "section_url": null,
+        "section": "summary",
+        "delete": "0"
+    },
+    {
+        "content": "\u2022\n\n\n\n\n\"What Are the Traits of People Struggling in this Niche? (ChatGPT)\"",
+        "section_url": "https://vimeo.com/862489326/a20e9cff72?share=copy",
+        "section": "video",
+        "delete": "1"
+    },
+    {
+        "content": "**Summary:**\n- ChatGPT can identify key struggles that people within your niche have\n- You can identify offers to solve these struggles\n- If you aren\u2019t sure about a suggestion ChatGPT gives you, you can ask it to give more details\n\n**Action steps:**\n- Use ChatGPT to identify common struggles that people in your niche have",
+        "section_url": null,
+        "section": "summary",
+        "delete": "0"
+    }
+]}

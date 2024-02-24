@@ -1,0 +1,125 @@
+{
+   "name":"quiz4",
+   "que0":[
+      {
+         "question":"Are you ready to enter the Gateway To A New World?",
+         "options":{
+            "a":"Yes",
+            "b":"No"
+         },
+         "answer":"a"
+      }
+   ],
+   "que1":[
+      {
+         "question":"Does crypto generate you an income? Does crypto replace your job?",
+         "options":{
+            "a":"No",
+            "b":"Yes"
+         },
+         "answer":"b"
+      }
+   ],
+   "que2":[
+      {
+         "question":"You can succeed at anything if you:",
+         "options":{
+            "a":"Never quit and become super skilled at what we know works",
+            "b":"Jump from thing to thing because you're easily distracted",
+            "c":"Follow what's currently popular, just like everyone else",
+            "d":"Become emotional and impatient that you didn't make $100k in 3.5 weeks"
+         },
+         "answer":"a"
+      }
+   ],
+   "que3":[
+      {
+         "question":"If you want to learn what actually makes you money you must:",
+         "options":{
+            "a":"Cry",
+            "b":"Learn what everyone else already knows",
+            "c":"Complain",
+            "d":"Progress to the more advanced lessons"
+         },
+         "answer":"d"
+      }
+   ],
+   "que4":[
+      {
+         "question":"How do you become a professional and avoid gambling like a degenerate?",
+         "options":{
+            "a":"The spirits of the universe will guide me",
+            "b":"By guessing, because using your brain is hard",
+            "c":"By buying NFT's",
+            "d":"By studying the lessons every day"
+         },
+         "answer":"d"
+      }
+   ],
+   "que5":[
+      {
+         "question":"To invest in crypto under 18 you must use:",
+         "options":{
+            "a":"Fraud to open an account",
+            "b":"Excuses to avoid making an account",
+            "c":"A custodial app, or your parents account"
+         },
+         "answer":"c"
+      }
+   ],
+   "que6":[
+      {
+         "question":"The effort you put into your questions is:",
+         "options":{
+            "a":"Not important",
+            "b":"Something which can be winged",
+            "c":"Super important",
+            "d":"Meh"
+         },
+         "answer":"c"
+      }
+   ],
+   "que7":[
+      {
+         "question":"By doing lessons and unlocking more advanced chats, you:",
+         "options":{
+            "a":"Jump from thing to thing because you're easily distracted",
+            "b":"Gain the knowledge and motivation of more advanced students in the community",
+            "c":"Become emotional and impatient that you didn't make $100k in 3.5 weeks",
+            "d":"Follow what's currently popular on TikTok, just like everyone else"
+         },
+         "answer":"b"
+      }
+   ],
+   "que8":[
+      {
+         "question":"How do you gain access to more signals?",
+         "options":{
+            "a":"Give a good signal in the chats to students",
+            "b":"SComplete the Fundamental Lessons",
+            "c":"Message the Professors",
+            "d":"Showing us your Crypto portfolio balance"
+         },
+         "answer":"b"
+      },
+      {
+         "question":"What do you do if you get lost?",
+         "options":{
+            "a":"Panic",
+            "b":"Show everyone your favorite crypto coin",
+            "c":"Spam all the chats",
+            "d":"Check the campus map or ask for help in the #network channel"
+         },
+         "answer":"d"
+      },
+      {
+         "question":"Now that you've finished the tutorials, where do you go to find the important Fundamental Lessons?",
+         "options":{
+            "a":"At the bottom of a pint of beer",
+            "b":"In your pocket",
+            "c":"In the \"Crypto Campus\" inside the #fundamentals channel"
+         },
+         "answer":"c"
+      }
+   ]
+}

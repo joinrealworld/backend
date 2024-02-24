@@ -1,0 +1,600 @@
+{
+   "channel_id":1146057281780318299,
+   "channel_name":"🕙┃long-term",
+   "sections":[
+      {
+         "content":"**The Masterclass** \ud83c\udf96\ufe0f \n\nModule 4 - \"Long Term\" \ud83d\udd59",
+         "section_url":"https://vimeo.com/856510566/09cb6ba6f3?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"In the Masterclass we are starting with the technique most likely to make you money in the long run.\n\nLong term investing requires the least amount of things to go right, and the activity itself is fundamentally biased in your favor.\n\nIn the investing series we covered how \u2018beta/passive/long-term\u2019 was the ideal way of grouping of these principles.\n\nHere in the masterclass I will take you through the steps required to form a sensible long term strategy.\n\n***Agenda ***\n\n> > Define time horizon\n> > Classify importance of asset selection over technique\n> > How we will look at asset selection\n> > What technique we will use (S.DCA)\n> > How we will time our technique (Aggregate valuation scoring)\n> > Speed of buying and selling (Requires knowledge of the future)",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nDefine time horizon (BTC)",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nDefine time horizon (ETH)",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nDefine magnitude (BTC)",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nDefine magnitude (ETH)",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***Why Long only?***\n\n> We will not be exploring shorting as the whole point of long term investing is to take advantage of cryptos positive skew\n\n> There is no skew on the downside\n\n***Importance of asset selection over technique for long term:***\n\n> \"In long term, the asset does the work for you. In medium term, the asset is just the vehicle for the technique\" - Prof Adam\n> \n> As you can see from the BTC and ETH example, extreme gains can be made. But more can be made if you choose the right asset.\n> \n> If you believe that ETH is going to outperform BTC, you wouldn\u2019t hold BTC.\n> \n> If you believe SONIC-OBAMA token is going to outperform ETH & BTC you wouldn\u2019t buy either right?\n> \n> This is the *black hole* all new investors fall into. Buying absolute shit because they hope it has more upside based off nothing but some propaganda.\n> \n> In the investing series we will be covering *Modern Portfolio Theory* and using it to select the optimal assets.\n> \n> MPT is the best quantitative method for selecting assets, and I will be showing you not only how to use it, but how to also improve it.\n\n***What technique we will use (S.DCA)***\n\n> The technique we will use to invest in our assets will be Strategic Dollar Cost Averaging\n\n> This is where you\u2019ll be using indicators to value BTC then buy dollar cost averaging when the value is sensible\n\n> This is the highest likelihood method of accurately buying the dip\n\n***How we will time our technique (Aggregate valuation scoring)***\n\n> Using the principles we have learned in the statistics section, we will perform a wide array of valuation analysis.\n\n> We will combine valuation scores to increase accuracy via Z-scoring\n\n***Speed of buying and selling (Requires knowledge of the future)***\n\n> Rate of buying and selling will be the most difficult and least accurate part of the long term series, as to know the correct speed, by definition we must know the future. Which is impossible.\n\n> We can make some rough approximation, however they will only be guides\n\n***Example of entire process:***\n\n> 1. Do a whole market asset selection analysis using good principles of quantitative asset selection\n> \n> 2. Decide ideal portfolio weights\n> \n> 3. Conduct indicator research\n> \n> 4. Score & Aggregate long term indicators\n> \n> 5. Adjust portfolio allocations based on valuations\n> >> If valuations are good, increase size\n> >> If valuations are neutral, hold\n> >> If valuations are bad, decrease size\n> \n> 6. The speed at which you increase or decrease positions will be determined by current market conditions\n\n***What can go wrong?***\n\nThere\u2019s not much that can go wrong in long term investing aside from lost opportunity cost.\n\nThis is an important principle. Opportunity cost is defined as the opportunity that you didn\u2019t take.\n\nWhen you\u2019re committed for a long time in one investment you might be closing yourself off to other quality investments.\n\nHowever with enough research you should be able to select the best opportunity from *day 1.*\n\n***What can go right?***\n\n> Long term investing is how the majority of people become millionaires from asset trading & management\n\n> The psyop that you can day trade your way to millions is not true for the majority of people\n\n> The majority of people can become rich easily using long term investing, it only requires patience.\n\n> With patience, 10x your money is basically guaranteed, you have to not fuck it up\n\n***Summary***\n\n> We\u2019re going to approach long term investing from the beta/passive/long-term angle\n\n> In order of importance we will look at\n> > Asset selection\n> > Long Term Valuation\n> > Strategic dollar cost averaging based on valuation\n\n> Long term investing is the most likely method that will make you rich",
+         "section_url":null,
+         "section":"summary",
+         "delete":"0"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n> **The Masterclass 26**\n>",
+         "section_url":"https://vimeo.com/856456024/f7bdc492e7?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"***Asset Selection (MPT basics)***\n\n> In the investing lessons we covered the basics of quantitative asset selection.\n\n> The quality of an asset is derived from its risk-adjusted performance, which is a ratio of its performance divided by risk.\n\n> We discussed how NO RATIONAL investor would willingly choose an asset that didn\u2019t maximise this relationship.\n\n> In this unit I will show you how to perform the asset analysis and selection process.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***\u2018Expected return\u2019*** is simply the historical return",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***\u2018Standard Deviation\u2019***",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"We\u2019ve covered a lot here, but the main takeaway is that MPT is the ideal way of understanding how asset selection should work, and the quality it provides us.\n\n***In Summary***\n\n> Correlation renders broad diversification mostly useless.\n\n> In a competitive market, a rational investor will only hold the optimal portfolio.\n\n> Because correlation is so high, this statement can be modified: In a competitive, highly correlated cryptocurrency market, a rational investor will only hold the optimal ASSET/s.\n\n> In this presentation, ETH was given the highest sharpe ratio as a hypothetical example, because of this, it would be the \u2018optimal asset\u2019 in traditional MPT.\n\nThe optimal asset is always changing, so there will be an appendix showing how to perform this analysis after the next lecture.\n\n***Appendix:*** Unedited pre-release MPT explainer:",
+         "section_url":"https://vimeo.com/856550445/095c9aca78?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n> **The Masterclass 27**\n>",
+         "section_url":"https://vimeo.com/856454035/7007cb9018?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"***Asset Selection Agenda (MPT Advanced)***\n\n> If MPT is good, then how can we improve it?\n\n> Failure of Standard Deviation in favor of Semi-Deviation (\u201cPMPT\u201d)\n\n> Failure of Semi-D (does not take into account the \u2018nature\u2019 of the risk)\n\n> Improve using a probability density function\n\n> \u201cUltimate portfolio theory\u201d\n\n> How I go about selecting assets (screencap of TV & Spreadsheet)\n\n***Problem?***\n\n> We already know MPT is useful for selecting the optimal asset. But it has a major flaw.\n\n> The sharpe ratio is a wonderful measurement for giving context to risk and reward, but there is a problem in the way it measures risk.\n\n> Risk according to the standard deviation of returns actually measures volatility in both directions by definition.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nUsing ***\u2018Standard Deviation\u2019*** in the sharpe ratio punishes up and down variance equally",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nWouldn't it be great if we had something that only punished the negative deviations?",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nWE DO ~ Its called the ***SORTINO RATIO******!***\n\nIt\u2019s the same as the sharpe ratio, but it only punishes negative variance",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nHow they look:",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nThere is another problem: ***Semi-Deviation*** only gives you a one dimensional measure of risk.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nWouldn\u2019t it be better if we had a measure that took into account ALL the behavior of the risk?",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nWhat about a ratio that took into account all the behavioral information about all the risks and all rewards? It would be the ultimate ratio, no data would be wasted.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nIn this example, neither standard deviation or semi-deviation would give us useful information",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nBut the ***Omega ratio*** does!",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nNow it doesn\u2019t matter what the distribution is shaped like! Every possible data point is now accounted for! This is good because crypto often behaves extremely weird.\n\nBecause no other ratio can possibly contain more information on the nature of risk and reward, it is known as \u2018omega\u2019 because it is the ultimate.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nFor the record, you will often find the behavior quite similar to the sortino ratio",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nSimplified",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***What can go wrong when using the Omega ratio?***\n\n> You may encounter results with this method that don\u2019t make sense, or are counterintuitive.\n\n> Results from the omega ratio might end up being biased due to extreme gains (10,000%+) and the limit of an asset to \u2018only\u2019 go down -100%.\n\n> Infinite upside skew.\n\n> Never forget that much like all data, its backwards looking and tells you nothing about the future, just about the historical behavior.\n\n> It might be worthwhile considering the results in the context of some qualitative analysis to temper extreme results.\n\n***Summary***\n\n> MPT uses the sharpe ratio, but it punishes both upwards variation and downwards variation\n\n> The sortino ratio improves on this and only punishes negative deviations\n\n> The omega ratio improves on this again and forms a theoretically perfect probability density ratio of all wins and all losses, and because of this, it is the best ratio for asset selection.\n\n> Conclusions stemming from the omega ratio might end up being biased due to extremely skewed gains.\n\nhttps://www.tradingview.com/script/J1aP07iJ-Rolling-Risk-Adjusted-Performance-Ratios/\n\n^ One of many public Omega ratio indicators you can use:\n\n***Appendix:*** How to collect the ratios.",
+         "section_url":"https://vimeo.com/856453563/cfd203e2f8?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n> **The Masterclass 28**\n>",
+         "section_url":"https://vimeo.com/856503269/45f9a30d2d?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"***DCA***\n\n> In the dollar cost average lecture we reviewed the brilliance of DCA\u2019ing, and how it gets you the best value over time for no additional research.\n\n> Clearly we are enterprising investors, so we will add additional information into the strategy to increase the profitability\n\n***Refresher - How it works:***\n\n> You buy a fixed dollar amount of the asset each time period (day, month, hour; it doesn't matter).\n\n> If you think the last point is overly simplified, you're right. We could argue semantics amount timing to infinity, we will not do that today.\n\n> Due to the investor automatically buying more UNITS of the asset when prices are low vs when prices are high, the natural volatility of the asset helps the investor to get better value for money.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nObviously the problem with DCA is that it also tells you to buy high and makes no consideration for sales.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nThe logical thing to do is to only DCA into positions when there is good value. This will exponentially increase the effectiveness of our dollar allocations because we won\u2019t be buying high.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nFurthermore, we\u2019ll also be using information to sell high and lock in profits.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"So in summary\u2026 \n\nYOUR STUPID ASS MISSED TWO KEY PROBLEMS\n\nYou thought this lecture was over didn\u2019t you? Guess again!!!\n\n1. What about the capital left over in case there is not enough time/opportunities to deploy all your capital?\n\n2. What do we do with extra cashflow that you keep earning after you've finished accumulating?\n\n***What about the capital left over in case there is not enough opportunities to deploy all the capital?***\n\n> If we have $10,000 and we\u2019ve only deployed $8,000, what do we do with the remaining $2000 now that we\u2019re not in the value zone anymore?\n\n> Think back to Price analysis principles - Trigger of trend condition\n\n> If were coming out of high value, there is a high probability that we\u2019ll be higher in the future, therefore dumping all the remaining capital into the market as a lump sum is the logical thing to do\n\n> This is the effective marriage of LSI and DCA working together",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nThis is what it should look like",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***What do we do with the extra cashflow?***\n\n> You keep investing it obviously, it's not going to have a very powerful effect, but what else are you going to do? Sit on your dick?\n\n> Invest additional cashflow into small caps over time moving down the market cap ladder.\n\n> They get the majority of their gains at the end of the bull market anyway so who cares",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nTherefore your complete long term investing strategy should look like this",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***\u201cBeyond the efficient frontier\u201d*** ~ Knowing when to use leverage",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***RELATED:*** Knowing when to use beta",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***Summary*** (for real this time)\n\n> DCA is an ideal long term strategy which can be enhanced by additional data.\n\n> We can make considerations for leftover capital and additional purchases by invoking new rules to enhance SDCA.\n\n> Accumulate when there\u2019s high value\n\n> LSI when we have a positive macro condition\n\n> Continue to DCA over time into progressively smaller-caps, but do not DCA on the downside of bear markets\n\n> Light leverage is permissible to take investors beyond the efficient frontier, but only when downside is limited (high value)\n\n> NEITHER THE CORRECT ASSET SELECTION, NOR CONSERVATIVE LEVERAGE WILL SAVE YOU FROM ANNIHILATION IF YOU GET YOUR TIMING WRONG. You must actually time your investments correctly.",
+         "section_url":null,
+         "section":"summary",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n> **The Masterclass 29**\n>",
+         "section_url":"https://vimeo.com/856496612/5503d5d777?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"So now we have a strategy outline...\n\nNow it is a question of timing, how do we deploy each phase of the strategy? \n\nWhere do we even start?\n\nObviously we've already covered this...\n\nHierarchy of analytical methods in order of significance:\n\n> 1. ***Systemization*** (Technically, just a technique)\n> 2. ***Fundamental Economics*** (Supply and Demand)\n> 3. ***Macroeconomics***\n> 4. ***On-Chain Data***\n> 5. ***Statistical Significance***\n> 6. ***Sentiment***\n> 7. ***Discretionary Technical Analysis***",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nEconomics (Supply & Demand) Note each halving is half of the previous reward era",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nEconomics - Reduce supply, keep demand the same, price goes up",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nBTC halving cycles (supply effect) - example 1",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nBTC halving cycles (supply effect) - example 2",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nBTC halving cycles (supply effect) - example 3",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***Diminishing effect of subsequent halvings:***\n\n> It\u2019s important to note that as BTC gets older, each halving has literally half the effect of the previous one.\n\n> This is why its a double edged sword\n> It cuts inflation by half - bullish\n> But it gets less important over time - not so bullish\n\n> It wouldn\u2019t surprise me if we\u2019re already in the era where macroeconomic effects override the supply dynamics; which leads me to my next point\n\nHierarchy of analytical methods in order of significance:\n\n> 1. ***Systemization*** (Technically, just a technique)\n> 2. ***Fundamental Economics*** (Supply and Demand)\n> 3. ***Macroeconomics***\n> 4. ***On-Chain Data***\n> 5. ***Statistical Significance***\n> 6. ***Sentiment***\n> 7. ***Discretionary Technical Analysis***\n\nI\u2019m going to keep this short because we\u2019ve already covered it.\n\n> If the world is getting destroyed, no one is going to want to buy bitcoin\n\n> Do not get memed into buying when it is macroeconomically retarded to invest in risky assets\n\n> The halving cycles and macroeconomic cycles really set the theme for the VERY long run behavior of BTC",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nIf you\u2019ve got a halving leading into an expansion. The game is easy.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***Clearly defining what we\u2019ve covered (TREND), which is different from the spreadsheet (VALUE)...***\n\n> Remember the halving cycles and macroeconomic cycles is akin/related to TREND analysis\n\n> If we want to do VALUE analysis to time our SDCA, we\u2019re going to need some more data...",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nWe\u2019re going to explore how to build a complete valuation model using Z-scores\n\n> 1. ***Systemization*** (Technically, just a technique)\n> 2. ***Fundamental Economics*** (Supply and Demand)\n> 3. ***Macroeconomics***\n> 4. ***On-Chain Data***\n> 5. ***Statistical Significance***\n> 6. ***Sentiment***\n> 7. ***Discretionary Technical Analysis***",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***Summary***\n\n> We know when to act on the different phases of the SDCA strategy by:\n> \n> ***1.*** Understanding how bitcoin cycles work through \u2018halvings\u2019 and macroeconomic phases. These are trend-like drivers of price.\n> \n> ***2. ***Using aggregate valuation to know where BTC is high and low.\n\n> We explore the valuation aspect by using the magical universal method of Z-scoring on all our indicators",
+         "section_url":null,
+         "section":"summary",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n> **The Masterclass 30** \n>",
+         "section_url":"https://vimeo.com/856507467/5ade05d14a?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"***What are we doing here...***\n\n> Here I show specifically how to Z-score each indicator.\n\n> Were going to spend a bit of time going through each one and showing you approximately how I\u2019d score them.\n\n> Beware your cognitive effects while learning this material, you\u2019ll likely get a dopamine rush when I start showing you all the indicators, but its important that you stick to the lessons and not get distracted.\n\n> You\u2019ll see why the method is more important than the data.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nCore Principle",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***Ok so now you know how to judge the relative value of each indicator***\n\n> The question will come up: \u2018why are we giving them subjective numbers instead of objective numbers if the human brain is so dangerous?\u2019\n\n> If you know how to do all the transformations, be my guest.\n\n> If you understand it conceptually enough, then you should be able to eye-ball it with accuracy even if you\u2019re slightly biased.\n\n> The average of your errors should even out the result\n\n> No one is going to spend weeks trying to value every indicator using propper math when you can do it instantly with your eyes.\n\n> With that being said, you could spend the time to program it and then automate it and that would be a huge benefit.\n\n***Summary***\n\n> Use Z-scores to judge the values of your indicators so they can all be aggregated.\n\n> The average errors of your guesses should even out the final result.\n\n> In my opinion this means a subjective judgement of the z-scores is sufficient, rather than doing it mathematically, which would be extremely complex to perform correctly.\n\n***Appendix:*** How to perform valuation analysis using the 'Macro Bitcoin' spreadsheet.",
+         "section_url":"https://vimeo.com/856490545/763f53d374?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n> **The Masterclass 31** \n>",
+         "section_url":"https://vimeo.com/856505999/ea4dd89bd7?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"***Valuation Concepts***\n\n> The real magic of valuation scoring comes from \u2018standardization\u2019\n\n> This is the process of using the Z-score to compare multiple things which could previously never be compared.\n\n> Remember that the Z-score is a standard measurement of the significance of any variation in any data-set.\n\n> Therefore getting an a complete valuation score is as easy as taking an average of all the z-scores",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nThe principle should be super fucking obvious at this point.\n\nWe don't know which indicator is correct, because they all work differently, so we just take a simple average of all the inputs.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nWhat this should look like in your mind (<> 1.5~2 sigma)\n\nObserve the color coding, this is what it looks inside my brain, this is how you should see the score as well.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nIn your brain it can also look like a heatmap as the scores change over time.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***WARNING***\n\n> Beware of indicator time horizons and volatility \n\n> RHODL v 'Puell multiple' - volatility characteristics are completely different\n> \n> Puell multiple is akin to medium-term sentiment & RHODL is akin to Long-term valuation\n\n> They can contaminate each other, so it\u2019s best to group time horizons where possible. However most on-chain indicators all target the same time horizons, generally speaking.\n\n> Beware of indicator nature (Real vs \u2018fake\u2019 data; i.e. economic, onchain vs TA)\n\n> If hunting for new valuation indicators, do not overly rely on technically based indicators if you can get access to higher quality data.\n\n***WARNING - TUNNEL VISION***\n\n> Don\u2019t autistically hyperfocus on what I provide you. There are many other valuation indicators out there. \n\n> Over the years I've noticed people turn their brains off and try to rely on what I give and never do further research. \n\n> KEEP DIGGING; you have far more time for research than I do.\n\n> You will not be able to rely on the contents of this masterclass forever because the market is competitive and is always changing. I CANNOT STRESS THIS ENOUGH. LISTEN TO THE WARNING TO STAY CONSISTENT.\n\n***Spreadsheet***\n\n> I will be granting you access to my personal spreadsheet\n> \n> DO NOT REQUEST EDIT ACCESS\n> \n> SIMPLY COPY AND PASTE THE FUCKING SPREADSHEET INTO A NEW SHEET YOU OWN\n> \n> IF YOU REQUEST EDIT ACCESS TO THE SHEET, GOOGLE AUTOMATICALLY SENDS ME AN EMAIL WITH YOUR FULL NAME IN IT. I WILL USE THIS INFORMATION TO TRACK DOWN YOUR LOCATION AND SEND A SWARM OF SPIDER-WASPS TO YOUR HOUSE TO HARASS YOU \n> \n> I AM SICK OF GETTING EDIT REQUEST EMAILS, SO DONT FUCKING DO IT\n\n***Link***\nhttps://docs.google.com/spreadsheets/d/1-jl-5wJHKme5KnsJW3mOocRZ6wPWluW7CW-E4b1XnCM/edit?usp=sharing\n\n***Summary***\n\n> Z-scores allow statistically valid probabilistic aggregation.\n\n> The average of your Z-scores should be equally weighted to eliminate estimation error.\n\n> Select high quality fundamental indicators where possible.\n\n> Don\u2019t mix too many short term indicators with long term.\n\n> This sheet I provide you is NOT complete. Don\u2019t be lazy. Get out there and find more indicators.",
+         "section_url":null,
+         "section":"summary",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n> **The Masterclass 32** \n>",
+         "section_url":"https://vimeo.com/856497956/82dc83e740?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"***Introduction***\n\n> Despite its power, there is a fundamental paradox in SDCA.\n\n> We need to know how fast to accumulate without knowing how much time we have to accumulate, because the future cannot be known.\n\n> Do you go 1% per day? 2% per day? 10% per week? 5% every 2 days?\n\n> Ideally, you\u2019d want to deploy all of your capital while price is in a \u2018high value\u2019 zone to get the best entries on average.\n\n> Said another day, the goal is to have no cash left over by the time the market starts rising into the next bull market.\n\n***The fundamental SDCA conundrum***\n\n> If you buy too fast, you\u2019ll run out of cash, and might miss out on better opportunities if the price keeps dipping.\n\n> If you go too slow, you\u2019ll have too much cash left as the market starts to rise, and your final entry price will be too high.\n\n> Too slow is marginally preferred over too fast due to the conservation of opportunity cost (meaning you keep your cash for longer) and the fact positive trend LSI will still likely provide good results.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nDespite not knowing the future, an educated guess is better than nothing.\n\nLets say, hypothetically, you wanted to start your purchases when BTC\u2019s value is under 10 on this indicator aggregator from CBBI. \n\nI\u2019ve gone ahead and downloaded this data to figure out how long each of these periods lasted for.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***EMERGENCY INTERVENTION WARNING ***\n\n> Now before you fuckers go out there and start blindly using the CBBI as some easy no-thought indicator that does the work for you, actually look at the component adjustments.\n> \n> I know you lazy bastards hate using your brain and will just load up the website with all the components.\n> \n> Does this isolated component look correctly adjusted to you? LOOK AT IT",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nThis one as a different example... Obviously much better",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nThese are the three I think are well adjusted, so you can use them for a quick and dirty measurement.\n\nMoving on......",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nNow...\n\nHow did I perform the calculation for expected bear market days in this cycle? \n\n(NOT a direct recommendation to use this method. It\u2019s just an idea. There is no \u2018secret\u2019 way of knowing the future. Don't be naive)\n\nLinear regression of market trends plus standard deviation of residuals = average of 145 days & SD of 27 for the bear market in the year 2027 (or \u2018phase\u2019 5 as I have called it).",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***Example:***\n\n> This means if you wanted to run down your 1,000,000$ cash account to zero by the end of an average bear market and hold 100% crypto, you\u2019d buy:\n> \n> $1,000,000 / 145 days = $6,896.55 per day for 145 days.\n> \n> This is also 0.69% per day.\n> \n> However depending on some additional analysis you could always make a judgement call on whether you think the SD of the bear market accumulation period will be on the long side (+1SD = 172d), or on the short side (-1SD = 117d).\n\n***Important considerations***\n\n> As you can see, this method uses calculation and historical data, which by definition, is lagging and probably doesn\u2019t contain any information about the future.\n> \n> It also only uses a sample size of only 3 complete bear markets, and one incomplete bear market (time of recording) which is bad data analysis, but it\u2019s the only data we have.\n> \n> We also don\u2019t know if bear market valuation-duration is stationary or non-stationary? Should I have performed a simple average and not a regression? No one knows because we don\u2019t know the future.\n\n***Summary***\n\n> What I have shown you here is not an accurate way of forecasting bear market durations because NO ONE KNOWS the right method. Its intrinsically unknowable. Rate of accumulation is a best-guess activity. \n\n> This means you should not blindly accept this method as \u2018best\u2019 simply because I use it. You should strive to create a better method and develop them yourself.\n\n> At the end of the day, bull markets in crypto are so big that generally even if you miss the bottom and LSI on an upwards trend, you\u2019ll do very well.\n\n> This means, getting your accumulation approximately correct is really \u2018good enough\u2019.",
+         "section_url":null,
+         "section":"summary",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n> **The Masterclass 33** \n>",
+         "section_url":"https://vimeo.com/856499491/7f3bc496cd?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"***Rate of Distribution Introduction***\n\n> Exactly like the accumulation lesson, there is no way of knowing how fast to \u201cdistribute\u201d our sales because the future is intrinsically unknowable.\n> \n> Rate of distribution is exponentially harder to plan than accumulation because the upper bounds of price do not exist. This is why when BTC is going up it is known as \u2018price discovery\u2019.\n> \n> I have not come up with a robust forecasting method for the rate of sales, so instead of providing a method, this lecture will simply supply some ideas for you to consider.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nMost obvious robust criteria: valuations >80 on the CBBI or maybe values above -1.5 or -2 on the Macro Bitcoin spreadsheet",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nIssues with alpha-decay and front-running: Unless you have a way of dynamically range adjusting the data, your estimations will become increasingly less accurate over time.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nI always looked at this chart and thought to myself, isn\u2019t it ironic that ATH\u2019s is when most people keep saying \u2018we\u2019ve broken out!\u2019 when in reality it\u2019s some of the best times to sell?",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nCombining ATH days/weeks with valuation would be an optimal strategy.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***\"But what if we sell at ATH\u2019s and it keeps going up?\"***\n\nOf course it will.\n\nYou\u2019re being conditioned in a pavlovian manner to not sell with each ATH, because every time you hesitate, it actually keeps going up, and you\u2019re implicitly rewarded for inaction and fear.\n\nThis keeps happening until it stops going up, and then crashes, but of course by then it\u2019s too late. You're married to your bags.\n\nThis means no single ATH will actually signal the top in forward testing, however most ATH\u2019s, on average, do represent an optimal selling location.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***Different methods of taking profit per ATH when the asset is still growing. (SDCA exit speed)***\n\nUnderlying assumption: Asset is still growing at some random speed.\n\n(This would be more accurate if the CAGR for each bull run could be calculated and then input as one of the model assumptions.)\n\nLinear+2 = 1 +2 +2 each time\nExpon = 1\\2 \\2 each time\nIncr1 = 1+2+3+4\nIncr2 = 1+2+4+6\nIncr\\1.1 = 1\\+10%\\*+10%\n\nNone of these hypothetical speeds will work well in forward testing because we have no idea how fast the bull market will be rising into the future.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nPersonally, I believe the single largest determinant of top formation is actually raw net profit. \n\nThink conceptually:\nI.e. if people are sitting on tons of profits, they are more likely to sell, thus placing a natural upper limit on how high price can go due to the desire of people to spend.\n\nIf you have $10 million in crypto, is your ass going to leave that shit in the market, or are you going to cash out and live your life?\n\nSell pressure measured by the NUPL indicator I think should theoretically be resistant to alpha decay. But nothing is truly perfect.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***Qualitative: Look for mass euphoria and classic social signs that BTC has peaked***\n\n> Uber-eats/pizza delivery kids becoming rich.\n\n> Most young people are talking about quitting their job to \u2018Trade\u2019 full time.\n\n> People are talking about the cars they want to buy.\n\n> Grandparents are buying shitcoins.\n\n> Old people, who previously knew nothing about finance, now are looking to convert all their assets to cryptos.\n\n> Rapid clustering of celebrities promoting crypto projects. (Personal favorite)\n\n***Qualitative: Persistent Macro Factors***\n\n> In the last cycle, the bull market began to fade along with central bank balance sheets.\n> \n> If you have the ability to keep an eye on this, you might broadly detect cycle tops, but it would not be very precise.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***CURVE BALL***\n\nThe hyperbolic model is a great example of what can go wrong if we use valuations and ATH\u2019s to classify tops in a mean-reversion manner rather than trend-following manner. \n\nValuations might be high, then you sell all your positions right before BTC goes to infinity.\n\nWhile this model is a SUPER MEGA TIN FOIL HAT idea, it serves as a great thought experiment about the limitations of valuation alone.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\nWe might be in the unlikely timeline where fiat money goes to zero and nothing matters except BTC.\n\nUnder these circumstances it would be good to have a long term trend model as well to manage your positions.\n\nTo validate this model you'd want to see things like hyperinflation in developed countries, which while unlikely, could still happen.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***A potential solution to the long term 'trend' problem***\n\nMy long term bull/bear model contains:\n> Technical trend factors\n> Macroeconomic factors\n> Market cap trend factors\n> Seasonal factors\n> and\u2026\n> Frequency cycle factors\n\nThese are all combined in an attempt to give context to the locations where the market might pivot from bull to bear\u2026\nMore on this method in the medium-term unit.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***Summary***\n\n> Selling the top is very hard to do, and your best approach is to be \u2018approximately correct\u2019 by scaling out over time, rather than \u2018exactly incorrect\u2019 and trying to top-tick the cycle.\n\n> Personally I use a combination of valuation, ATH\u2019s, trend and qualitative analysis to determine if it's time to sell.\n\n> Whole-market quantitative valuation analysis is likely least subject to errors, but could also be the most sensitive to front-running & alpha decay.\n\n> There is a non-zero chance that BTC will go to infinity in the next 10 years, and valuation analysis will cause you to sell early. Weight the probability of this unlikely scenario appropriately, i.e. 90% sales based on valuation analysis, 10% based on trend analysis.",
+         "section_url":null,
+         "section":"summary",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n> **The Masterclass 34**\n>",
+         "section_url":"https://vimeo.com/856514240/ddee36c070?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***'Defining magnitude BTC'***",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***'Defining magnitude ETH'***",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***'Modern Portfolio Theory'***\n\n> Correlation renders diversification mostly useless.\n\n> In a competitive market, a rational investor will only hold the optimal portfolio.\n\n> Because correlation is so high, this statement can be modified: In a competitive, highly correlated cryptocurrency market, a rational investor will only hold the optimal ASSET/s.\n\n> Because ETH has a high sharpe ratio, it is the optimal asset in traditional MPT.\n\n> ETH displays a strong correlation to BTC (high signal), and positive supply dynamics",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***PMPT & UPT***\n\n> MPT uses the sharpe ratio, but it punishes both upwards variation and downwards variation\n\n> The sortino ratio improves on this and only punishes negative deviations\n\n> The omega ratio improves on this again and forms a theoretically perfect probability density ratio of all wins and all losses, and because of this, it is the best ratio for asset selection.\n\n> Conclusions stemming from the omega ratio might end up being biased due to extremely skewed gains.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***S.DCA***\n\n> DCA is an ideal long term strategy which can be enhanced by additional data.\n\n> Accumulate when there\u2019s high value.\n\n> LSI when we have a positive macro condition.\n\n> Continue to DCA over time into progressively smaller-caps, but do not DCA on the downside of bear markets.\n\n> Light leverage is permissible to take investors beyond the efficient frontier, but only when downside is limited (high value).\n\n> NEITHER THE CORRECT ASSET SELECTION, NOR CONSERVATIVE LEVERAGE WILL SAVE YOU FROM ANNIHILATION. You must actually time your investments correctly.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***Basic Long Term Drivers***\n\nWe know when to act on the different phases of the SDCA strategy by:\n\n> 1. Understanding how bitcoin cycles work through \u2018halvings\u2019 and macroeconomic phases. These are trend-like drivers of price.\n\n> 2. Using aggregate valuation to know where BTC is high and low.\n\nWe explore the valuation aspect by using the magical universal method of Z-scoring on all our indicators",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***Valuation Indicators***\n\n> Use Z-scores to judge the values of your indicators so they can all be aggregated.\n\n> The average errors of your guesses should even out the final result\n\n> In my opinion this means a subjective judgement of the z-scores is sufficient, rather than doing it mathematically, would would be extremely complex to perform correctly",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***Valuation Aggregation/Scoring***\n\n> Z-scores allow statistically valid probabilistic aggregation\n\n> The average of your Z-scores should be equally weighted to eliminate estimation error\n\n> Select high quality fundamental indicators where possible\n\n> Don\u2019t mix too many short term indicators with long term\n\n> This sheet I provide you is NOT complete. Don\u2019t be lazy. Get out there and find more indicators",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***Rate of Accumulation***\n\n> What I have shown you here is not the right way of forecasting bear market values because NO ONE KNOWS the right method. Its intrinsically unknowable. Rate of accumulation is a best-guess activity.\n\n> This means you should not blindly accept this method as \u2018best\u2019 simply because I use it. You should strive to create a better method.\n\n> At the end of the day, bull markets in crypto are so big that generally even if you miss the bottom and LSI on an upwards trend, you\u2019ll do very well.\n\n> This means, getting your accumulation approximately correct is really \u2018good enough\u2019.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"By using the CBBI chart and some principles from the stats lessons I found that the average period I could consider \u2018DCA-able value\u2019 to be on average 114 days for each bear market, with a standard deviation of 32 days.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n***Rate of Distribution***\n\n> Selling the top is very hard to do, and your best approach is to be \u2018approximately correct\u2019 by scaling out over time, rather than \u2018exactly incorrect\u2019 and trying to top-tick the cycle.\n\n> Personally I use a combination of valuation, ATH\u2019s, trend and qualitative analysis to determine if it's time to sell.\n\n> Whole-market quantitative valuation analysis is likely least subject to errors, but could also be the most sensitive to front-running & alpha decay.\n\n> There is a non-zero chance that BTC will go to infinity in the next 10 years, and valuation analysis will cause you to sell early. Weight the probability of this unlikely scenario appropriately, i.e. 90% sales based on valuation analysis, 10% based on trend analysis.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"\u2022\n\n\n\n\n> **The Masterclass** \ud83c\udf96\ufe0f \n>",
+         "section_url":"https://vimeo.com/859621345/e18ad2263f?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"||**\u201cMoney must circulate to bring power.\u201d**||\n\u2022\n\n\n\n\n> **Congratulations, you completed** <#1146057281780318299>. \n> \n> \n> On to the next channel <#1146058356365205645>.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      }
+   ]
+}

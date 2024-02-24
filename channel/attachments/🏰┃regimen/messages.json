@@ -1,0 +1,60 @@
+{
+   "channel_id":1131767075002658898,
+   "channel_name":"🏰┃regimen",
+   "sections":[
+    {
+        "content": "# **Welcome to your regimen.**\n\n\n\n\n\"**Breathing Pattern**\"\n\n\nBreath in on the eccentric movement.\n\nBreath out on the concentric movement.\n\nIn the first weeks it is good to count the tempo in your mind or out loud until you get used to the movement.",
+        "section_url": null,
+        "section": "general",
+        "delete": "1"
+    },
+    {
+        "content": "\u25cf\n\n\n\n\n**Monday - Chest and ABS**\n\nChoose one workout to perform.",
+        "section_url": null,
+        "section": "attachment",
+        "image_path": "attachments/\ud83c\udff0\u2503regimen/Workout-_Chest_and_Abs.png",
+        "delete": "0"
+    },
+    {
+        "content": "\u25cf\n\n\n\n\n**Tuesday - Legs**\n\nChoose one workout to perform.",
+        "section_url": null,
+        "section": "attachment",
+        "image_path": "attachments/\ud83c\udff0\u2503regimen/Legs_Workout.png",
+        "delete": "0"
+    },
+    {
+        "content": "\u25cf\n\n\n\n\n**Wednesday - Shoulders and ABS**\n\nChoose one workout to perform.",
+        "section_url": null,
+        "section": "attachment",
+        "image_path": "attachments/\ud83c\udff0\u2503regimen/Workout-_Shoulder_and_Abs.png",
+        "delete": "0"
+    },
+    {
+        "content": "\u25cf\n\n\n\n\n**Thursday - Arms**\n\nChoose one workout to perform.",
+        "section_url": null,
+        "section": "attachment",
+        "image_path": "attachments/\ud83c\udff0\u2503regimen/Workout-_ARMS.png",
+        "delete": "0"
+    },
+    {
+        "content": "\u25cf\n\n\n\n\n**Friday - Back and Traps**\n\nChoose one workout to perform.",
+        "section_url": null,
+        "section": "attachment",
+        "image_path": "attachments/\ud83c\udff0\u2503regimen/Workout-_Back_and_Traps.png",
+        "delete": "0"
+    },
+    {
+        "content": "\u2022\r\n\r\n\r\n\r\n\r\n> **The Fitness Campus** - Your Regimen \ud83d\udcaa\ud83c\udffd\r\n>",
+        "section_url": "https://vimeo.com/859621345/e18ad2263f?share=copy",
+        "section": "video",
+        "image_path": null,
+        "delete": "1"
+    },
+    {
+        "content": "||**\u201cNever Stray.\u201d**||\n\u2022\n\n\n\n\n> **Congratulations, you completed** <#1131767075002658898>.\n> \n> \n> On to the next channel <#1131772934646661251>.",
+        "section_url": null,
+        "section": "general",
+        "image_path": null,
+        "delete": "0"
+    }
+]}

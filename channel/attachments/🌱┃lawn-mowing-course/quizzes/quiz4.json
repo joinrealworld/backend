@@ -1,0 +1,74 @@
+{
+   "name":"quiz4",
+   "que0":[
+      {
+         "question":"Why is lawn mowing a great side hustle?",
+         "options":{
+            "a":"It's the most popular way to make money",
+            "b":"You don't need any skill and you can make moneybags now",
+            "c":"It requires no effort"
+         },
+         "answer":"b"
+      }
+   ],
+   "que1":[
+      {
+         "question":"What equipment do you need to cut lawns?",
+         "options":{
+            "a":"Just a mower",
+            "b":"You don't need any equipment",
+            "c":"Push mower, rake, broom and trash bags"
+         },
+         "answer":"c"
+      }
+   ],
+   "que2":[
+      {
+         "question":"Why is lawn mowing a great side hustle?",
+         "options":{
+            "a":"It's the most popular way to make money",
+            "b":"You don't need any skills and you can earn moneybags now",
+            "c":"It requires no effort"
+         },
+         "answer":"b"
+      },
+      {
+         "question":"How much should you charge cutting lawns?",
+         "options":{
+            "a":"Start with $15 to $30",
+            "b":"At least $100",
+            "c":"More than $30, closer to $50"
+         },
+         "answer":"a"
+      },
+      {
+         "question":"How should you approach clients?",
+         "options":{
+            "a":"Grab a phone book and call random numbers",
+            "b":"Go door to door asking neighbors, offer your service online and/or leave pamphlets for them at their door ",
+            "c":"Leave pamphlets in their mailbox"
+         },
+         "answer":"b"
+      }
+   ],
+   "que3":[
+      {
+         "question":"How do you take on more lawn mowing clients?",
+         "options":{
+            "a":"Work 25 hours per day",
+            "b":"Hire your homies",
+            "c":"Stop mowing and start freelancing"
+         },
+         "answer":"b"
+      }
+   ],
+   "que4":[
+      {
+         "question":"Are you going to implement the Lawn Care Course?",
+         "options":{
+            "a":"Yes, I'm ready to make my first $100"
+         },
+         "answer":"a"
+      }
+   ]
+}

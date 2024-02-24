@@ -1,0 +1,123 @@
+
+{
+   "name":"quiz4",
+   "que0":[
+      {
+         "question": "What is the point of this lesson series?",
+         "options": {
+            "a": "In the end, you’ll realize that all your work will be rewarded with something that doesn’t exist.",
+            "b": "In the end, you will understand money at a deeper level than 99% of adults out there.",
+            "c": "In the end, you will understand how rich people avoid taxes."
+         },
+         "answer": "b"
+      }
+   ],
+   "que1":[
+      {
+         "question": "What is the gold standard?",
+         "options": {
+            "a": "That's when the world's top economists get together and try to solve a financial crisis, so that every nation’s citizens can live and prosper.",
+            "b": "The gold standard is when the government hires a group of dwarves to dig for gold 24/7 and use it to power the country's economy. It's like 'The Hobbit' but with more inflation.",
+            "c": "At a certain point in history money was pegged to the amount of gold that a country had. If a country wanted to print more money, it would have to own the gold to back it up."
+         },
+         "answer": "c"
+      },
+      {
+         "question": "What is FIAT money and what does it mean?",
+         "options": {
+            "a": "Fiat money is a currency not backed by a physical commodity like gold or silver. It allows governments and central banks to control the money supply, regulate inflation and deflation, and manage the economy easier.",
+            "b": "FIAT money is what happens when the government takes all the old Fiats and smushes them together to create a new kind of currency. It's like a Transformer, but with less resale value.",
+            "c": "FIAT money is a currency backed up by physical commodities like gold or silver."
+         },
+         "answer": "a"
+      },
+      {
+         "question": "What can happen when new money is printed?",
+         "options": {
+            "a": "Increasing the money supply can lead to inflation, which can erode the currency’s value and reduce its purchasing power.",
+            "b": "When more money is printed, its value goes down and the value of gold goes up. It's like reverse alchemy where the government is turning money into fools' gold.",
+            "c": "More money printing means more currency notes, which means more paper cuts. So basically, every time you spend money, you're contributing to a worldwide epidemic of paper cuts. Be careful out there."
+         },
+         "answer": "a"
+      }
+   ],
+   "que2":[
+     {
+         "question": "What is fractional reserve banking?",
+         "options": {
+            "a": "It’s when banks keep only a fraction of the money in reserve and use the rest to fund charity work.",
+            "b": "Fractional reserve banking is a system where banks only accept deposits in fractions of time, leading to an unpredictable and confusing currency exchange rate.",
+            "c": "It’s a clever scheme banks use to create money out of thin air. They take only a small portion of customers’ deposits and lend out the rest, knowing full well that not all customers will want to withdraw their funds at the same time.",
+            "d": "This allows banks to create more loans and make more money while putting customers' deposits at risk. It's basically legal counterfeiting."
+         },
+         "answer": "c"
+      },
+      {
+         "question": "How is money created?",
+         "options": {
+            "a": "Money is created by a group of eccentric billionaires who gather together in a secret bunker deep beneath the earth's surface. They use a special machine to transmute lead into gold, then into piles of cash.",
+            "b": "The central bank creates it out of thin air and sends it to other banks (or to the government in exchange for government bonds), and they don’t even print it anymore. It’s just numbers on a screen.",
+            "c": "It's all about the power of positive thinking. You just visualize a big pile of money, focus your energy on it, and watch as it materializes before your eyes."
+         },
+         "answer": "b"
+      },
+      {
+         "question": "Knowing that banks get their money basically free, what happens if you don’t pay your loans?",
+         "options": {
+            "a": "In extreme cases, the bank repossesses your home or car and sell it. You’ll become bankrupt and that’s that. Welcome to the rat race!",
+            "b": "The bank will send you a strongly-worded letter written in ancient Sanskrit. You won't be able to read it but trust us, it's terrifying.",
+            "c": "The banks will understand that you are momentarily struggling, and they will give you all the time you need to clear your debt. It’s not real anyway."
+         },
+         "answer": "a"
+      }
+   ],
+   "que3":[
+      {
+         "question": "Who runs the central banks and how are they chosen for the job?",
+         "options": {
+            "a": "Central banks are actually run by a shadowy cabal of wizards who meet in secret to discuss monetary policy and cast spells to control the economy.",
+            "b": "Central banks are overseen by people nominated by at least 10 electors from the constituency they wish to represent. They also need to pay a $500 deposit which they get back if they get more than 5% of the total votes in their constituency.",
+            "c": "Central banks are typically overseen by a board of directors or governors, who are appointed by the government or other relevant authorities. In some cases, the central bank governor may also be appointed by the country's head of state or elected official."
+         },
+         "answer": "c"
+      },
+      {
+         "question": "What is inflation and how is it caused?",
+         "options": {
+            "a": "Inflation is the term used to describe the process of turning a solid substance into a gas without going through the liquid phase. It usually occurs when consuming beans and other sources of fiber.",
+            "b": "Inflation is the rise in prices of goods and services in an economy over time, often caused by an increase in the amount of money available, which can reduce the value of savings.",
+            "c": "Inflation is like the weatherman. He’ll tell you it's going to be sunny and 70 degrees, but when you step outside, it's raining cats and dogs and you need an ark to get to work."
+         },
+         "answer": "b"
+      },
+      {
+         "question": "What can you do to change your personal situation and make the world a little better?",
+         "options": {
+            "a": "You need to vote for a different party than the current one. Never let them govern for more than one term.",
+            "b": "You need to become economically literate and stop voting for people that promise free stuff. No government ever gives anything for free.",
+            "c": "You should join the French Foreign Legion. They will erase your identity and keep you off the grid for years. No taxes, free food, and free clothes."
+         },
+         "answer": "b"
+      }
+   ],
+   "que4":[
+      {
+         "question": "How can you become better at making money?",
+         "options": {
+            "a": "You should focus on improving your skills. Trying to make money without skills is like trying boxing with no hands.",
+            "b": "You should learn how to create a truly impressive CV and apply for a higher-paying job.",
+            "c": "People that had very tough upbringings have an advantage when it comes to succeeding later on in life. If you had loving parents and a good safety net you will never become rich. Unless you were born rich already of course."
+         },
+         "answer": "a"
+      },
+      {
+         "question": "Instead of saving money, what can you do to beat inflation?",
+         "options": {
+            "a": "You should learn how the crypto market works and invest all your savings in new coins. You should also start hoarding toilet paper. It worked during the pandemic, so why not now?",
+            "b": "Increase your income by building your skills and investing in yourself and your business. That is the fastest and most rewarding way to become rich and beat inflation.",
+            "c": "Invest in diversified assets and make informed financial decisions. Hire an experienced accountant and an aggressive lawyer."
+         },
+         "answer": "b"
+      }
+   ]
+}

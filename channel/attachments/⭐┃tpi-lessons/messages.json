@@ -1,0 +1,39 @@
+{
+   "channel_id":1147377568668991579,
+   "channel_name":"⭐┃tpi-lessons",
+   "sections":[
+      {
+         "content":"",
+         "section_url":null,
+         "section":"attachment",
+         "image_path":"attachments/\u2b50\u2503tpi-lessons/random_tpi.jpg",
+         "delete":"0"
+      },
+      {
+         "content":"***What is the TPI??? ***\n\nTPI stands for 'Trend Probability Indicator'\n \nIts called this because its a medium term ***TREND*** indicator and **not** a MEAN-REVERSION indicator.\n\nThis indicator DOES NOT tell you to buy low and sell high.\n\n> It tells you to buy high and sell higher.\n> It tells you to sell low and buy lower.\n\nIf this doesn't make sense to you then **do not** attempt to use the TPI.\n\nDisclaimer - This picture is NOT live.\n\n\n\n\nThere are currently **two variants** of the TPI\n\n> Medium Term (Days~Months)\n> Long Term (Months~Years)",
+         "section_url":null,
+         "section":"attachment",
+         "image_path":"attachments/\u2b50\u2503tpi-lessons/tpi_example.jpg",
+         "delete":"0"
+      },
+      {
+         "content":"Example of the intended duration of the **Medium-Term TPI ** ^^\n\nTake careful note of the TIME axis",
+         "section_url":null,
+         "section":"attachment",
+         "image_path":"attachments/\u2b50\u2503tpi-lessons/long_term_tpi_example.jpg",
+         "delete":"0"
+      },
+      {
+         "content":"Example of the intended duration of the **Long-Term TPI ** ^^\n\nTake careful note of the TIME axis",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      },
+      {
+         "content":"***Advanced TPI Description:*** <a:toomuchcash:1147485534097244240> \n\n> The market trend probability is derived from the average signals of the TPI's component inputs, of which the TPI has many dozens.\n> \u200e\n> This includes precisely calibrated trend following algorithms for an array of tokens, generic trend following models, and other market trend models derived from stock market fundamentals, seasonality & correlation.\n> \u200e\n> The indicator itself can be used as you see fit. There's no one correct way of using it, however I think it exists as a fantastic indicator to build a strategy from.\n> \u200e\n> For example, I sell if the trend probability swings below zero and buy when it swings above zero.\n> \u200e\n> I've observed it to be reasonably accurate in forward testing since its invention.\n\n\n\n***Recommended use:*** \n\nWhen above zero:\n> Buy crypto\n\nWhen above zero and rising:\n> Consider increasing leverage\n> Consider increasing beta\n\nWhen above zero and falling:\n> Be extremely cautious and prepare to sell\n> Consider cutting leverage\n> Consider reducing beta &/or raising cash\n\nWhen below zero: \n> Sell crypto\n\nWhen below zero and falling: \n> Consider shorting crypto\n\nWhen below zero and rising: \n> Cover shorts\n> Prepare to buy\n\n\n\n***Understanding the signal:*** <a:Pepemoneyrain:1147485279465263124> \n\nThe TPI might appear to be just one number, but there are three insights you can take from the indicator:\n\n> 1. State\n> 2. Rate of Change\n> 3. Strength\n\n> 1. 'State' is whether the TPI is long or short. Above or below zero. This is a binary state. It can only be one or the other. This is the most important derivative of the TPI. This is the 'probability' of the trend probability indicator. A 'state' above zero simply means there is a higher probability that price will go up instead of down.\n\n> 2. 'Rate of Change' is the second most important derivative of the TPI. This is the speed at which it is changing. A slow rate of change might just be noise. A fast rate of change is a sign that there may be a change of state about to occur. Rate of change is not an infallible signal, therefore it generally only used for expectation management.\n\n> 3. 'Strength' is the size of the TPI number (i.e. Hypothetically +0.9 is \"stronger\" than +0.3). This is the least important derivative of the TPI. A better term for this would be 'consensus'. People often mistake the 'strength' of the TPI for a higher probability of the price going up. This is NOT TRUE. \n\n'Strength' is only useful to determine if the market has exhausted its trend alpha and is about to re-enter a mean-reverting state. This is a highly complex theory. Do not ask me to explain it unless you've passed the investing masterclass first.\n\n\n\n***Guidelines:***\n\n> Do not try and use the TPI if you\u2019re not an advanced trader.\n\n> This is not a Fear/Greed indicator & therefore it does not show tops/bottoms.\n\n> This is a **trend** indicator. It tells you which direction things are likely to move over the coming days-weeks.\n\n> It will be most incorrect at turning points (Tops/Bottoms), so if you see it reach an extreme 'long' reading and start to weaken, it might be an early sell warning.\n\n> Likewise if you see it reach an extreme 'short' reading and start to strengthen, it might be an early buy warning.\n\n\n\n***Where can I find it?:*** \n\n> In the \u2b50\uff5cTrend Probability Indicator channel\n\n\n\n***Want to create your own so you can see it in real time?***\n\n> Do all the lessons and graduate the INVESTING MASTERCLASS for a complete guide on how to make your own.",
+         "section_url":null,
+         "section":"general",
+         "delete":"1"
+      }
+   ]
+}

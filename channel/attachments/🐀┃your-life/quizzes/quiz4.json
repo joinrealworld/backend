@@ -1,0 +1,13 @@
+{
+   "name":"quiz4",
+   "que0":[
+      {
+         "question": "Is this the type of life you wanna live?",
+         "options": {
+            "a": "No, I want to escape and I am serious about it.",
+            "b": "Yes / no but I'm too lazy to do something about it."
+         },
+         "answer": "a"
+      }
+   ]
+}

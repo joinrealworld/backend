@@ -1,0 +1,41 @@
+{
+   "name":"quiz4",
+   "que0":[
+      {
+         "question":"How much do you need to start dog walking?",
+         "options":{
+            "a":"$20-$30",
+            "b":" $0",
+            "c":"$0-$5"
+         },
+         "answer":"b"
+      }
+   ],
+   "que1":[
+      {
+         "question":"What are some methods we recommend on finding more customers?",
+         "options":{
+            "a":"A Google, Youtube and TikTok",
+            "b":"Your local small business and door-knocking",
+            "c":"Neighbors & Family, Facebook and Pamphlets"
+         },
+         "answer":"c"
+      },
+      {
+         "question":"How much should you charge?",
+         "options":{
+            "a":"$5-$15",
+            "b":"$40-$60",
+            "c":"$10-$30"
+         },
+         "answer":"b"
+      },
+      {
+         "question":"Are you going to implement the Dog Walking Course?",
+         "options":{
+            "a":"Yes, I'm ready to make my first $100"
+         },
+         "answer":"a"
+      }
+   ]
+}

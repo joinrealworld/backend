@@ -1,0 +1,75 @@
+{
+   "name":"quiz4",
+   "que0":[
+      {
+         "question":"What do you do after you created your profile?",
+         "options":{
+            "a": "Write blog posts.",
+            "b": "Dm \"important\" and \"unimportant\" people to network.",
+            "c": "Write blog posts and join LinkedIn Groups."
+         },
+         "answer":"c"
+      }
+   ],
+   "que1":[
+      {
+         "question":"Is LinkedIn a good lead-gen platform?",
+         "options":{
+            "a": "Yes",
+            "b": "No, not really"
+         },
+         "answer":"a"
+      }
+   ],
+   "que2":[
+      {
+         "question":"How many of the \"Simple Steps\" were mentioned in the video?",
+         "options":{
+            "a": "6",
+            "b": "5",
+            "c": "4",
+            "d": "3"
+         },
+         "answer":"a"
+      }
+   ],
+   "que3":[
+      {
+         "question":"Are you going to listen to the video and avoid the 4 common mistakes?",
+         "options":{
+            "a": "Yes, of course Miguel"
+         },
+         "answer":"a"
+      }
+   ],
+   "que4":[
+      {
+         "question":"Did you watch the video?",
+         "options":{
+            "a": "Ofcourse"
+         },
+         "answer":"a"
+      }
+   ],
+   "que5":[
+      {
+         "question":"Did you watch the video?",
+         "options":{
+            "a": "Ofcourse"
+         },
+         "answer":"a"
+      }
+   ],
+   "que6":[
+      {
+         "question":"What is a job mentioned in the video?",
+         "options":{
+            "a": "Copywriter",
+            "b": "Pimping",
+            "c": "CFO",
+            "d": "Consultant"
+         },
+         "answer":"a"
+      }
+   ]
+}

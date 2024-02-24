@@ -1,0 +1,96 @@
+{
+   "name":"quiz4",
+   "que0":[
+      {
+         "question":"Where do you find the templates we have given you?",
+         "options":{
+            "a":"Inside the \"Flipping Sites\" channel.",
+            "b":"Inside the \"Millionaire Access Checklist channel.",
+            "c":"WE ARE NOT GIVING YOU TEMPLATES."
+         },
+         "answer":"c"
+      },
+      {
+         "question":"Which mindset must you adopt?",
+         "options":{
+            "a":"The greedy mindset",
+            "b":"The abundance mindset",
+            "c":"The scared mindset",
+            "d":"The hardworker mindset"
+         },
+         "answer":"b"
+      },
+      {
+         "question":"If you want NEW content submit it where?",
+         "options":{
+            "a":"Inside of the Feedback button",
+            "b":"Inside of the Ask the Professor button",
+            "c":"Inside of General chat"
+         },
+         "answer":"a"
+      },
+      {
+         "question":"Are you ready to proceed to the DMing Mastery section?",
+         "options":{
+            "a":"Of course",
+            "b":"Not yet"
+         },
+         "answer":"a"
+      }
+   ],
+   "que1":[
+      {
+         "question":"How many Effective Outreach Strategy examples did we provide you with?",
+         "options":{
+            "a":"7",
+            "b":"5",
+            "c":"6",
+            "d":"4"
+         },
+         "answer":"a"
+      },
+      {
+         "question":"What are Highly Needed?",
+         "options":{
+            "a":"High Follower Count",
+            "b":"Neon Pfp and a good bio",
+            "c":"Testimonials and Rapport"
+         },
+         "answer":"c"
+      },
+      {
+         "question":"Do we recommend you follow up?",
+         "options":{
+            "a":"Of course",
+            "b":"Fuck no"
+         },
+         "answer":"a"
+      },
+      {
+         "question":"When are people likely to reply to you?",
+         "options":{
+            "a":"Having a bad profile",
+            "b":"After you send them a long DM",
+            "c":"Having multiple posts",
+            "d": "After you send them a DM about yourself"
+         },
+         "answer":"c"
+      },
+      {
+         "question":"What to do if you feel lost?",
+         "options":{
+            "a":"Get back to it and proceed with the simple steps",
+            "b":"Take a break",
+            "c":"Spam general chat"
+         },
+         "answer":"a"
+      },
+      {
+         "question":"Are you ready to start DMing prospects?",
+         "options":{
+            "a":"Of course"
+         },
+         "answer":"a"
+      }
+   ]
+}

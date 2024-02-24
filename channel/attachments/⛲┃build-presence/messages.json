@@ -1,0 +1,52 @@
+{
+   "channel_id":1151177785977618432,
+   "channel_name":"⛲┃build-presence",
+   "sections":[
+      {
+         "content":"\u26f2 **Build Presence** \u26f2\n\n\"Phase 1\"",
+         "section_url":"https://vimeo.com/862482231/3410edd918?share=copy",
+         "section":"video",
+         "delete":"1"
+      },
+      {
+         "content":"\ud83d\udcb0 **The Simple Steps:** \ud83d\udcb0 \n\nPhase 1 - Build Presence: YOU ARE HERE.",
+         "section_url":null,
+         "section":"attachment",
+         "image_path":"attachments/\u26f2\u2503build-presence/d.jpg",
+         "delete":"0"
+      },
+      {
+         "content":"**Step 1** - Start Your Socials:\n\n**Take this Course:** Build Socials (Complete more lessons to unlock)\n**Take this Course:** Harness Your X, Instagram, Facebook, or LinkedIn. (Complete more lessons to unlock)\n\na. Create your profile(s). \nb. Post engaging content. \nc. Interact with your audience.",
+         "section_url":null,
+         "section":"general",
+         "image_path":null,
+         "delete":"1"
+      },
+      {
+         "content":"**Step 2** - Learn a Skill:\n\n**Take this Course:** Learn a Skill (Complete more lessons to unlock)\n\na. Learn a skill from another campus or identify one you already have. \nb. Continue practicing your skill while building your socials.\nc. Complete Social Media Mastery checklist daily",
+         "section_url":null,
+         "section":"general",
+         "image_path":null,
+         "delete":"1"
+      },
+      {
+         "content":"**Step 3 **- Create Your Offer:\n\n**Take this Course:** Create Offer (Complete more lessons to unlock)\n\na. Define the services or products you will provide.\nb. Develop a clear value proposition and pricing strategy.",
+         "section_url":null,
+         "section":"general",
+         "image_path":null,
+         "delete":"1"
+      },
+      {
+         "content":"**Step 4** - Research Your Niche:\n\n**Take this Course:** How to Research a Niche (Complete more lessons to unlock)\n\na. Find a niche that works with your offer. \nb. Do market research to comprehend client needs.",
+         "section_url":null,
+         "section":"general",
+         "image_path":null,
+         "delete":"1"
+      },
+      {
+         "content":"Are you ready to move onto the \"Build Socials\" Course?\n\na Yes, I'm ready",
+         "section":"quiz",
+         "quiz_id":"quiz4",
+         "delete":"1"
+      }
+   ]}

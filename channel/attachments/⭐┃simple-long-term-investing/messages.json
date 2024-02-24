@@ -1,0 +1,20 @@
+{
+   "channel_id":1142404394067963966,
+   "channel_name":"⭐┃simple-long-term-investing",
+   "sections":[
+      {
+         "content":"Welcome the the <#1142404394067963966> strategy channel.\n\nIf you're a beginner, I will tell you what to do here.\n\nIf you're advanced, please proceed to  <#1142406690147405834> as that signal will be significantly more detailed.\n<@&1137731034755108896>",
+         "section_url":null,
+         "section":"attachment",
+         "image_path":"attachments/\u2b50\u2503simple-long-term-investing/image.png",
+         "delete":"0"
+      },
+      {
+         "content":"The signal is always current. There will only be updates if there is updates to the strategy. Do not ask for updates, it is always up to date unless I post an update.",
+         "section_url":null,
+         "section":"attachment",
+         "image_path":"attachments/\u2b50\u2503simple-long-term-investing/simple_long_term.png",
+         "delete":"0"
+      }
+   ]
+}

@@ -1,0 +1,73 @@
+{
+   "name":"quiz4",
+   "que0":[
+      {
+         "question":"What is the 6 Figure DM Template?",
+         "options":{
+            "a": "Compliment, Question, Convo",
+            "b": "Direct straight to the point",
+            "c": "Your life story followed by what you do"
+         },
+         "answer":"a"
+      }
+   ],
+   "que1":[
+      {
+         "question":"What is a red flag you should avoid?",
+         "options":{
+            "a": "High Engagement",
+            "b": "Haggling",
+            "c": "Neon Profile Picture"
+         },
+         "answer":"b"
+      },
+      {
+         "question":"What do you do if their DM's are off?",
+         "options":{
+            "a": "Give up and cry",
+            "b": "Comment and try to reach them there",
+            "c": "Find another way to get in contact with the Prospect"
+         },
+         "answer":"c"
+      }
+   ],
+   "que2":[
+      {
+         "question":"How many followers must the accounts have ideally?",
+         "options":{
+            "a": "10k-150k",
+            "b": "5k-15k",
+            "c": "10k-100k"
+         },
+         "answer":"c"
+      },
+      {
+         "question":"Which is the most Ideal Prospect?",
+         "options":{
+            "a": "5k-15k High Engagement",
+            "b": "6k-200k Low Engagement",
+            "c": "5k-15k Low Engagement",
+            "d": "60k-70k High Engagement"
+         },
+         "answer":"d"
+      },
+      {
+         "question":"When must you send the Prospect a DM?",
+         "options":{
+            "a": "ASAP",
+            "b": "After you complete the \"How To Write A DM\" course",
+            "c": "Laterrr..."
+         },
+         "answer":"b"
+      }
+   ],
+   "que3":[
+      {
+         "question":"Are you going to implement this course?",
+         "options":{
+            "a": "Yes, of course Miguel"
+         },
+         "answer":"a"
+      }
+   ]
+}
