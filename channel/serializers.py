@@ -40,10 +40,11 @@ class CategorySerializer(serializers.ModelSerializer):
 class CoursesSerializer(serializers.ModelSerializer):
 	completed = serializers.SerializerMethodField()
 	is_favorite = serializers.SerializerMethodField()
+	lessons = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Courses
-		fields = ('id', 'uuid','name', 'completed', 'is_favorite', 'pic',)
+		fields = ('id', 'uuid','name', 'completed', 'is_favorite', 'pic', 'lessons')
 
 	def get_completed(self, obj):
 		user_id = self.context.get('user_id')
@@ -56,6 +57,9 @@ class CoursesSerializer(serializers.ModelSerializer):
 		if favourite.exists():
 			return True
 		return False
+
+	def get_lessons(self, obj):
+		return len(obj.data)
 
 class CoursesDataSerializer(serializers.ModelSerializer):
 	completed = serializers.SerializerMethodField()

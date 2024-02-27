@@ -29,10 +29,11 @@ from django.db.models import Q
 from datetime import datetime, timedelta, date
 import string
 from user.scripts import *
-from constants.response import KEY_MESSAGE, KEY_PAYLOAD
+from constants.response import KEY_MESSAGE, KEY_PAYLOAD, KEY_STATUS
 from rest_framework.parsers import MultiPartParser
 from rest_framework_simplejwt.tokens import OutstandingToken
 from notification.scripts import send_account_verification_mail
+from constants.commons import handle_exceptions
 
 # Create your views here.
 class LoginWithPasswordAPIView(GenericAPIView):
@@ -41,6 +42,7 @@ class LoginWithPasswordAPIView(GenericAPIView):
     permission_classes = [AllowAny]
     serializer_class = EmailLoginSerializer
 
+    @handle_exceptions
     def post(self, request):
         password = request.data.get('password', None)
         email = request.data.get('email', None)
@@ -50,7 +52,8 @@ class LoginWithPasswordAPIView(GenericAPIView):
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 data={
                     KEY_MESSAGE: "error",
-                    KEY_PAYLOAD: "Please Enter Email or Username or contact number"
+                    KEY_PAYLOAD: "Please Enter Email or Username or contact number",
+                    KEY_STATUS: 0
                 },
             )
 
@@ -69,7 +72,8 @@ class LoginWithPasswordAPIView(GenericAPIView):
                     status=status.HTTP_201_CREATED,
                     data={
                         KEY_MESSAGE: "user login successful.",
-                        KEY_PAYLOAD: {"token": token, "user": user_serializer.data}
+                        KEY_PAYLOAD: {"token": token, "user": user_serializer.data},
+                        KEY_STATUS: 1
                     },
                 )
             else:
@@ -77,7 +81,8 @@ class LoginWithPasswordAPIView(GenericAPIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "User Does Not Exist With This Credentials"
+                        KEY_PAYLOAD: "User Does Not Exist With This Credentials",
+                        KEY_STATUS: -1
                     },
                 )
         else:
@@ -85,7 +90,8 @@ class LoginWithPasswordAPIView(GenericAPIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "User Doesn't Exist"
+                        KEY_PAYLOAD: "User Doesn't Exist",
+                        KEY_STATUS: 0
                     },
                 )
 
@@ -96,6 +102,7 @@ class SignUpAPIViewAPIView(APIView):
     """End point To Generate/ReGenerate the OTP. Send contact_number and country_code [country_code:str] in parameters"""
     permission_classes = [AllowAny]
 
+    @handle_exceptions
     def post(self, request):
         first_name = request.data.get("first_name", None)
         last_name = request.data.get("last_name", None)
@@ -107,7 +114,8 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter Email"
+                        KEY_PAYLOAD: "Please Enter Email",
+                        KEY_STATUS: 0
                     },
                 )
         if not password:
@@ -115,7 +123,8 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter Password."
+                        KEY_PAYLOAD: "Please Enter Password.",
+                        KEY_STATUS: 0
                     },
                 )
 
@@ -124,7 +133,8 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter First Name"
+                        KEY_PAYLOAD: "Please Enter First Name",
+                        KEY_STATUS: 0
                     },
                 )
 
@@ -133,7 +143,8 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter last Name"
+                        KEY_PAYLOAD: "Please Enter last Name",
+                        KEY_STATUS: 0
                     },
                 )
 
@@ -144,7 +155,8 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Verify Your Email."
+                        KEY_PAYLOAD: "Please Verify Your Email.",
+                        KEY_STATUS: -1
                     },
                 )
 
@@ -152,7 +164,8 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please make sign in."
+                        KEY_PAYLOAD: "Please make sign in.",
+                        KEY_STATUS: -1
                     },
                 )
 
@@ -170,7 +183,8 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_200_OK,
                     data={
                         KEY_MESSAGE: "Sucess",
-                        KEY_PAYLOAD: "Please Verify Your Email Address through sent email"
+                        KEY_PAYLOAD: "Please Verify Your Email Address through sent email",
+                        KEY_STATUS: 1
                     },
                 )
         else:
@@ -178,7 +192,8 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter Email"
+                        KEY_PAYLOAD: "Please Enter Email",
+                        KEY_STATUS: 0
                     },
                 )
 
@@ -186,6 +201,7 @@ class VerifyEmailAPIView(APIView):
     """End point To Verify the OTP. Send (contact_number and country_code[country_code: srt]) or email and otp in parameters"""
     permission_classes = [AllowAny]
 
+    @handle_exceptions
     def get(self, request):
         token = request.query_params.get("token")
 
@@ -194,7 +210,8 @@ class VerifyEmailAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Provide Token"
+                        KEY_PAYLOAD: "Please Provide Token",
+                        KEY_STATUS: 0
                     },
                 )
 
@@ -206,7 +223,8 @@ class VerifyEmailAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Provide Token"
+                        KEY_PAYLOAD: "Please Provide Token",
+                        KEY_STATUS: 0
                     },
                 )
 
@@ -215,7 +233,8 @@ class VerifyEmailAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Verify Email through Signup or Forgot Password."
+                        KEY_PAYLOAD: "Please Verify Email through Signup or Forgot Password.",
+                        KEY_STATUS: 0
                     },
                 )
         user = email_verification.last().email_to
@@ -233,7 +252,8 @@ class VerifyEmailAPIView(APIView):
                     status=status.HTTP_200_OK,
                     data={
                         KEY_MESSAGE: "Email verfied successfully.",
-                        KEY_PAYLOAD: {"token": res['access'], "user": user_serializer.data}
+                        KEY_PAYLOAD: {"token": res['access'], "user": user_serializer.data},
+                        KEY_STATUS: 1
                     },
                 )
             else:
@@ -241,7 +261,8 @@ class VerifyEmailAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Link is Incorrect or Expired"
+                        KEY_PAYLOAD: "Link is Incorrect or Expired",
+                        KEY_STATUS: 0
                     },
                 )
         else:
@@ -249,7 +270,8 @@ class VerifyEmailAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "User Doesn't Exist"
+                        KEY_PAYLOAD: "User Doesn't Exist",
+                        KEY_STATUS: -1
                     },
                 )
 
@@ -257,6 +279,7 @@ class VerifyEmailAPIView(APIView):
 class SetPasswordAPIView(APIView):
     permission_classes = [AllowAny]
 
+    @handle_exceptions
     def post(self, request):
         password = request.data.get("password", None)
         user = request.user
@@ -265,7 +288,8 @@ class SetPasswordAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please provide the New Password."
+                        KEY_PAYLOAD: "Please provide the New Password.",
+                        KEY_STATUS: 0
                     },
                 )
 
@@ -276,7 +300,8 @@ class SetPasswordAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Token is not Provided."
+                        KEY_PAYLOAD: "Token is not Provided.",
+                        KEY_STATUS: 0
                     },
                 )
             email_verification = EmailVerification.objects.filter(verification_token=token)
@@ -285,7 +310,8 @@ class SetPasswordAPIView(APIView):
                         status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                         data={
                             KEY_MESSAGE: "error",
-                            KEY_PAYLOAD: "Please Verify Email through Signup or Forgot Password."
+                            KEY_PAYLOAD: "Please Verify Email through Signup or Forgot Password.",
+                            KEY_STATUS: 0
                         },
                     )
             user = email_verification.last().email_to
@@ -304,7 +330,8 @@ class SetPasswordAPIView(APIView):
                             status=status.HTTP_200_OK,
                             data={
                                 KEY_MESSAGE: "Email verfied successfully.",
-                                KEY_PAYLOAD: {"token": res['access'], "user": user_serializer.data}
+                                KEY_PAYLOAD: {"token": res['access'], "user": user_serializer.data},
+                                KEY_STATUS: 0
                             },
                         )
                 else:
@@ -312,7 +339,8 @@ class SetPasswordAPIView(APIView):
                         status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                         data={
                             KEY_MESSAGE: "error",
-                            KEY_PAYLOAD: "Link is Incorrect or Expired"
+                            KEY_PAYLOAD: "Link is Incorrect or Expired",
+                            KEY_STATUS: 0
                         },
                     )
 
@@ -322,13 +350,15 @@ class SetPasswordAPIView(APIView):
                     status=status.HTTP_200_OK,
                     data={
                         KEY_MESSAGE: "Success",
-                        KEY_PAYLOAD: "Password stored successfully"
+                        KEY_PAYLOAD: "Password stored successfully",
+                        KEY_STATUS: 1
                     },
                 )
 
 class ForgotPasswordAPIView(APIView):
     permission_classes = [AllowAny]
 
+    @handle_exceptions
     def get(self, request):
         email = request.query_params.get("email", None)
         if email is None:
@@ -336,8 +366,10 @@ class ForgotPasswordAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Provide Email"
+                        KEY_PAYLOAD: "Please Provide Email",
+                        KEY_STATUS: 0
                     },
+                   
                 )
         user = User.objects.filter(email = email)
         if not user:
@@ -345,7 +377,8 @@ class ForgotPasswordAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please make sign up."
+                        KEY_PAYLOAD: "Please make sign up.",
+                        KEY_STATUS: 0
                     },
                 )
         user = user.last()
@@ -354,7 +387,8 @@ class ForgotPasswordAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please verify email."
+                        KEY_PAYLOAD: "Please verify email.",
+                        KEY_STATUS: 0
                     },
                 )
         verification_token = generate_verification_token()
@@ -366,25 +400,29 @@ class ForgotPasswordAPIView(APIView):
                 status=status.HTTP_200_OK,
                 data={
                     KEY_MESSAGE: "Sucess",
-                    KEY_PAYLOAD: "Password Reset Link sent to your mail box"
+                    KEY_PAYLOAD: "Password Reset Link sent to your mail box",
+                    KEY_STATUS: 1
                 },
             )
 
 class FetchProfileAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
+    @handle_exceptions
     def get(self, request):
         return Response(
                     status=status.HTTP_200_OK,
                     data={
                         KEY_MESSAGE: "Profile fetched successfully",
-                        KEY_PAYLOAD: UserSimpleSerializer(request.user, many=False).data
+                        KEY_PAYLOAD: UserSimpleSerializer(request.user, many=False).data,
+                        KEY_STATUS: 1
                     },
                 )
 
 class ChangeUserNameAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
+    @handle_exceptions
     def patch(self, request):
         username = request.data.get("username", None)
         user = request.user
@@ -393,7 +431,8 @@ class ChangeUserNameAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "Error",
-                        KEY_PAYLOAD: "Username can not be empty."
+                        KEY_PAYLOAD: "Username can not be empty.",
+                        KEY_STATUS: 0
                     },
                 )
         user.username = username
@@ -402,21 +441,24 @@ class ChangeUserNameAPIView(APIView):
                     status=status.HTTP_200_OK,
                     data={
                         KEY_MESSAGE: "Success",
-                        KEY_PAYLOAD: "Username updated successfully."
+                        KEY_PAYLOAD: "Username updated successfully.",
+                        KEY_STATUS: 1
                     },
                 )
 
 class ChangePasswordAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
+    @handle_exceptions
     def patch(self, request):
         serializer = ChangePasswordSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": serializer.errors,
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: serializer.errors,
+                    KEY_STATUS: 0
                 }
             )
 
@@ -429,8 +471,9 @@ class ChangePasswordAPIView(APIView):
                 return Response(
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
-                        "message": "Error",
-                        "payload": "New password can not be similar to the old password."
+                        KEY_MESSAGE: "Error",
+                        KEY_PAYLOAD: "New password can not be similar to the old password.",
+                        KEY_STATUS: 0
                     },
                 )
             user.set_password(new_password)
@@ -438,30 +481,34 @@ class ChangePasswordAPIView(APIView):
             return Response(
                 status=status.HTTP_200_OK,
                 data={
-                    "message": "Success",
-                    "payload": "Password updated successfully."
+                    KEY_MESSAGE: "Success",
+                    KEY_PAYLOAD: "Password updated successfully.",
+                    KEY_STATUS: 1
                 },
             )
         else:
             return Response(
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 data={
-                    "message": "Error",
-                    "payload": "Old Password doesn't match with the database."
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "Old Password doesn't match with the database.",
+                    KEY_STATUS: 0
                 },
             )
 
 class ChangeStatusAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
+    @handle_exceptions
     def patch(self, request):
         serializer = ChangeStatusSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": serializer.errors,
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: serializer.errors,
+                    KEY_STATUS: 0
                 }
             )
 
@@ -473,11 +520,13 @@ class ChangeStatusAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": "Status updated successfully."
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Status updated successfully.",
+                KEY_STATUS: 1
             }
         )
 
+    @handle_exceptions
     def delete(self, request):
         user = request.user
 
@@ -486,8 +535,9 @@ class ChangeStatusAPIView(APIView):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": "User does not have an existing status to delete.",
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: "User does not have an existing status to delete.",
+                    KEY_STATUS: 0
                 }
             )
 
@@ -498,8 +548,9 @@ class ChangeStatusAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": "Status updated successfully.",
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Status updated successfully.",
+                KEY_STATUS: 1
             }
         )
 
@@ -507,14 +558,16 @@ class ChangeStatusAPIView(APIView):
 class ChangeInvisibleAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
+    @handle_exceptions
     def patch(self, request):
         serializer = ChangeInvisibleSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": serializer.errors,
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: serializer.errors,
+                    KEY_STATUS: 0
                 }
             )
         invisible = serializer.validated_data["invisible"]
@@ -525,7 +578,8 @@ class ChangeInvisibleAPIView(APIView):
                     status=status.HTTP_200_OK,
                     data={
                         KEY_MESSAGE: "Success",
-                        KEY_PAYLOAD: "Inivisible updated successfully."
+                        KEY_PAYLOAD: "Inivisible updated successfully.",
+                        KEY_STATUS: 1
                     },
                 )
 
@@ -534,14 +588,16 @@ class ChangeAvatarAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
     parser_classes = [MultiPartParser]
 
+    @handle_exceptions
     def patch(self, request):
         serializer = AvatarSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": serializer.errors,
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: serializer.errors,
+                    KEY_STATUS: 0
                 }
             )
 
@@ -553,11 +609,13 @@ class ChangeAvatarAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": UploadAvatarSerializer(user).data,
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: UploadAvatarSerializer(user).data,
+                KEY_STATUS: 1
             }
         )
 
+    @handle_exceptions
     def delete(self, request):
         user = request.user
 
@@ -566,8 +624,9 @@ class ChangeAvatarAPIView(APIView):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": "User does not have an existing avatar to remove.",
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: "User does not have an existing avatar to remove.",
+                    KEY_STATUS: 0
                 }
             )
 
@@ -578,8 +637,9 @@ class ChangeAvatarAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": "Avatar removed successfully.",
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Avatar removed successfully.",
+                KEY_STATUS: 1
             }
         )
 
@@ -587,14 +647,16 @@ class ChangeBackgroundAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
     parser_classes = [MultiPartParser]
 
+    @handle_exceptions
     def patch(self, request):
         serializer = BackgroundSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": serializer.errors,
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: serializer.errors,
+                    KEY_STATUS: 0
                 }
             )
 
@@ -606,11 +668,13 @@ class ChangeBackgroundAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": UploadBackgroundSerializer(user).data,
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: UploadBackgroundSerializer(user).data,
+                KEY_STATUS: 1
             }
         )
 
+    @handle_exceptions
     def delete(self, request):
         user = request.user
 
@@ -619,8 +683,9 @@ class ChangeBackgroundAPIView(APIView):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": "User does not have an existing background to remove.",
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: "User does not have an existing background to remove.",
+                    KEY_STATUS: 1
                 }
             )
 
@@ -631,22 +696,25 @@ class ChangeBackgroundAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": "Background removed successfully.",
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Background removed successfully.",
+                KEY_STATUS: 1
             }
         )
 
 class ChangeBioAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
+    @handle_exceptions
     def patch(self, request):
         serializer = ChangeBioSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": serializer.errors,
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: serializer.errors,
+                    KEY_STATUS: 0
                 }
             )
 
@@ -660,11 +728,13 @@ class ChangeBioAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": "Bio Updated Successfully.",
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Bio Updated Successfully.",
+                KEY_STATUS: 1
             }
         )
 
+    @handle_exceptions
     def delete(self, request):
         user = request.user
 
@@ -673,8 +743,9 @@ class ChangeBioAPIView(APIView):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": "User does not have an existing bio to remove.",
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: "User does not have an existing bio to remove.",
+                    KEY_STATUS: 0
                 }
             )
 
@@ -685,13 +756,15 @@ class ChangeBioAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": "Bio removed successfully.",
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Bio removed successfully.",
+                KEY_STATUS: 1
             }
         )
 class SingleDeviceLogoutAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
+    @handle_exceptions
     def get(self, request):
         authorization_header = request.headers.get('Authorization')
         _, token = authorization_header.split(' ', 1)
@@ -699,27 +772,31 @@ class SingleDeviceLogoutAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": "Logout from All device successful",
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Logout from All device successful",
+                KEY_STATUS: 1
             }
         )
 
 class AllDeviceLogoutAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
+    @handle_exceptions
     def get(self, request):
         AccessTokenLog.objects.filter(user=request.user).delete()
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": "Logout from All device successful",
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Logout from All device successful",
+                KEY_STATUS: 1
             }
         )
 
 class UserFeedbackAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
+    @handle_exceptions
     def post(self, request):
         # Use the serializer for input validation
         serializer = FeedbackSerializer(data=request.data)
@@ -727,8 +804,9 @@ class UserFeedbackAPIView(APIView):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": serializer.errors,
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: serializer.errors,
+                    KEY_STATUS: 0
                 }
             )
 
@@ -737,8 +815,9 @@ class UserFeedbackAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": "Feedback sent successfully.",
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Feedback sent successfully.",
+                KEY_STATUS: 1
             }
         )
 
@@ -747,6 +826,7 @@ class UserFeedbackAPIView(APIView):
 class UpdateThemeAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
+    @handle_exceptions
     def patch(self, request):
         serializer = UpdateThemeSerializer(data=request.data)
         
@@ -754,8 +834,9 @@ class UpdateThemeAPIView(APIView):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": serializer.errors,
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: serializer.errors,
+                    KEY_STATUS: 0
                 }
             )
 
@@ -766,14 +847,16 @@ class UpdateThemeAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": "Theme updated successfully.",
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Theme updated successfully.",
+                KEY_STATUS: 1
             }
         )
 
 class UpdateSoundEffectAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
+    @handle_exceptions
     def patch(self, request):
         serializer = UpdateSoundEffectSerializer(data=request.data)
         
@@ -781,8 +864,9 @@ class UpdateSoundEffectAPIView(APIView):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    "message": "Validation Error",
-                    "payload": serializer.errors,
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: serializer.errors,
+                    KEY_STATUS: 0
                 }
             )
 
@@ -794,8 +878,9 @@ class UpdateSoundEffectAPIView(APIView):
         return Response(
             status=status.HTTP_200_OK,
             data={
-                "message": "Success",
-                "payload": "Sound Effect updated successfully.",
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Sound Effect updated successfully.",
+                KEY_STATUS: 1
             }
         )
 
