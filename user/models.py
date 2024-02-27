@@ -66,6 +66,10 @@ class User(AbstractBaseUser):
 		('dark', 'Dark'),
 		('light', 'Light'),
 	]
+	FA_CHOICES = [
+		('code', 'Code'),
+		('email', 'Email'),
+	]
 	def save(self, *args, **kwargs):
 		if self.pk == None:
 			if not (self.email == None or self.email == ""):
@@ -120,6 +124,9 @@ class User(AbstractBaseUser):
 	last_login = models.DateTimeField(blank=True, auto_now=True)
 	theme = models.CharField( max_length=20,choices=THEME_CHOICES,default='dark',)
 	sound_effect = models.BooleanField(default=False)
+	fa = models.BooleanField(default=False)
+	fa_type = models.CharField(max_length=20,choices=THEME_CHOICES,default='code',)
+	fa_code = models.CharField(max_length=6,null=True, blank=True)
 
 	objects = UserManager()
 

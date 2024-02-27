@@ -884,3 +884,37 @@ class UpdateSoundEffectAPIView(APIView):
             }
         )
 
+class ChangeAuthenticationAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def patch(self, request):
+        serializer = UpdateAuthenticationSerializer(data=request.data)
+        
+        if not serializer.is_valid():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    KEY_MESSAGE: "Validation Error",
+                    KEY_PAYLOAD: serializer.errors,
+                    KEY_STATUS: 0
+                }
+            )
+
+        # If validation passes, update the user's sound_effect
+        user = request.user
+        user.fa = serializer.validated_data['authentication']
+        user.fa_type = serializer.validated_data['authentication_type']
+        if user.fa and user.fa_type == "code":
+            user.fa_code = serializer.validated_data['authentication_code']
+        user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Authentication updated successfully.",
+                KEY_STATUS: 1
+            }
+        )
+

@@ -66,5 +66,11 @@ class UpdateThemeSerializer(serializers.Serializer):
 
 class UpdateSoundEffectSerializer(serializers.Serializer):
     sound_effect = serializers.BooleanField()
+
+class UpdateAuthenticationSerializer(serializers.Serializer):
+    authentication = serializers.BooleanField(required = True)
+    authentication_type = serializers.ChoiceField(choices=User.FA_CHOICES, required = False)
+    authentication_code = serializers.CharField(max_length=6, required=False)
+
     
 
