@@ -29,7 +29,7 @@ class ChangeInvisibleSerializer(serializers.Serializer):
     invisible = serializers.BooleanField()
 
 class ChangeStatusSerializer(serializers.Serializer):
-    status = serializers.CharField()
+    status = serializers.CharField(allow_blank=True)
 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField()
