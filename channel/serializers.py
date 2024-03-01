@@ -65,10 +65,11 @@ class CoursesDataSerializer(serializers.ModelSerializer):
 	completed = serializers.SerializerMethodField()
 	is_favorite = serializers.SerializerMethodField()
 	data = serializers.SerializerMethodField()
+	last_checked = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Courses
-		fields = ('id', 'uuid', 'name', 'description', 'completed', 'pic', 'is_favorite', 'data')
+		fields = ('id', 'uuid', 'name', 'description', 'completed', 'pic', 'is_favorite', 'last_checked','data')
 
 	def get_completed(self, obj):
 		user_id = self.context.get('user_id')
@@ -81,6 +82,14 @@ class CoursesDataSerializer(serializers.ModelSerializer):
 		if favourite.exists():
 			return True
 		return False
+
+	def get_last_checked(self, obj):
+		user_id = self.context.get('user_id')
+		course_id = self.context.get('course_id')
+		completed_content = CompleteContent.objects.filter(user__id = user_id, course__uuid = course_id)
+		if completed_content.exists():
+			return completed_content.last().content_uuid
+		return None
 
 	def fomat_data(self, data, obj):
 		user_id = self.context.get('user_id')

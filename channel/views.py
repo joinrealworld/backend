@@ -73,7 +73,7 @@ class FetchCourseDataAPIView(APIView):
     @handle_exceptions
     def get(self, request, course_id):
         courses = Courses.objects.filter(uuid = course_id)
-        context = {"user_id":request.user.id}
+        context = {"user_id":request.user.id, "course_id": courses.last().uuid}
         return Response(
                 status=status.HTTP_200_OK,
                 data={
