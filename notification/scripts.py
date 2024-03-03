@@ -23,3 +23,9 @@ def send_account_verification_mail(subject, first_name, verification_link, to_em
     txt_template_path = "templates/verify_email.txt"
     html_template_path = "templates/verify_otp.html"
     send_mail_with_template(mail_content, txt_template_path, html_template_path, subject, from_email, to_emails)
+
+def send_2fa_verification_mail(subject, first_name, code, to_emails, from_email=settings.EMAIL_HOST_USER):
+    mail_content = {'first_name': first_name, "code":code}
+    txt_template_path = "templates/verify_2fa.txt"
+    html_template_path = "templates/verify_2fa.html"
+    send_mail_with_template(mail_content, txt_template_path, html_template_path, subject, from_email, to_emails)

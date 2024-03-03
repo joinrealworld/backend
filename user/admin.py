@@ -100,4 +100,4 @@ class FeebackAdmin(admin.ModelAdmin):
 
 admin.site.register(FeedBack, FeebackAdmin)
 
-admin.site.register(EmailVerification)
+admin.site.register(FAVerification)

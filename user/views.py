@@ -32,8 +32,9 @@ from user.scripts import *
 from constants.response import KEY_MESSAGE, KEY_PAYLOAD, KEY_STATUS
 from rest_framework.parsers import MultiPartParser
 from rest_framework_simplejwt.tokens import OutstandingToken
-from notification.scripts import send_account_verification_mail
+from notification.scripts import send_account_verification_mail, send_2fa_verification_mail
 from constants.commons import handle_exceptions
+import random
 
 # Create your views here.
 class LoginWithPasswordAPIView(GenericAPIView):
@@ -46,7 +47,7 @@ class LoginWithPasswordAPIView(GenericAPIView):
     def post(self, request):
         password = request.data.get('password', None)
         email = request.data.get('email', None)
-
+        code = request.data.get('fa_code', None)
         if not email:
             return Response(
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -65,7 +66,39 @@ class LoginWithPasswordAPIView(GenericAPIView):
             email = email.lower()
             user = User.objects.filter(email=email).first() or User.objects.filter(username=email).first()
         if user:
+            if user.email_verified == False:
+                return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Verify Your Email.",
+                        KEY_STATUS: -1
+                    },
+                )
             if user.check_password(password):
+                if user.fa:
+                    if code is None:
+                        if user.fa_type == "email":
+                            new_code = ''.join(random.choices('0123456789', k=4))
+                            FAVerification.objects.create(fa_code = new_code, email_to = user)
+                            send_2fa_verification_mail("Join Real World | 2FA Authentication",user.first_name, new_code, email)
+                        return Response(
+                            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                            data={
+                                KEY_MESSAGE: "error",
+                                KEY_PAYLOAD: "Please Enter 2FA verification Code.",
+                                KEY_STATUS: 0
+                            },
+                        )
+                    if not user.verify_2fa_authentication(code):
+                        return Response(
+                            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                            data={
+                                KEY_MESSAGE: "error",
+                                KEY_PAYLOAD: "2FA verification Failed.",
+                                KEY_STATUS: -1
+                            },
+                        )
                 token = user.get_tokens_for_user()
                 user_serializer = UserSimpleSerializer(user, many=False)
                 return Response(

@@ -1,0 +1,135 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css?family=Raleway:300,400,600,700,800&display=swap');
+
+        * {
+          margin: 0;
+          border: 0;
+          padding: 0;
+        }
+
+        body {
+          max-width: 400px;
+          background-color: #ffffff;
+          margin: 0 auto;
+          padding: 2%;
+          color: #ffffff;
+          font-family: 'Raleway', sans-serif;
+        }
+
+        .wrapper {
+          background-color: #fff;
+          color: #000;
+        }
+
+        .inner_wrapper {
+          
+          color: #000;
+        }
+
+
+        #logo {
+          padding: 5%;
+          /*max-width: 35rem;*/
+          background-color: #f0f0f0;
+        }
+
+        /*#logo img {
+          width: 20%;
+        }*/
+
+        .header_text {
+          margin-top: 2rem;
+          font-size: 2.3rem;
+          font-weight: bold;
+          color: #ffffff;
+        }
+
+        .mt-1{
+              margin-top: 1rem;
+        }
+        .mt-2{
+              margin-top: 2rem;
+        }
+
+         .mt-5{
+              margin-top: 5rem;
+        }
+
+        .header_text {
+          font-size: 1.5rem;
+          font-style: bold;
+          color: #e0b60f;
+        }
+
+        .header_sub_text {
+          font-size: .7rem;
+          font-style: bold;
+          color: #000;
+        }
+
+        .col-two{
+              margin: 2rem;
+              color: #ffffff;
+        }
+
+        .color_bold{
+          color: #000;
+          font-weight: 600;
+        }
+        .numFont{
+          font-family: sans-serif;
+          letter-spacing: 0.5px;
+        }
+
+        p {
+          color: #000;
+        }
+
+        .footer {
+          margin-top: 3%;
+          font-size: .7rem;
+          text-align: center;
+          height: 50px;
+          background-color: #f0f0f0;
+        }
+
+    </style>
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="inner_wrapper">
+
+          <header>
+              <div id="logo">
+                <p class="header_text"> Verify Your Email </p>
+              <p class="header_sub_text"> Below is your 2FA Authentication Code</p>
+              </div>
+          </header>
+          <div class="col-one">
+            <div class="col-two">
+              <p>Hey! {{first_name}},</p>
+              <p  class="mt-1">Thanks for your interest in creating an Join Real World account. To create your account, please verify your email address by clicking below. </p><br>
+              <p><strong> {{code}} </strong> </p><br>
+              <p>Code will be valid for next 24 hours</p>
+
+              <p  class="mt-1">In order to keep your account safe
+              and secure, never share your login
+              details with anyone.</p>
+              <p  class="mt-2">Best Regards,</p>
+              <p>Team Join Real World</p>
+            </div>
+            <div class="footer">
+              <p > You are recieving this mail because you have an account with Join Real World. <br />
+              Not you? please <a href="https://www.joinrealworld.com/contact-us/" style="color: #e0b60f"> Contact Us </a></p>
+            </div>
+
+          </div>
+      </div>
+    </div> <!--  End of wrapper  -->
+  </body>
+</html>

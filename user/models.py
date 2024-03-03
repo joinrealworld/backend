@@ -125,7 +125,7 @@ class User(AbstractBaseUser):
 	theme = models.CharField( max_length=20,choices=THEME_CHOICES,default='dark',)
 	sound_effect = models.BooleanField(default=False)
 	fa = models.BooleanField(default=False)
-	fa_type = models.CharField(max_length=20,choices=THEME_CHOICES,default='code',)
+	fa_type = models.CharField(max_length=20,choices=FA_CHOICES,default='code',)
 	fa_code = models.CharField(max_length=6,null=True, blank=True)
 
 	objects = UserManager()
@@ -170,6 +170,34 @@ class User(AbstractBaseUser):
 	    characters = string.ascii_letters + string.digits  # include both letters and digits
 	    random_string = ''.join(random.choice(characters) for _ in range(length))
 	    return random_string
+
+	def verify_2fa_authentication(self, code):
+		if self.fa_type == "email":
+			fa_verification = FAVerification.objects.filter(email_to__id = self.pk, fa_code = code)
+			if fa_verification.exists():
+				fa_verification.delete()
+				return True
+		if self.fa_type == "code":
+			if self.code == fa_code:
+				return True
+		return False
+
+class FAVerification(models.Model):
+	email_to = models.ForeignKey(User, on_delete=models.CASCADE, null = False, blank = False)
+	fa_code = models.CharField(max_length=255, blank=False, null=False, )
+	validity = models.DateTimeField(blank=True, null=True, )
+
+	def validate_email(self, email_to, fa_code):
+		# Checking if the email and verification token match the instance
+		valid = (self.email_to == email_to and 
+				self.fa_code == fa_code and 
+				self.validity >= timezone.now())
+
+		# Deleting the instance if validation is successful
+		if valid:
+			self.delete()
+
+		return valid
 
 class EmailVerification(models.Model):
 	email_to = models.ForeignKey(User, on_delete=models.CASCADE, null = False, blank = False)
