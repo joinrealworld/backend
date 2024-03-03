@@ -176,7 +176,7 @@ class SignUpAPIViewAPIView(APIView):
             user.email_verified = False
             user.save()
             verification_token = generate_verification_token()
-            verification_link = generate_user_account_verification_link(verification_token, "verify_email")
+            verification_link = generate_user_account_verification_link(verification_token, "verify-email?e=")
             EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
             send_account_verification_mail("Verify your email to create your Join Real World Account",first_name, verification_link, email)
             return Response(
@@ -392,7 +392,7 @@ class ForgotPasswordAPIView(APIView):
                     },
                 )
         verification_token = generate_verification_token()
-        verification_link = generate_user_account_verification_link(verification_token, "reset_password")
+        verification_link = generate_user_account_verification_link(verification_token, "reset-password?t=")
         EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
         send_account_verification_mail("Reset Your Password for Join Real World", user.first_name, verification_link, email)
 

@@ -10,4 +10,4 @@ def generate_verification_token():
 	return secrets.token_hex(60)
 
 def generate_user_account_verification_link(token, target):
-	return f"{env('FRONTEND_URL')}?{target}={token}"
+	return f"{env('FRONTEND_URL')}{target}{token}"
