@@ -36,6 +36,7 @@ from notification.scripts import send_account_verification_mail, send_2fa_verifi
 from constants.commons import handle_exceptions
 import random
 
+
 # Create your views here.
 class LoginWithPasswordAPIView(GenericAPIView):
     """Custom Login for user to login using password"""
@@ -950,4 +951,38 @@ class ChangeAuthenticationAPIView(APIView):
                 KEY_STATUS: 1
             }
         )
+
+class SendVerificationMailAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    @handle_exceptions
+    def get(self, request):
+        email = request.query_params.get("email")
+        try:
+            user = User.objects.get(email = email)
+        except Exception as e:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "User not found with given Email.",
+                    KEY_STATUS: 1
+                }
+            )
+        verification_token = generate_verification_token()
+        verification_link = generate_user_account_verification_link(verification_token, "verify-email?e=")
+        EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
+        send_account_verification_mail("Verify your email to create your Join Real World Account",user.first_name, verification_link, email)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Verification Mail Sent Successfully.",
+                KEY_STATUS: 1
+            }
+        )
+
+
+
+
 
