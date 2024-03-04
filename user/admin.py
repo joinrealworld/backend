@@ -67,7 +67,7 @@ class UserAdmin(BaseUserAdmin):
     list_display = ('id', 'username', 'email', 'first_name', 'last_name', 'is_admin', 'email_verified', 'fa','is_online', 'coin', 'referral_code', 'last_login')
     list_filter = ('is_admin',)
     fieldsets = (
-        (None, {'fields': ('username', 'email', 'password', 'fa','referral_code')}),
+        (None, {'fields': ('username', 'email', 'password', 'email_verified','fa','referral_code')}),
         ('Profile Picture', {'fields': ('avatar', 'background')}),
         ('Additional Info', {'fields': ('first_name', 'last_name','bio', 'theme', 'sound_effect')}),
         ('Permissions', {'fields': ('is_staff', 'is_admin',)}),
