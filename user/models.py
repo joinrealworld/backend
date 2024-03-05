@@ -178,7 +178,7 @@ class User(AbstractBaseUser):
 				fa_verification.delete()
 				return True
 		if self.fa_type == "code":
-			if self.fa_code == fa_code:
+			if self.fa_code == code:
 				return True
 		return False
 
