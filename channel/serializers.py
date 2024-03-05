@@ -41,11 +41,11 @@ class CoursesSerializer(serializers.ModelSerializer):
 	completed = serializers.SerializerMethodField()
 	is_favorite = serializers.SerializerMethodField()
 	lessons = serializers.SerializerMethodField()
-	category = serializers.SerializerMethodField()
+	category_uuid = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Courses
-		fields = ('id', 'uuid','name', 'completed', 'is_favorite', 'pic', 'category','lessons')
+		fields = ('id', 'uuid','name', 'completed', 'is_favorite', 'pic', 'category_uuid','lessons')
 
 	def get_completed(self, obj):
 		user_id = self.context.get('user_id')
@@ -62,7 +62,7 @@ class CoursesSerializer(serializers.ModelSerializer):
 	def get_lessons(self, obj):
 		return len(obj.data)
 
-	def get_category(self, obj):
+	def get_category_uuid(self, obj):
 		return obj.category.uuid
 
 class CoursesDataSerializer(serializers.ModelSerializer):
