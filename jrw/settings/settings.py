@@ -3,6 +3,7 @@ import os
 from datetime import timedelta
 from pathlib import Path
 import environ
+import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -196,8 +197,10 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-DATABASES = {'default': env.db('DATABASE_URL', default='postgresql://postgres:@localhost:5432/jrw'), }
-
+# DATABASES = {'default': env.db('DATABASE_URL', default='postgresql://postgres:@localhost:5432/jrw'), }
+DATABASES = {
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
 STATICFILES_DIRS = (
     str(APPS_DIR.path('static')),
     os.path.join(APPS_DIR, 'attachments')
