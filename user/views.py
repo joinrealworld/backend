@@ -237,7 +237,7 @@ class VerifyEmailAPIView(APIView):
 
     @handle_exceptions
     def get(self, request):
-        token = request.query_params.get("token")
+        token = request.query_params.get("t")
 
         if not token:
             return Response(
