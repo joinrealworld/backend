@@ -7,8 +7,14 @@ from constants.commons import handle_exceptions
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 stripe_base_url = settings.STRIPE_BASE_URL
-def create_stripe_customer(name, email):
-	return stripe.Customer.create(name=name, email=email)
+
+def create_stripe_customer(user, name, email):
+	existing_customer = CustomerDetails.objects.filter(user=user, customer_id__isnull=False).first()
+	if existing_customer:
+		return existing_customer.data
+	stripe_customer_data = stripe.Customer.create(name=name, email=email)
+	existing_customer = CustomerDetails.objects.create(user=user, customer_id=stripe_customer_data['id'], data=stripe_customer_data)
+	return existing_customer.data
 	 
 def generate_card_token(cardnumber, expmonth, expyear, cvv):
 	data= stripe.Token.create(
@@ -30,7 +36,7 @@ def fetch_price_list():
 	return stripe.Price.list()
 
 def creat_stripe_subscription_payment(customer_id, price_id):
-	return stripe.Subscription.create(customer=customer_id,items=[{"price": price_id}])#,payment_behavior="error_if_incomplete", trial_period_days=0)
+	return stripe.Subscription.create(customer=customer_id, items=[{"price": price_id}], payment_behavior="error_if_incomplete", trial_period_days=0)
 
 def fetch_stripe_subscription_list(subscription_id):
 	return stripe.Subscription.retrieve(subscription_id)

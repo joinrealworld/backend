@@ -50,14 +50,13 @@ class CreateCustomerAPIView(APIView):
 		    )
 
 		# If customer does not exist, create a new one
-		stripe_customer_data = create_stripe_customer(name, email)
-		existing_customer = CustomerDetails.objects.create(user=request.user, customer_id=stripe_customer_data['id'], data=stripe_customer_data)
+		stripe_customer_data = create_stripe_customer(request.user, name, email)
 
 		return Response(
 		    status=status.HTTP_200_OK,
 		    data={
 		        "message": "Success",
-		        "payload": existing_customer.data,
+		        "payload": stripe_customer_data,
 		        "status": 1
 		    }
 		)
