@@ -2,9 +2,11 @@
 import stripe
 from django.conf import settings
 from payment.models import *
+import requests
+from constants.commons import handle_exceptions
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
-
+stripe_base_url = settings.STRIPE_BASE_URL
 def create_stripe_customer(name, email):
 	return stripe.Customer.create(name=name, email=email)
 	 
@@ -28,4 +30,17 @@ def fetch_price_list():
 	return stripe.Price.list()
 
 def creat_stripe_subscription_payment(customer_id, price_id):
-	return stripe.Subscription.create(customer=customer_id,items=[{"price": price_id}],)
+	return stripe.Subscription.create(customer=customer_id,items=[{"price": price_id}],payment_behavior="error_if_incomplete", trial_period_days=0)
+
+def fetch_stripe_subscription_list(subscription_id):
+	return stripe.Subscription.retrieve(subscription_id)
+
+@handle_exceptions
+def fetch_customer_card_list(customer_id):
+	url = stripe_base_url+ f"/v1/customers/{customer_id}/cards"
+	params = {'limit': 3}
+	response = requests.get(url, params=params, auth=(settings.STRIPE_SECRET_KEY, ''))
+	if response.status_code == 200:
+		return response.json()
+	else:
+		return response

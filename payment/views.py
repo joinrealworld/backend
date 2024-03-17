@@ -38,7 +38,6 @@ class CreateCustomerAPIView(APIView):
 		email = request.data.get("customer_email", None)
 
 		# Check if the customer already exists
-		print("41-----", request.user.email)
 		existing_customer = CustomerDetails.objects.filter(user=request.user, customer_id__isnull=False).first()
 		if existing_customer:
 		    return Response(
@@ -115,8 +114,15 @@ class CreateSubscriptionAPIView(APIView):
 		price_id = request.data.get("price_id", None)
 		customer_detail = CustomerDetails.objects.filter(user=request.user, customer_id__isnull=False).first()
 		customer_subscription = creat_stripe_subscription_payment(customer_detail.customer_id, price_id)
+		cus_payment = CustomerPayment.objects.create(user = request.user, price_id = price_id, customer_id = customer_detail.customer_id, data = customer_subscription)
 		customer_plan = customer_subscription['items']['data'][0]['plan']
-		CustomerPayment.objects.create(user = request.user, price_id = price_id, status = customer_subscription['status'],customer_id = customer_detail.customer_id, amount=customer_plan['amount'], subscription_id = customer_subscription['id'], currency=customer_subscription['currency'], plan = customer_plan['nickname'], data = customer_subscription)
+		cus_payment.status = customer_subscription['status']
+		cus_payment.amount = customer_plan['amount']
+		cus_payment.subscription_id = customer_subscription['id']
+		cus_payment.plan = customer_plan['nickname']
+		cus_payment.status = customer_subscription['status']
+		cus_payment.save()
+
 		return Response(
 		    status=status.HTTP_200_OK,
 		    data={
@@ -126,5 +132,38 @@ class CreateSubscriptionAPIView(APIView):
 		    }
 		)
 
+class RetriveSubscriptionAPIView(APIView):
+	permission_classes = [IsUserAuthenticated]
+
+	@handle_exceptions
+	def get(self, request):
+		user = request.user
+		customer_payment = CustomerPayment.objects.filter(user = user).last()
+		subscription_data = fetch_stripe_subscription_list(customer_payment.subscription_id)
+		return Response(
+		    status=status.HTTP_200_OK,
+		    data={
+		        "message": "Success",
+		        "payload": subscription_data,
+		        "status": 1
+		    }
+		)
+
+class CustomerCardListAPIView(APIView):
+	permission_classes = [IsUserAuthenticated]
+
+	@handle_exceptions
+	def get(self, request):
+		user = request.user
+		customer_detail = CustomerDetails.objects.filter(user=request.user, customer_id__isnull=False).first()
+		card_list = fetch_customer_card_list(customer_detail.customer_id)
+		return Response(
+		    status=status.HTTP_200_OK,
+		    data={
+		        "message": "Success",
+		        "payload": card_list,
+		        "status": 1
+		    }
+		)
 
 
