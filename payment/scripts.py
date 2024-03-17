@@ -30,7 +30,7 @@ def fetch_price_list():
 	return stripe.Price.list()
 
 def creat_stripe_subscription_payment(customer_id, price_id):
-	return stripe.Subscription.create(customer=customer_id,items=[{"price": price_id}],payment_behavior="error_if_incomplete", trial_period_days=0)
+	return stripe.Subscription.create(customer=customer_id,items=[{"price": price_id}])#,payment_behavior="error_if_incomplete", trial_period_days=0)
 
 def fetch_stripe_subscription_list(subscription_id):
 	return stripe.Subscription.retrieve(subscription_id)
@@ -44,3 +44,6 @@ def fetch_customer_card_list(customer_id):
 		return response.json()
 	else:
 		return response
+
+def cancle_customer_subscription(subscription_id):
+	return stripe.Subscription.cancel(subscription_id)

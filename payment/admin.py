@@ -15,3 +15,10 @@ class CustomerPaymentAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 admin.site.register(CustomerPayment, CustomerPaymentAdmin)
+
+class CancleSubscriptionAdmin(admin.ModelAdmin):
+    fields = ['user','subscription_id','customer_payment','customer_id','data','created_at']
+    list_display = ('id','user', 'subscription_id', 'customer_payment', 'status', 'customer_id','subscription_id', 'created_at')
+    list_per_page = 25
+
+admin.site.register(CancleSubscription, CancleSubscriptionAdmin)

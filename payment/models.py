@@ -30,4 +30,17 @@ class CustomerPayment(models.Model):
 	def __str__(self):
 		return f"{self.id} -- {self.user} -- {self.created_at}"
 
+class CancleSubscription(models.Model):
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+	user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
+	subscription_id = models.CharField(max_length=128,null=True, blank=True)
+	customer_payment = models.ForeignKey(CustomerPayment, null=False, blank=False, on_delete=models.CASCADE)
+	customer_id = models.CharField(max_length=128,null=True, blank=True)
+	status = models.CharField(max_length=128,null=True, blank=True)
+	data = models.JSONField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return f"{self.id} -- {self.user} -- {self.created_at}"
+
 

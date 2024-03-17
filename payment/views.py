@@ -167,3 +167,26 @@ class CustomerCardListAPIView(APIView):
 		)
 
 
+class CancleSubscriptionAPIView(APIView):
+	permission_classes = [IsUserAuthenticated]
+
+	@handle_exceptions
+	def post(self, request):
+		user = request.user
+		subscription_id = request.data.get("subscription_id", None)
+		customer_detail = CustomerDetails.objects.filter(user=request.user, customer_id__isnull=False).first()
+		customer_payment = CustomerPayment.objects.filter(customer_id = customer_detail.customer_id, subscription_id = subscription_id) #status = "complete"
+		cancle_subscription = cancle_customer_subscription(subscription_id)
+		if cancle_subscription['status'] in ["canceled", "incomplete_expired"]:
+			CancleSubscription.objects.create(user = request.user, status = cancle_subscription['status'], subscription_id = subscription_id, customer_payment = customer_payment.last(), customer_id = customer_detail.customer_id,  data = cancle_subscription)
+			customer_payment = customer_payment.last()
+			customer_payment.status = cancle_subscription['status']
+			customer_payment.save()
+		return Response(
+		    status=status.HTTP_200_OK,
+		    data={
+		        "message": "Success",
+		        "payload": cancle_subscription,
+		        "status": 1
+		    }
+		)
