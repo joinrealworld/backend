@@ -22,3 +22,10 @@ def generate_card_token(cardnumber, expmonth, expyear, cvv):
 
 def create_custormer_card_on_stripe(customer_id, source=None):
 	return stripe.Customer.create_source(customer_id,source=source)
+
+def fetch_price_list():
+	""" this function will return all listed subscription under the product """
+	return stripe.Price.list()
+
+def creat_stripe_subscription_payment(customer_id, price_id):
+	return stripe.Subscription.create(customer=customer_id,items=[{"price": price_id}],)

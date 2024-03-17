@@ -30,37 +30,38 @@ from payment.scripts import *
 
 # Create your views here.
 class CreateCustomerAPIView(APIView):
-    permission_classes = [IsUserAuthenticated]
+	permission_classes = [IsUserAuthenticated]
 
-    @handle_exceptions
-    def post(self, request):
-        name = request.data.get("customer_name", None)
-        email = request.data.get("customer_email", None)
-        
-        # Check if the customer already exists
-        existing_customer = CustomerDetails.objects.filter(user=request.user, customer_id__isnull=False).first()
-        if existing_customer:
-            return Response(
-                status=status.HTTP_400_BAD_REQUEST,
-                data={
-                    "message": "Customer already exists",
-                    "payload": existing_customer.data,
-                    "status": 0
-                }
-            )
+	@handle_exceptions
+	def post(self, request):
+		name = request.data.get("customer_name", None)
+		email = request.data.get("customer_email", None)
 
-        # If customer does not exist, create a new one
-        stripe_customer_data = create_stripe_customer(name, email)
-        existing_customer = CustomerDetails.objects.create(user=request.user, customer_id=stripe_customer_data['id'], data=stripe_customer_data)
-        
-        return Response(
-            status=status.HTTP_200_OK,
-            data={
-                "message": "Success",
-                "payload": existing_customer.data,
-                "status": 1
-            }
-        )
+		# Check if the customer already exists
+		print("41-----", request.user.email)
+		existing_customer = CustomerDetails.objects.filter(user=request.user, customer_id__isnull=False).first()
+		if existing_customer:
+		    return Response(
+		        status=status.HTTP_400_BAD_REQUEST,
+		        data={
+		            "message": "Customer already exists",
+		            "payload": existing_customer.data,
+		            "status": 0
+		        }
+		    )
+
+		# If customer does not exist, create a new one
+		stripe_customer_data = create_stripe_customer(name, email)
+		existing_customer = CustomerDetails.objects.create(user=request.user, customer_id=stripe_customer_data['id'], data=stripe_customer_data)
+
+		return Response(
+		    status=status.HTTP_200_OK,
+		    data={
+		        "message": "Success",
+		        "payload": existing_customer.data,
+		        "status": 1
+		    }
+		)
 
 class CreateCustomerCardAPIView(APIView):
 	permission_classes = [IsUserAuthenticated]
@@ -91,3 +92,39 @@ class CreateCustomerCardAPIView(APIView):
 		        "status": 1
 		    }
 		)
+
+class FetchSubscriptionsAPIView(APIView):
+	permission_classes = [IsUserAuthenticated]
+
+	@handle_exceptions
+	def get(self, request):
+		return Response(
+		    status=status.HTTP_200_OK,
+		    data={
+		        "message": "Success",
+		        "payload": fetch_price_list(),
+		        "status": 1
+		    }
+		)
+
+class CreateSubscriptionAPIView(APIView):
+	permission_classes = [IsUserAuthenticated]
+
+	@handle_exceptions
+	def post(self, request):
+		price_id = request.data.get("price_id", None)
+		customer_detail = CustomerDetails.objects.filter(user=request.user, customer_id__isnull=False).first()
+		customer_subscription = creat_stripe_subscription_payment(customer_detail.customer_id, price_id)
+		customer_plan = customer_subscription['items']['data'][0]['plan']
+		CustomerPayment.objects.create(user = request.user, price_id = price_id, status = customer_subscription['status'],customer_id = customer_detail.customer_id, amount=customer_plan['amount'], subscription_id = customer_subscription['id'], currency=customer_subscription['currency'], plan = customer_plan['nickname'], data = customer_subscription)
+		return Response(
+		    status=status.HTTP_200_OK,
+		    data={
+		        "message": "Success",
+		        "payload": customer_subscription,
+		        "status": 1
+		    }
+		)
+
+
+
