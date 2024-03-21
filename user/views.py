@@ -54,13 +54,13 @@ class LoginWithPasswordAPIView(GenericAPIView):
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 data={
                     KEY_MESSAGE: "error",
-                    KEY_PAYLOAD: "Please Enter Email or Username or contact number",
+                    KEY_PAYLOAD: "Please enter your email!",
                     KEY_STATUS: 0
                 },
             )
 
         if not password:
-            return Response({"error": "Please Enter Password"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response({"error": "Please enter your password!"}, status.HTTP_422_UNPROCESSABLE_ENTITY)
 
         user = None
         if email:
@@ -72,7 +72,7 @@ class LoginWithPasswordAPIView(GenericAPIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Verify Your Email.",
+                        KEY_PAYLOAD: "Please verify your email address!",
                         KEY_STATUS: -1
                     },
                 )
@@ -96,7 +96,7 @@ class LoginWithPasswordAPIView(GenericAPIView):
                             status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                             data={
                                 KEY_MESSAGE: "error",
-                                KEY_PAYLOAD: "2FA verification Failed.",
+                                KEY_PAYLOAD: "Incorrect code! 2FA verification failed.",
                                 KEY_STATUS: -1
                             },
                         )
@@ -115,7 +115,7 @@ class LoginWithPasswordAPIView(GenericAPIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "User Does Not Exist With This Credentials",
+                        KEY_PAYLOAD: "The password is incorrect!",
                         KEY_STATUS: -1
                     },
                 )
@@ -124,7 +124,7 @@ class LoginWithPasswordAPIView(GenericAPIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "User Doesn't Exist",
+                        KEY_PAYLOAD: "Email doesn't exist!",
                         KEY_STATUS: 0
                     },
                 )
@@ -148,7 +148,7 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter Email",
+                        KEY_PAYLOAD: "Please enter your email!",
                         KEY_STATUS: 0
                     },
                 )
@@ -157,7 +157,7 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter Password.",
+                        KEY_PAYLOAD: "Please enter your password!",
                         KEY_STATUS: 0
                     },
                 )
@@ -167,7 +167,7 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter First Name",
+                        KEY_PAYLOAD: "Please enter your first name!",
                         KEY_STATUS: 0
                     },
                 )
@@ -177,7 +177,7 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter last Name",
+                        KEY_PAYLOAD: "Please enter your last name!",
                         KEY_STATUS: 0
                     },
                 )
@@ -189,7 +189,7 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Verify Your Email.",
+                        KEY_PAYLOAD: "User already exists. Please verify your email address to login.",
                         KEY_STATUS: -1
                     },
                 )
@@ -198,7 +198,7 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please make sign in.",
+                        KEY_PAYLOAD: "User already exists. Please login.",
                         KEY_STATUS: -1
                     },
                 )
@@ -216,8 +216,8 @@ class SignUpAPIViewAPIView(APIView):
             return Response(
                     status=status.HTTP_200_OK,
                     data={
-                        KEY_MESSAGE: "Sucess",
-                        KEY_PAYLOAD: "Please Verify Your Email Address through sent email",
+                        KEY_MESSAGE: "Success",
+                        KEY_PAYLOAD: "Register successfully! Please verify your Email to login.",
                         KEY_STATUS: 1
                     },
                 )
@@ -226,7 +226,7 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Enter Email",
+                        KEY_PAYLOAD: "Please enter your email!",
                         KEY_STATUS: 0
                     },
                 )
@@ -244,7 +244,7 @@ class VerifyEmailAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Provide Token",
+                        KEY_PAYLOAD: "Please provide a token!",
                         KEY_STATUS: 0
                     },
                 )
@@ -257,7 +257,7 @@ class VerifyEmailAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Provide Token",
+                        KEY_PAYLOAD: "Please provide a token!",
                         KEY_STATUS: 0
                     },
                 )
@@ -295,7 +295,7 @@ class VerifyEmailAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Link is Incorrect or Expired",
+                        KEY_PAYLOAD: "The verification link has expired.", 
                         KEY_STATUS: 0
                     },
                 )
@@ -304,7 +304,7 @@ class VerifyEmailAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "User Doesn't Exist",
+                        KEY_PAYLOAD: "User doesn't exist!",
                         KEY_STATUS: -1
                     },
                 )
@@ -322,7 +322,7 @@ class SetPasswordAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please provide the New Password.",
+                        KEY_PAYLOAD: "Please provide a new password.",
                         KEY_STATUS: 0
                     },
                 )
@@ -334,7 +334,7 @@ class SetPasswordAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Token is not Provided.",
+                        KEY_PAYLOAD: "The token not provided",
                         KEY_STATUS: 0
                     },
                 )
@@ -363,7 +363,7 @@ class SetPasswordAPIView(APIView):
                         return Response(
                             status=status.HTTP_200_OK,
                             data={
-                                KEY_MESSAGE: "Email verfied successfully.",
+                                KEY_MESSAGE: "Email verified successfully.",
                                 KEY_PAYLOAD: {"token": res['access'], "user": user_serializer.data},
                                 KEY_STATUS: 0
                             },
@@ -373,7 +373,7 @@ class SetPasswordAPIView(APIView):
                         status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                         data={
                             KEY_MESSAGE: "error",
-                            KEY_PAYLOAD: "Link is Incorrect or Expired",
+                            KEY_PAYLOAD: "The reset password link has expired.",
                             KEY_STATUS: 0
                         },
                     )
@@ -400,7 +400,7 @@ class ForgotPasswordAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please Provide Email",
+                        KEY_PAYLOAD: "Please enter your email!",
                         KEY_STATUS: 0
                     },
                    
@@ -411,7 +411,7 @@ class ForgotPasswordAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please make sign up.",
+                        KEY_PAYLOAD: "The provided email doesn't exist! Please check your email or register.",
                         KEY_STATUS: 0
                     },
                 )
@@ -421,7 +421,7 @@ class ForgotPasswordAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "error",
-                        KEY_PAYLOAD: "Please verify email.",
+                        KEY_PAYLOAD: "Please verify your email address!",
                         KEY_STATUS: 0
                     },
                 )
@@ -433,7 +433,7 @@ class ForgotPasswordAPIView(APIView):
         return Response(
                 status=status.HTTP_200_OK,
                 data={
-                    KEY_MESSAGE: "Sucess",
+                    KEY_MESSAGE: "Success",
                     KEY_PAYLOAD: "Password Reset Link sent to your mail box",
                     KEY_STATUS: 1
                 },
@@ -465,7 +465,7 @@ class ChangeUserNameAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "Error",
-                        KEY_PAYLOAD: "Username can not be empty.",
+                        KEY_PAYLOAD: "Please provide a username!",
                         KEY_STATUS: 0
                     },
                 )
@@ -506,7 +506,7 @@ class ChangePasswordAPIView(APIView):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     data={
                         KEY_MESSAGE: "Error",
-                        KEY_PAYLOAD: "New password can not be similar to the old password.",
+                        KEY_PAYLOAD: "New password is similar to the old password!",
                         KEY_STATUS: 0
                     },
                 )
@@ -525,7 +525,7 @@ class ChangePasswordAPIView(APIView):
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 data={
                     KEY_MESSAGE: "Error",
-                    KEY_PAYLOAD: "Old Password doesn't match with the database.",
+                    KEY_PAYLOAD: "Old password is incorrect!",
                     KEY_STATUS: 0
                 },
             )
@@ -612,7 +612,7 @@ class ChangeInvisibleAPIView(APIView):
                     status=status.HTTP_200_OK,
                     data={
                         KEY_MESSAGE: "Success",
-                        KEY_PAYLOAD: "Inivisible updated successfully.",
+                        KEY_PAYLOAD: "Invisible updated successfully.",
                         KEY_STATUS: 1
                     },
                 )
@@ -965,7 +965,7 @@ class SendVerificationMailAPIView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
                 data={
                     KEY_MESSAGE: "Error",
-                    KEY_PAYLOAD: "User not found with given Email.",
+                    KEY_PAYLOAD: "Email doesn't exist! Please register first.",
                     KEY_STATUS: 1
                 }
             )
@@ -977,7 +977,7 @@ class SendVerificationMailAPIView(APIView):
             status=status.HTTP_200_OK,
             data={
                 KEY_MESSAGE: "Success",
-                KEY_PAYLOAD: "Verification Mail Sent Successfully.",
+                KEY_PAYLOAD: "Verification email sent successfully.",
                 KEY_STATUS: 1
             }
         )
