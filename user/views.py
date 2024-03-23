@@ -35,7 +35,7 @@ from rest_framework_simplejwt.tokens import OutstandingToken
 from notification.scripts import send_account_verification_mail, send_2fa_verification_mail
 from constants.commons import handle_exceptions
 import random
-
+from payment.scripts import *
 
 # Create your views here.
 class LoginWithPasswordAPIView(GenericAPIView):
@@ -209,6 +209,8 @@ class SignUpAPIViewAPIView(APIView):
             user.set_password(password)
             user.email_verified = False
             user.save()
+            # create_stripe_customer(user, first_name + " " last_name + , email)
+            
             verification_token = generate_verification_token()
             verification_link = generate_user_account_verification_link(verification_token, "verify-email?e=")
             EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)

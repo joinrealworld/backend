@@ -70,7 +70,8 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     'user',
     'notification',
-    'channel'
+    'channel',
+    'payment'
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -197,10 +198,10 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-# DATABASES = {'default': env.db('DATABASE_URL', default='postgresql://postgres:@localhost:5432/jrw'), }
-DATABASES = {
-    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
-}
+DATABASES = {'default': env.db('DATABASE_URL', default='postgresql://postgres:@localhost:5432/jrw'), }
+# DATABASES = {
+#     "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+# }
 STATICFILES_DIRS = (
     str(APPS_DIR.path('static')),
     os.path.join(APPS_DIR, 'attachments')
@@ -224,3 +225,18 @@ EMAIL_USE_SSL = False
 EMAIL_PORT = 587
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
+
+#Payment Config
+if SYS_ENV=="development":
+    STRIPE_SECRET_KEY = env('TEST_STRIPE_SECRET_KEY')
+    STRIPE_PUBLISHABLE_KEY = env('TEST_STRIPE_PUBLISHABLE_KEY')
+    TEST_CARD_TOKEN = env('TEST_CARD_TOKEN')
+    STRIPE_BASE_URL = env('TEST_STRIPE_BASE_URL')
+else:
+    STRIPE_SECRET_KEY = env('LIVE_STRIPE_SECRET_KEY')
+    STRIPE_PUBLISHABLE_KEY = env('LIVE_STRIPE_PUBLISHABLE_KEY')
+    CARD_TOKEN = env('CARD_TOKEN')
+    STRIPE_BASE_URL = env('LIVE_STRIPE_BASE_URL')
+
+

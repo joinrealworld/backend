@@ -3,6 +3,7 @@ from rest_framework.serializers import (ModelSerializer,
                                         )
 from user.models import *
 from django.contrib.auth.password_validation import validate_password
+from payment.models import *
 
 class EmailLoginSerializer(ModelSerializer):
     """ Login Serializer """
@@ -17,13 +18,22 @@ class EmailLoginSerializer(ModelSerializer):
 
 class UserSimpleSerializer(ModelSerializer):
     """ User Basic Information Serializer """
+    customer_id = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('id', 'uuid','avatar', 'email','background', 'theme', 'fa', 'fa_type', 'username', 'first_name', 'last_name', 'bio','email_verified', 'status', 'invisible','referral_code')
+        fields = ('id', 'uuid','avatar', 'email','background', 'theme', 'fa', 'fa_type', 'username', 'first_name', 'last_name', 'bio','email_verified', 'status', 'invisible', 'customer_id','referral_code')
 
     def get_avatar(self, obj):
         return obj.avatar.url if obj.avatar else obj.dummy_avatar
+
+    def get_customer_id(self, obj):
+        try:
+            return CustomerDetails.objects.filter(user = obj).last().customer_id
+        except Exception as e:
+            print("get_customer_id serializer method exception -->", e)
+            return ""
+
 
 class ChangeInvisibleSerializer(serializers.Serializer):
     invisible = serializers.BooleanField()
