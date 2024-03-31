@@ -142,6 +142,22 @@ class SignUpAPIViewAPIView(APIView):
         last_name = request.data.get("last_name", None)
         email = request.data.get("email", None)
         password = request.data.get("password", None)
+        card_number = request.data.get("card_number", None)
+        card_exp_month = request.data.get("card_exp_month", None)
+        card_exp_year = request.data.get("card_exp_year", None)
+        card_cvc = request.data.get("card_cvc", None)
+        card_name = request.data.get("card_name", None)
+        price_id = request.data.get("price_id", None)
+
+        if card_number is None or card_exp_month is None or card_exp_year is None or card_cvc is None or card_name is None:
+            return Response(
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    data={
+                        KEY_MESSAGE: "error",
+                        KEY_PAYLOAD: "Please Enter Card Details",
+                        KEY_STATUS: 0
+                    },
+                )
         
         if not email:
             return Response(
@@ -209,17 +225,43 @@ class SignUpAPIViewAPIView(APIView):
             user.set_password(password)
             user.email_verified = False
             user.save()
-            # create_stripe_customer(user, first_name + " " last_name + , email)
-            
-            verification_token = generate_verification_token()
-            verification_link = generate_user_account_verification_link(verification_token, "verify-email?e=")
-            EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
-            send_account_verification_mail("Verify your email to create your Join Real World Account",first_name, verification_link, email)
+            card_data = {
+                'card[number]': card_number,
+                'card[exp_month]': card_exp_month,
+                'card[exp_year]': card_exp_year,
+                'card[cvc]': card_cvc,
+                'card[name]': card_name
+            }
+            card_token = create_user_card_token(user, card_data)
+            card_token = card_token['id']
+            cus_data = {
+                'name': first_name + " " + last_name,
+                'email': email,
+                'source': card_token
+            }
+            customer_data = create_card_customer(user, cus_data)
+            customer_id = customer_data['id']
+            subscription_data = {
+                'customer': customer_id,
+                'items[0][price]': price_id,
+                'payment_behavior': 'error_if_incomplete',
+                'off_session': 'true'
+            }
+            subscription_data = create_user_subscription(user, subscription_data)
+            # verification_token = generate_verification_token()
+            # verification_link = generate_user_account_verification_link(verification_token, "verify-email?e=")
+            # EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
+            # send_account_verification_mail("Verify your email to create your Join Real World Account",first_name, verification_link, email)
+            data = {
+                'data': subscription_data,
+                "customer_id": customer_id,
+                "price_id": price_id
+            }
             return Response(
                     status=status.HTTP_200_OK,
                     data={
                         KEY_MESSAGE: "Sucess",
-                        KEY_PAYLOAD: "Please Verify Your Email Address through sent email",
+                        KEY_PAYLOAD: data,
                         KEY_STATUS: 1
                     },
                 )

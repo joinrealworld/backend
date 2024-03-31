@@ -4,9 +4,11 @@ from django.conf import settings
 from payment.models import *
 import requests
 from constants.commons import handle_exceptions
+from user.serializers import UserSimpleSerializer
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 stripe_base_url = settings.STRIPE_BASE_URL
+stripe_publishable_key = settings.STRIPE_PUBLISHABLE_KEY
 
 def create_stripe_customer(user, name, email):
 	existing_customer = CustomerDetails.objects.filter(user=user, customer_id__isnull=False).first()
@@ -36,7 +38,7 @@ def fetch_price_list():
 	return stripe.Price.list()
 
 def creat_stripe_subscription_payment(customer_id, price_id):
-	return stripe.Subscription.create(customer=customer_id, items=[{"price": price_id}], payment_behavior="error_if_incomplete", trial_period_days=0)
+	return stripe.Subscription.create(customer=customer_id, items=[{"price": price_id}], payment_behavior="error_if_incomplete",  off_session=True)
 
 def fetch_stripe_subscription_list(subscription_id):
 	return stripe.Subscription.retrieve(subscription_id)
@@ -53,3 +55,81 @@ def fetch_customer_card_list(customer_id):
 
 def cancle_customer_subscription(subscription_id):
 	return stripe.Subscription.cancel(subscription_id)
+
+###
+def create_customer_card_token(data):
+	url = stripe_base_url+'/v1/tokens'
+	headers = {
+	    'Authorization': 'Bearer '+stripe_publishable_key,
+	    'Content-Type': 'application/x-www-form-urlencoded',
+	    'Accept': 'application/json'
+	}
+	response = requests.post(url, headers=headers, data=data)
+	print("67-----", response.json()['id'])
+
+	return response.json()
+
+def create_customer(data):
+	url = stripe_base_url+'/v1/customers'
+	headers = {
+	    'Authorization': 'Bearer '+settings.STRIPE_SECRET_KEY,
+	    'Content-Type': 'application/x-www-form-urlencoded'
+	}
+	
+	response = requests.post(url, headers=headers, data=data)
+	return response.json()
+
+def create_subscription(data):
+	url = stripe_base_url+'/v1/subscriptions'
+	headers = {
+	    'Authorization': 'Bearer '+settings.STRIPE_SECRET_KEY,
+	    'Content-Type': 'application/x-www-form-urlencoded'
+	}
+	response = requests.post(url, headers=headers, data=data)
+	return response.json()
+
+def create_user_card_token(user, data):
+	url = stripe_base_url+'/v1/tokens'
+	headers = {
+	    'Authorization': 'Bearer '+stripe_publishable_key,
+	    'Content-Type': 'application/x-www-form-urlencoded',
+	    'Accept': 'application/json'
+	}
+	response = requests.post(url, headers=headers, data=data)
+	card_token = response.json()['id']
+	card_id = response.json()['card']['id']
+	CustomerDetails.objects.create(user = user, card_id=card_id, data=response.json(), has_card=True,)
+	return response.json()
+
+def create_card_customer(user, data):
+	url = stripe_base_url+'/v1/customers'
+	headers = {
+	    'Authorization': 'Bearer '+settings.STRIPE_SECRET_KEY,
+	    'Content-Type': 'application/x-www-form-urlencoded'
+	}
+	
+	response = requests.post(url, headers=headers, data=data)
+	customer_details = CustomerDetails.objects.get(user = user)
+	customer_details.customer_id = response.json()['id']
+	customer_details.save()
+	return response.json()
+
+def create_user_subscription(user, data):
+	url = stripe_base_url+'/v1/subscriptions'
+	headers = {
+	    'Authorization': 'Bearer '+settings.STRIPE_SECRET_KEY,
+	    'Content-Type': 'application/x-www-form-urlencoded'
+	}
+	response = requests.post(url, headers=headers, data=data)
+	CustomerPayment.objects.create(user = user, price_id=data['items[0][price]'], customer_id=data['customer'], subscription_id=response.json()['id'], plan=response.json()['plan']['id'], currency=response.json()['plan']['currency'], amount=response.json()['plan']['amount'], data=response.json(), status=response.json()['status'])
+	print("125-----",response.json()['status'])
+	if response.json()['status'] == 'active':
+		user.email_verified = True
+		user.save()
+		res = user.get_tokens_for_user()
+		user_serializer = UserSimpleSerializer(user, many=False)
+		return {"token": res['access'], "user": user_serializer.data}
+	else:
+		return response.json()
+
+
