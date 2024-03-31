@@ -7,6 +7,7 @@ class CustomerDetails(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
 	customer_id = models.CharField(max_length=128,null=True, blank=True)
+	card_id = models.CharField(max_length=128,null=True, blank=True)
 	data = models.JSONField(null=True, blank=True)
 	has_card = models.BooleanField(default = False)
 	created_at = models.DateTimeField(auto_now_add=True)
