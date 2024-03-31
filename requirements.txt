@@ -38,6 +38,7 @@ ruamel.yaml.clib==0.2.7
 s3transfer==0.6.1
 six==1.15.0
 sqlparse==0.4.4
+stripe==8.6.0
 typing_extensions==4.10.0
 uritemplate==3.0.1
 urllib3==1.25.11
