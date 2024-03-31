@@ -97,7 +97,7 @@ class CreateCustomerCardAPIView(APIView):
 		)
 
 class FetchSubscriptionsAPIView(APIView):
-	permission_classes = [IsUserAuthenticated]
+	permission_classes = []
 
 	@handle_exceptions
 	def get(self, request):

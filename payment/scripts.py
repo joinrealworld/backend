@@ -9,6 +9,7 @@ from user.serializers import UserSimpleSerializer
 stripe.api_key = settings.STRIPE_SECRET_KEY
 stripe_base_url = settings.STRIPE_BASE_URL
 stripe_publishable_key = settings.STRIPE_PUBLISHABLE_KEY
+stripe_product_id = settings.STRIPE_PRODUCT_ID
 
 def create_stripe_customer(user, name, email):
 	existing_customer = CustomerDetails.objects.filter(user=user, customer_id__isnull=False).first()
@@ -35,7 +36,7 @@ def create_custormer_card_on_stripe(customer_id, source=None):
 
 def fetch_price_list():
 	""" this function will return all listed subscription under the product """
-	return stripe.Price.list()
+	return stripe.Price.list(product=stripe_product_id)
 
 def creat_stripe_subscription_payment(customer_id, price_id):
 	return stripe.Subscription.create(customer=customer_id, items=[{"price": price_id}], payment_behavior="error_if_incomplete",  off_session=True)
