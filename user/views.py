@@ -1027,6 +1027,28 @@ class SendVerificationMailAPIView(APIView):
         )
 
 
+class CheckEmailAPIView(APIView):
+    permission_classes = [AllowAny]
 
-
-
+    @handle_exceptions
+    def post(self, request):
+        email = request.data.get("email", None)
+        try:
+            user = User.objects.get(email = email)
+        except Exception as e:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "Email doesn't exist! Please register first.",
+                    KEY_STATUS: 0
+                }
+            )
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Email Exists.",
+                KEY_STATUS: 1
+            }
+        )

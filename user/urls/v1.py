@@ -23,4 +23,5 @@ urlpatterns = [
     path('theme', views.UpdateThemeAPIView.as_view(), name='update-theme'),
     path('sound_effect', views.UpdateSoundEffectAPIView.as_view(), name='sound-effect'),
     path('change/authentication', views.ChangeAuthenticationAPIView.as_view(), name='change-authentication'),
+    path('check/email', views.CheckEmailAPIView.as_view(), name='check-email-api-exists'),
 	]

@@ -70,8 +70,8 @@ def create_customer_card_token(data):
 
 	return response.json()
 
-def create_customer(data):
-	url = stripe_base_url+'/v1/customers'
+def create_customer(data, customer_id):
+	url = stripe_base_url+'/v1/customers/'+customer_id
 	headers = {
 	    'Authorization': 'Bearer '+settings.STRIPE_SECRET_KEY,
 	    'Content-Type': 'application/x-www-form-urlencoded'
@@ -132,5 +132,15 @@ def create_user_subscription(user, data):
 		return {"token": res['access'], "user": user_serializer.data}
 	else:
 		return response.json()
+
+
+def fetch_all_stripe_customer():
+	return stripe.Customer.list()
+
+def fetch_stripe_customer(customer_id):
+	return stripe.Customer.retrieve(customer_id)
+
+
+
 
 
