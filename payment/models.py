@@ -11,6 +11,7 @@ class CustomerDetails(models.Model):
 	data = models.JSONField(null=True, blank=True)
 	has_card = models.BooleanField(default = False)
 	created_at = models.DateTimeField(auto_now_add=True)
+	attach_source = models.JSONField(null=True, blank=True)
 	
 	def __str__(self):
 		return f"{self.id} -- {self.user} -- {self.created_at}"

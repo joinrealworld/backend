@@ -12,5 +12,4 @@ urlpatterns = [
     path('card_list', views.CustomerCardListAPIView.as_view(), name='customer-card-list'),
     path('create_card_token', views.CustomerCardTokenAPIView.as_view(), name='customer-card-token'),
     path('fetch/<str:entity>/customer', views.FetchAllStripeCustomerAPIView.as_view(), name='fetch-stripe-customer'),
-    
 ]

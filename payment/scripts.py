@@ -99,7 +99,9 @@ def create_user_card_token(user, data):
 	response = requests.post(url, headers=headers, data=data)
 	card_token = response.json()['id']
 	card_id = response.json()['card']['id']
-	CustomerDetails.objects.create(user = user, card_id=card_id, data=response.json(), has_card=True,)
+	customer_details, created = CustomerDetails.objects.get_or_create(user = user, card_id=card_id, has_card=True,)
+	customer_details.data=response.json()
+	customer_details.save()
 	return response.json()
 
 def create_card_customer(user, data):
@@ -110,9 +112,10 @@ def create_card_customer(user, data):
 	}
 	
 	response = requests.post(url, headers=headers, data=data)
-	customer_details = CustomerDetails.objects.get(user = user)
-	customer_details.customer_id = response.json()['id']
-	customer_details.save()
+	customer_details = CustomerDetails.objects.filter(user = user)
+	for cus_detail in customer_details:
+		cus_detail.customer_id = response.json()['id']
+		cus_detail.save()
 	return response.json()
 
 def create_user_subscription(user, data):
@@ -133,6 +136,13 @@ def create_user_subscription(user, data):
 	else:
 		return response.json()
 
+def create_stripe_customer_source(user, data):
+	response = stripe.Source.create(type="ach_credit_transfer",currency="usd",owner={"email": user.email},)
+	return response
+
+def attach_stripe_customer_source(user, customer_id):
+	response = stripe.Customer.create_source("cus_9s6XKzkNRiz8i3",source="src_1NfRGv2eZvKYlo2Cv7NAImBL",)
+	return response
 
 def fetch_all_stripe_customer():
 	return stripe.Customer.list()
@@ -140,7 +150,20 @@ def fetch_all_stripe_customer():
 def fetch_stripe_customer(customer_id):
 	return stripe.Customer.retrieve(customer_id)
 
-
+def attache_stripe_customer_source(user, customer_id, card_token):
+	print("151------", customer_id)
+	print("152------", card_token)
+	try:
+		res = stripe.Customer.create_source(customer_id,source=card_token)
+	except Exception as e:
+		print("156----", e)
+	print("153----", res)
+	customer_details = CustomerDetails.objects.filter(user = user)
+	if customer_details:
+		customer_details = customer_details.last()
+	customer_details.attach_source = res
+	customer_details.save()
+	return res
 
 
 

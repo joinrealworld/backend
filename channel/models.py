@@ -22,6 +22,21 @@ def course_pic_path(instance, filename):
         filename
     )
 
+def master_category_pic_path(instance, filename):
+    return 'category_pic/{}/{}'.format(
+        instance.id,
+        filename
+    )
+
+class MasterCategory(models.Model):
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+	name = models.CharField(max_length=128)
+	category_pic = models.ImageField(upload_to=master_category_pic_path, blank=True, null=True)
+	description = RichTextField(blank = True)
+
+	def __str__(self):
+	    return f"{self.name}"
+
 class Category(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	name = models.CharField(max_length=128)
@@ -30,6 +45,7 @@ class Category(models.Model):
 
 	def __str__(self):
 	    return f"{self.name}"
+
 
 class Courses(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)

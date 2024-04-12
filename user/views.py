@@ -241,12 +241,19 @@ class SignUpAPIViewAPIView(APIView):
             }
             customer_data = create_card_customer(user, cus_data)
             customer_id = customer_data['id']
+            print("244------", customer_id)
+            print("245------", card_token)
+            print("246------", user)
+            card_token = create_user_card_token(user, card_data)
+            card_token = card_token['id']
+            create_customer_source = attache_stripe_customer_source(user, customer_id, card_token)
             subscription_data = {
                 'customer': customer_id,
                 'items[0][price]': price_id,
                 'payment_behavior': 'error_if_incomplete',
                 'off_session': 'true'
             }
+
             subscription_data = create_user_subscription(user, subscription_data)
             # verification_token = generate_verification_token()
             # verification_link = generate_user_account_verification_link(verification_token, "verify-email?e=")

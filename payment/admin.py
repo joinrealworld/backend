@@ -3,7 +3,7 @@ from payment.models import *
 
 # Register your models here.
 class CustomerDetailsAdmin(admin.ModelAdmin):
-    fields = ['user','customer_id','data','has_card']
+    fields = ['user','customer_id', 'card_id','data', 'attach_source','has_card']
     list_display = ('id', 'user','customer_id','has_card','created_at')
     list_per_page = 25
 
