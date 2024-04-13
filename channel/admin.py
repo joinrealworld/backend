@@ -2,9 +2,16 @@ from django.contrib import admin
 from channel.models import *
 # Register your models here.
 
-class CategoryAdmin(admin.ModelAdmin):
+class MasterCategoryAdmin(admin.ModelAdmin):
     fields = ['name', 'category_pic', 'description']
     list_display = ('id','name', 'category_pic', 'description')
+    list_per_page = 25
+
+admin.site.register(MasterCategory, MasterCategoryAdmin)
+
+class CategoryAdmin(admin.ModelAdmin):
+    fields = ['name', 'category_pic', 'master_category','description',]
+    list_display = ('id','name', 'category_pic', 'master_category','description')
     list_per_page = 25
 
 admin.site.register(Category, CategoryAdmin)

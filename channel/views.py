@@ -34,13 +34,28 @@ from user.permissions import IsUserAuthenticated
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
 
+class FetchMasterCategoryAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def get(self, request):
+        category = MasterCategory.objects.all()
+        context = {"user_id":request.user.id, 'request': self.request}
+        return Response(
+                status=status.HTTP_200_OK,
+                data={
+                    KEY_MESSAGE: "category data sent successfully.",
+                    KEY_PAYLOAD: MasterCategorySerializer(category, many = True, context=context).data,
+                    KEY_STATUS: 1
+                },
+            )
 
 class FetchCategoryAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
     @handle_exceptions
-    def get(self, request):
-        category = Category.objects.all()
+    def post(self, request, master_category_id):
+        category = Category.objects.filter(master_category__uuid = master_category_id)
         context = {"user_id":request.user.id, 'request': self.request}
         return Response(
                 status=status.HTTP_200_OK,

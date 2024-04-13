@@ -8,14 +8,39 @@ import random
 from user.models import User
 from channel.scripts import count_completed_category, count_completed_course
 
+class MasterCategorySerializer(serializers.ModelSerializer):
+	# category_pic = serializers.SerializerMethodField()
+	no_of_category = serializers.SerializerMethodField()
+    
+	class Meta:
+		model = Category
+		fields = ('id', 'uuid','name', 'category_pic', 'description', 'no_of_category')
+
+	# def get_category_pic(self, obj):
+		# # request = self.context.get('request')
+
+		# # # Check if request is available
+		# # if request:
+		# # 	# Generate absolute URL using reverse and request
+		# # 	absolute_url = request.build_absolute_uri(obj.category_pic.url)
+		# # 	return absolute_url
+
+		# # Fallback to relative URL if request is not available
+		# return obj.category_pic if obj.category_pic else ""
+
+	def get_no_of_category(self, obj):
+		return Category.objects.filter(master_category = obj).count()
+
+
 class CategorySerializer(serializers.ModelSerializer):
 	# category_pic = serializers.SerializerMethodField()
 	no_of_courses = serializers.SerializerMethodField()
 	completed = serializers.SerializerMethodField()
+	master_category__uuid = serializers.SerializerMethodField()
     
 	class Meta:
 		model = Category
-		fields = ('id', 'uuid','name', 'category_pic', 'description', 'no_of_courses', 'completed')
+		fields = ('id', 'uuid','name', 'category_pic', 'description', 'no_of_courses', 'completed', 'master_category__uuid')
 
 	# def get_category_pic(self, obj):
 		# # request = self.context.get('request')
@@ -36,6 +61,9 @@ class CategorySerializer(serializers.ModelSerializer):
 		user_id = self.context.get('user_id')
 		user = User.objects.get(pk=user_id)
 		return count_completed_category(user, obj)
+
+	def get_master_category__uuid(self, obj):
+		return obj.master_category.uuid if obj.master_category else None
 
 class CoursesSerializer(serializers.ModelSerializer):
 	completed = serializers.SerializerMethodField()

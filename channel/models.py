@@ -23,7 +23,7 @@ def course_pic_path(instance, filename):
     )
 
 def master_category_pic_path(instance, filename):
-    return 'category_pic/{}/{}'.format(
+    return 'master_category_pic/{}/{}'.format(
         instance.id,
         filename
     )
@@ -31,7 +31,7 @@ def master_category_pic_path(instance, filename):
 class MasterCategory(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	name = models.CharField(max_length=128)
-	category_pic = models.ImageField(upload_to=master_category_pic_path, blank=True, null=True)
+	category_pic = models.FileField(upload_to=master_category_pic_path, blank=True, null=True)
 	description = RichTextField(blank = True)
 
 	def __str__(self):
@@ -42,6 +42,7 @@ class Category(models.Model):
 	name = models.CharField(max_length=128)
 	category_pic = models.ImageField(upload_to=category_pic_path, blank=True, null=True)
 	description = RichTextField(blank = True)
+	master_category =  models.ForeignKey(MasterCategory, null=True, blank=True, on_delete=models.CASCADE)
 
 	def __str__(self):
 	    return f"{self.name}"
