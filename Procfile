@@ -1,1 +1,1 @@
-web: gunicorn jrw.wsgi:application --log-file - -b 0.0.0.0:5000
+web: gunicorn jrw.wsgi:application --log-file - -b 0.0.0.0:$PORT
