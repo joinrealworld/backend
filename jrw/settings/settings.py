@@ -50,6 +50,7 @@ ROOT_URLCONF = 'jrw.urls'
 
 # Application definition
 DJANGO_APPS = (
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,14 +65,16 @@ THIRD_PARTY_APPS = (
     'ckeditor',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist'
+    'rest_framework_simplejwt.token_blacklist',
+    'channels'
 )
 
 LOCAL_APPS = (
     'user',
     'notification',
     'channel',
-    'payment'
+    'payment',
+    'chat'
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -122,8 +125,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-WSGI_APPLICATION = 'jrw.wsgi.application'
-
+# WSGI_APPLICATION = 'jrw.wsgi.application'
+ASGI_APPLICATION = "jrw.routing.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    }
+}
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 6379)],
+#         },
+#     },
+# }
 # LOGGING = {
 #     'version': 1,
 #     'disable_existing_loggers': False,
@@ -202,6 +218,7 @@ DATABASES = {'default': env.db('DATABASE_URL', default='postgresql://postgres:@l
 # DATABASES = {
 #     "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 # }
+
 STATICFILES_DIRS = (
     str(APPS_DIR.path('static')),
     os.path.join(APPS_DIR, 'attachments')
