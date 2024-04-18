@@ -28,10 +28,17 @@ def master_category_pic_path(instance, filename):
         filename
     )
 
+def master_category_pic_2_path(instance, filename):
+    return 'master_category_2_pic/{}/{}'.format(
+        instance.id,
+        filename
+    )
+
 class MasterCategory(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	name = models.CharField(max_length=128)
 	category_pic = models.FileField(upload_to=master_category_pic_path, blank=True, null=True)
+	category_pic2 = models.FileField(upload_to=master_category_pic_2_path, blank=True, null=True)
 	description = RichTextField(blank = True)
 
 	def __str__(self):

@@ -39,7 +39,7 @@ class FetchMasterCategoryAPIView(APIView):
 
     @handle_exceptions
     def get(self, request):
-        category = MasterCategory.objects.all()
+        category = MasterCategory.objects.all().order_by('id')
         context = {"user_id":request.user.id, 'request': self.request}
         return Response(
                 status=status.HTTP_200_OK,
@@ -54,7 +54,7 @@ class FetchCategoryAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
     @handle_exceptions
-    def post(self, request, master_category_id):
+    def get(self, request, master_category_id):
         category = Category.objects.filter(master_category__uuid = master_category_id)
         context = {"user_id":request.user.id, 'request': self.request}
         return Response(

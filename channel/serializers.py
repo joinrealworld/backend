@@ -13,8 +13,8 @@ class MasterCategorySerializer(serializers.ModelSerializer):
 	no_of_category = serializers.SerializerMethodField()
     
 	class Meta:
-		model = Category
-		fields = ('id', 'uuid','name', 'category_pic', 'description', 'no_of_category')
+		model = MasterCategory
+		fields = ('id', 'uuid','name', 'category_pic', 'category_pic2','description', 'no_of_category')
 
 	# def get_category_pic(self, obj):
 		# # request = self.context.get('request')
