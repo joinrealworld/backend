@@ -1056,3 +1056,103 @@ class CheckEmailAPIView(APIView):
                 KEY_STATUS: 1
             }
         )
+
+class PurchesEmojiAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def post(self, request):
+        serializer = PurchesEmojiSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        emoji = serializer.validated_data.get('emoji')
+        price = serializer.validated_data.get('price')
+        user_coin = request.user.coin
+
+        if user_coin < price:
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "You don't have enough coins.",
+                    KEY_STATUS: 0
+                }
+            )
+
+        user_emoji = UserPurchesedEmoji.objects.create(emoji=emoji, price=price, user=request.user)
+        request.user.coin -= price
+        request.user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: f"{emoji} purchased successfully.",
+                KEY_STATUS: 1
+            }
+        )
+
+class PurchesTuneAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def post(self, request):
+        serializer = PurchesTuneSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        tune = serializer.validated_data.get('tune')
+        price = serializer.validated_data.get('price')
+        user_coin = request.user.coin
+
+        if user_coin < price:
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "You don't have enough coins.",
+                    KEY_STATUS: 0
+                }
+            )
+
+        user_tune = UserPurchesedTune.objects.create(tune=tune, price=price, user=request.user)
+        request.user.coin -= price
+        request.user.save()
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: f"{tune} purchased successfully.",
+                KEY_STATUS: 1
+            }
+        )
+
+class ListMyEmojiAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def get(self, request):
+        user_emojies = UserPurchesedEmoji.objects.filter(user=request.user)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: UserPurchesedEmojiSerializer(user_emojies, many=True).data,
+                KEY_STATUS: 1
+            }
+        )
+
+class ListMyTuneAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def get(self, request):
+        user_tune = UserPurchesedTune.objects.filter(user=request.user)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: UserPurchesedTuneSerializer(user_tune, many=True).data,
+                KEY_STATUS: 1
+            }
+        )
+

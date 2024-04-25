@@ -242,4 +242,21 @@ class Referral(models.Model):
     def __str__(self):
         return f"{self.referring_user.username} referred {self.referred_user.username}"
 
+class UserPurchesedEmoji(models.Model):
+    emoji = models.CharField(max_length=255)
+    price = models.PositiveIntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.id}"
+
+class UserPurchesedTune(models.Model):
+    tune = models.CharField(max_length=255)
+    price = models.PositiveIntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.id}"
 

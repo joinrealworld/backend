@@ -82,5 +82,30 @@ class UpdateAuthenticationSerializer(serializers.Serializer):
     authentication_type = serializers.ChoiceField(choices=User.FA_CHOICES, required = False)
     authentication_code = serializers.CharField(max_length=6, required=False)
 
-    
+class PurchesEmojiSerializer(serializers.Serializer):
+    emoji = serializers.CharField()
+    price = serializers.IntegerField()
 
+    def validate_price(self, value):
+        if value <= 0:
+            raise ValidationError("Price must be a positive integer.")
+        return value
+
+class PurchesTuneSerializer(serializers.Serializer):
+    tune = serializers.CharField()
+    price = serializers.IntegerField()
+
+    def validate_price(self, value):
+        if value <= 0:
+            raise ValidationError("Price must be a positive integer.")
+        return value
+
+class UserPurchesedEmojiSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserPurchesedEmoji
+        fields = ['id', 'emoji', 'price', 'timestamp']
+
+class UserPurchesedTuneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserPurchesedTune
+        fields = ['id', 'tune', 'price', 'timestamp']

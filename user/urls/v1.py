@@ -24,4 +24,8 @@ urlpatterns = [
     path('sound_effect', views.UpdateSoundEffectAPIView.as_view(), name='sound-effect'),
     path('change/authentication', views.ChangeAuthenticationAPIView.as_view(), name='change-authentication'),
     path('check/email', views.CheckEmailAPIView.as_view(), name='check-email-api-exists'),
+    path('purches/emoji', views.PurchesEmojiAPIView.as_view(), name='purches-emoji'),
+    path('purches/tune', views.PurchesTuneAPIView.as_view(), name='purches-tune'),
+    path('fetch/purchesed/emoji', views.ListMyEmojiAPIView.as_view(), name='list-my-emoji'),
+    path('fetch/purchesed/tune', views.ListMyTuneAPIView.as_view(), name='list-my-tune'),
 	]
