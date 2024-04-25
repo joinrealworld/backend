@@ -36,12 +36,11 @@ from polls.serializers import *
 # Create your views here.
 
 class CreatePollAPIView(APIView):
-	permission_classes = [IsUserAuthenticated]
+	permission_classes = [IsLoggedInUserOrAdmin]
 
 	@handle_exceptions
 	def post(self, request):
 		serializer = CreatePollSerializer(data=request.data)
-
 		if not serializer.is_valid():
 		    errors = serializer.errors
 		    return Response(
@@ -115,4 +114,43 @@ class AnswerPollAPIView(APIView):
 		    },
 		    status=status.HTTP_200_OK
 		)
+
+# class FetchDailyCheckListAPIView(APIView):
+# 	permission_classes = [IsUserAuthenticated]
+
+# 	@handle_exceptions
+# 	def post(self, request):
+# 		serializer = AnswerPollSerializer(data=request.data)
+
+# 		if not serializer.is_valid():
+# 			errors = serializer.errors
+# 			return Response(
+# 				{
+# 					KEY_MESSAGE: "Validation Error",
+# 					KEY_PAYLOAD: errors,
+# 					KEY_STATUS: 0
+# 				},
+# 				status=status.HTTP_400_BAD_REQUEST
+# 			)
+
+# 		question_id = serializer.validated_data.get('question_id')
+# 		selected_option_id = serializer.validated_data.get('selected_option_id')
+# 		obj, created = UserPoll.objects.get_or_create(poll_quetion = MasterPollQuetion.objects.get(uuid = question_id), user = request.user)
+# 		obj.selected_option = MasterPollOption.objects.get(uuid = selected_option_id)
+# 		obj.is_checked = True
+# 		obj.save()
+# 		return Response(
+# 			{
+# 				KEY_MESSAGE: "Success",
+# 				KEY_PAYLOAD: "Answer processed successfully.",
+# 				KEY_STATUS: 1
+# 			},
+# 			status=status.HTTP_200_OK
+# 		)
+
+
+
+
+
+
 

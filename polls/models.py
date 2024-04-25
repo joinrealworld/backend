@@ -20,3 +20,12 @@ class UserPoll(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank = False)
 	poll_quetion = models.ForeignKey(MasterPollQuetion, on_delete=models.CASCADE, null=True, blank = True)
 	created_at = models.DateTimeField(auto_now_add=True)
+
+class MasterCheckList(models.Model):
+	checklist_data = models.TextField()
+	created_at = models.DateTimeField(auto_now_add=True)
+
+class UserCheckedList(models.Model):
+	checked_data = models.TextField()
+	user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank = False)
+	created_at = models.DateTimeField(auto_now_add=True)
