@@ -26,6 +26,7 @@ app_urls_v1 = [
     path('api/v1/channel/', include('channel.urls.v1')),
     path('api/v1/payment/', include('payment.urls.v1')),
     path('api/v1/polls/', include('polls.urls.v1')),
+    path('api/v1/checklist/', include('checklist.urls.v1')),
 ]
 
 urlpatterns = app_urls_v1
