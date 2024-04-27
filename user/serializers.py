@@ -103,12 +103,12 @@ class PurchesTuneSerializer(serializers.Serializer):
 class UserPurchesedEmojiSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPurchesedEmoji
-        fields = ['id', 'emoji', 'price', 'timestamp']
+        fields = ['id', 'uuid','emoji', 'price', 'selected','timestamp']
 
 class UserPurchesedTuneSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPurchesedTune
-        fields = ['id', 'tune', 'price', 'timestamp']
+        fields = ['id', 'uuid','tune', 'price', 'selected','timestamp']
 
 class WallPaperSerializer(serializers.ModelSerializer):
     is_purchase = serializers.SerializerMethodField()

@@ -243,22 +243,26 @@ class Referral(models.Model):
         return f"{self.referring_user.username} referred {self.referred_user.username}"
 
 class UserPurchesedEmoji(models.Model):
-    emoji = models.CharField(max_length=255)
-    price = models.PositiveIntegerField(default=0)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+	emoji = models.CharField(max_length=255)
+	price = models.PositiveIntegerField(default=0)
+	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+	timestamp = models.DateTimeField(auto_now_add=True)
+	selected = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"{self.id}"
+	def __str__(self):
+	    return f"{self.id}"
 
 class UserPurchesedTune(models.Model):
-    tune = models.CharField(max_length=255)
-    price = models.PositiveIntegerField(default=0)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+	tune = models.CharField(max_length=255)
+	price = models.PositiveIntegerField(default=0)
+	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+	timestamp = models.DateTimeField(auto_now_add=True)
+	selected = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"{self.id}"
+	def __str__(self):
+	    return f"{self.id}"
 
 def wallpaper_path(instance, filename):
     return 'wallpaper/{}/{}'.format(
@@ -277,7 +281,7 @@ class UserWallPaper(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False)
 	wallpaper = models.ForeignKey(WallPaper, on_delete=models.CASCADE, null=False, blank=False)
 	is_purchase = models.BooleanField(default=True)
-	selected = models.BooleanField(default=True)
+	selected = models.BooleanField(default=False)
 	timestamp = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):

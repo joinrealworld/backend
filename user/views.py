@@ -1242,3 +1242,63 @@ class ChangeWallPapaerAPIView(APIView):
                 KEY_STATUS: 1
             }
         )
+
+class ChangeTuneAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def patch(self, request):
+        tune_uuid = request.data.get('uuid', None)
+        if UserPurchesedTune.objects.filter(uuid = tune_uuid).exists():
+            user_tune = UserPurchesedTune.objects.get(uuid = tune_uuid)
+            selected_tune = UserPurchesedTune.objects.get(uuid = tune_uuid)
+            selected_tune.selected = True
+            selected_tune.save()
+        else:
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "You need to purchase tune.",
+                    KEY_STATUS: 0
+                }
+            )
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Tune Changed Successfully.",
+                KEY_STATUS: 1
+            }
+        )
+
+class ChangeEmojiAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def patch(self, request):
+        emoji_uuid = request.data.get('uuid', None)
+        if UserPurchesedEmoji.objects.filter(uuid = emoji_uuid).exists():
+            user_emoji = UserPurchesedEmoji.objects.get(uuid = emoji_uuid)
+            selected_emoji = UserPurchesedEmoji.objects.get(uuid = emoji_uuid)
+            selected_emoji.selected = True
+            selected_emoji.save()
+        else:
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "You need to purchase Emoji.",
+                    KEY_STATUS: 0
+                }
+            )
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Emoji Changed Successfully.",
+                KEY_STATUS: 1
+            }
+        )

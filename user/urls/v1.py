@@ -31,4 +31,6 @@ urlpatterns = [
     path('fetch/wallpapers', views.FetchWallPapaerAPIView.as_view(), name='list-wallpaper'),
     path('buy/wallpapers', views.BuyWallPapaerAPIView.as_view(), name='buy-wallpaper'),
     path('change/wallpaper', views.ChangeWallPapaerAPIView.as_view(), name='change-wallpaper'),
+    path('change/tune', views.ChangeTuneAPIView.as_view(), name='change-tune'),
+    path('change/emoji', views.ChangeEmojiAPIView.as_view(), name='change-emoji'),
 	]
