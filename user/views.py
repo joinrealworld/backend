@@ -1156,3 +1156,89 @@ class ListMyTuneAPIView(APIView):
             }
         )
 
+
+class FetchWallPapaerAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def get(self, request):
+        wallpapers = WallPaper.objects.all()
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: WallPaperSerializer(wallpapers, many=True, context={'user': request.user}).data,
+                KEY_STATUS: 1
+            }
+        )
+
+class BuyWallPapaerAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def post(self, request):
+        wallpaper_uuid = request.data.get('uuid', None)
+        wallpaper = WallPaper.objects.get(uuid = wallpaper_uuid)
+        if UserWallPaper.objects.filter(user=request.user, wallpaper=wallpaper).exists():
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "You have already bought this wallpaper.",
+                    KEY_STATUS: 0
+                }
+            )
+        if wallpaper.price > request.user.coin:
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "You don't have enough coins.",
+                    KEY_STATUS: 0
+                }
+            )
+        UserWallPaper.objects.get_or_create(is_purchase=True, user=request.user, wallpaper=wallpaper)
+        request.user.coin -= wallpaper.price
+        request.user.save()
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Wallpaper Purchsed Successfully.",
+                KEY_STATUS: 1
+            }
+        )
+
+class ChangeWallPapaerAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def patch(self, request):
+        wallpaper_uuid = request.data.get('uuid', None)
+        wallpaper = WallPaper.objects.get(uuid = wallpaper_uuid)
+        if UserWallPaper.objects.filter(user=request.user, wallpaper=wallpaper).exists():
+            user_wallpapers = UserWallPaper.objects.filter(user=request.user, is_purchase=True, selected = True)
+            for wallpaper in user_wallpapers:
+                wallpaper.selected = False
+                wallpaper.save()
+            selected_wallpaper = UserWallPaper.objects.get(user=request.user, wallpaper=wallpaper)
+            selected_wallpaper.selected = True
+            selected_wallpaper.save()
+        else:
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "You need to purchase wallpaper.",
+                    KEY_STATUS: 0
+                }
+            )
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Wallpaper Changed Successfully.",
+                KEY_STATUS: 1
+            }
+        )

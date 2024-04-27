@@ -260,3 +260,26 @@ class UserPurchesedTune(models.Model):
     def __str__(self):
         return f"{self.id}"
 
+def wallpaper_path(instance, filename):
+    return 'wallpaper/{}/{}'.format(
+        instance.id,
+        filename
+    )
+
+class WallPaper(models.Model):
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+	wallpaper = models.ImageField(upload_to=wallpaper_path, blank=True, null=True)
+	price = models.PositiveIntegerField(default=0)
+	timestamp = models.DateTimeField(auto_now_add=True)
+
+class UserWallPaper(models.Model):
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+	user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False)
+	wallpaper = models.ForeignKey(WallPaper, on_delete=models.CASCADE, null=False, blank=False)
+	is_purchase = models.BooleanField(default=True)
+	selected = models.BooleanField(default=True)
+	timestamp = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+	    return f"{self.id}"
+

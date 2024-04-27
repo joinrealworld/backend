@@ -109,3 +109,25 @@ class UserPurchesedTuneSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPurchesedTune
         fields = ['id', 'tune', 'price', 'timestamp']
+
+class WallPaperSerializer(serializers.ModelSerializer):
+    is_purchase = serializers.SerializerMethodField()
+    selected = serializers.SerializerMethodField()
+
+    class Meta:
+        model = WallPaper
+        fields = ['id', 'uuid','wallpaper', 'price', 'is_purchase', 'selected']
+
+    def get_is_purchase(self, obj):
+        user = self.context.get('user')
+        if user:
+            return UserWallPaper.objects.filter(user=user, wallpaper=obj).exists()
+        return False
+
+    def get_selected(self, obj):
+        user = self.context.get('user')
+        if user:
+            user_wallpaper = UserWallPaper.objects.filter(user=user, wallpaper=obj).first()
+            if user_wallpaper:
+                return user_wallpaper.selected
+        return False

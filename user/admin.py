@@ -101,3 +101,11 @@ class FeebackAdmin(admin.ModelAdmin):
 admin.site.register(FeedBack, FeebackAdmin)
 
 admin.site.register(FAVerification)
+
+
+class WallPaperAdmin(admin.ModelAdmin):
+    fields = ['wallpaper', 'price']
+    list_display = ('id','wallpaper','price','timestamp')
+    list_per_page = 25
+
+admin.site.register(WallPaper, WallPaperAdmin)

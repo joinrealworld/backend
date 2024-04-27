@@ -28,4 +28,7 @@ urlpatterns = [
     path('purches/tune', views.PurchesTuneAPIView.as_view(), name='purches-tune'),
     path('fetch/purchesed/emoji', views.ListMyEmojiAPIView.as_view(), name='list-my-emoji'),
     path('fetch/purchesed/tune', views.ListMyTuneAPIView.as_view(), name='list-my-tune'),
+    path('fetch/wallpapers', views.FetchWallPapaerAPIView.as_view(), name='list-wallpaper'),
+    path('buy/wallpapers', views.BuyWallPapaerAPIView.as_view(), name='buy-wallpaper'),
+    path('change/wallpaper', views.ChangeWallPapaerAPIView.as_view(), name='change-wallpaper'),
 	]
