@@ -9,6 +9,11 @@ class CreatePollSerializer(serializers.Serializer):
 	question = serializers.CharField()
 	options = serializers.ListField(child=serializers.CharField())
 
+	def validate_options(self, value):
+	    if len(value) < 2:
+	        raise serializers.ValidationError("At least two options are required.")
+	    return value
+
 class MasterPollOptionSerializer(serializers.ModelSerializer):
 	no_of_selected_by_user = serializers.SerializerMethodField()
 

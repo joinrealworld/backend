@@ -1284,6 +1284,8 @@ class ChangeEmojiAPIView(APIView):
             selected_emoji = UserPurchesedEmoji.objects.get(uuid = emoji_uuid)
             selected_emoji.selected = True
             selected_emoji.save()
+            request.user.username = str(request.user.username) + str(selected_emoji.emoji)
+            request.user.save()
         else:
             return Response(
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY,

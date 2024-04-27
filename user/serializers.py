@@ -19,10 +19,13 @@ class EmailLoginSerializer(ModelSerializer):
 class UserSimpleSerializer(ModelSerializer):
     """ User Basic Information Serializer """
     customer_id = serializers.SerializerMethodField()
+    selected_emoji = serializers.SerializerMethodField()
+    selected_tune = serializers.SerializerMethodField()
+    selected_wallpaper = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('id', 'uuid','avatar', 'email','background', 'coin','theme', 'fa', 'fa_type', 'username', 'first_name', 'last_name', 'bio','email_verified', 'status', 'invisible', 'customer_id','referral_code')
+        fields = ('id', 'uuid','avatar', 'email','background', 'coin','theme', 'fa', 'is_admin','fa_type', 'username', 'first_name', 'last_name', 'bio','email_verified', 'status', 'invisible', 'customer_id','referral_code', 'selected_emoji','selected_tune', 'selected_wallpaper')
 
     def get_avatar(self, obj):
         return obj.avatar.url if obj.avatar else obj.dummy_avatar
@@ -33,6 +36,24 @@ class UserSimpleSerializer(ModelSerializer):
         except Exception as e:
             print("get_customer_id serializer method exception -->", e)
             return ""
+
+    def get_selected_emoji(self, obj):
+        user_emoji = UserPurchesedEmoji.objects.filter(user = obj, selected = True)
+        if user_emoji.exists():
+            return user_emoji.last().emoji
+        return ""
+
+    def get_selected_tune(self, obj):
+        user_tune = UserPurchesedTune.objects.filter(user = obj, selected = True)
+        if user_tune.exists():
+            return user_tune.last().tune
+        return ""
+
+    def get_selected_wallpaper(self, obj):
+        user_wallpaper = UserWallPaper.objects.filter(user = obj, selected = True)
+        if user_wallpaper.exists():
+            return user_wallpaper.last().wallpaper.wallpaper.url
+        return ""
 
 
 class ChangeInvisibleSerializer(serializers.Serializer):
