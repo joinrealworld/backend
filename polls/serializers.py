@@ -23,8 +23,7 @@ class MasterPollOptionSerializer(serializers.ModelSerializer):
 
 	def get_no_of_selected_by_user(self, obj):
 		user_count = User.objects.all().count()
-		user_poll_count = UserPoll.objects.filter(is_checked = True, selected_option = obj).count()
-		return str(user_poll_count) + " out of " + str(user_count)
+		return UserPoll.objects.filter(is_checked = True, selected_option = obj).count()
 
 class MasterPollQuetionSerializer(serializers.ModelSerializer):
 	options = MasterPollOptionSerializer(source='masterpolloption_set', many=True)
