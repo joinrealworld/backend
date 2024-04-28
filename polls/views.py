@@ -72,7 +72,7 @@ class PollListAPIView(APIView):
 
 	@handle_exceptions
 	def get(self, request):
-		master_poll_quetion = MasterPollQuetion.objects.all().order_by("created_at")
+		master_poll_quetion = MasterPollQuetion.objects.all().order_by("-created_at")
 		return Response(
 		    {
 		        KEY_MESSAGE: "Success",
