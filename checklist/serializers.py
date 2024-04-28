@@ -3,15 +3,26 @@ from rest_framework.serializers import ModelSerializer
 from checklist.models import *
 
 
-# class MasterPollOptionSerializer(serializers.ModelSerializer):
-# 	no_of_selected_by_user = serializers.SerializerMethodField()
+class MasterCheckListSerializer(serializers.ModelSerializer):
+	checklist_data = serializers.SerializerMethodField()
 
-# 	class Meta:
-# 		model = MasterPollOption
-# 		fields = ( 'id','uuid', 'option', 'no_of_selected_by_user')
+	class Meta:
+		model = MasterCheckList
+		fields = ( 'checklist_data',)
 
-# 	def get_no_of_selected_by_user(self, obj):
-# 		user_count = User.objects.all().count()
-# 		user_poll_count = UserPoll.objects.filter(is_checked = True, selected_option = obj).count()
-# 		return str(user_poll_count) + " out of " + str(user_count)
+	def get_checklist_data(self, obj):
+		return obj.data.split(",")
 
+class UserDailyCheckListSerializer(serializers.ModelSerializer):
+	selected_data = serializers.SerializerMethodField()
+	user = serializers.SerializerMethodField()
+
+	class Meta:
+		model = UserDailyCheckList
+		fields = ( 'user', 'selected_data', 'created_at')
+
+	def get_selected_data(self, obj):
+		return obj.selected.split(",")
+
+	def get_user(self, obj):
+		return obj.user.username
