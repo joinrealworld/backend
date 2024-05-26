@@ -4,25 +4,40 @@ from checklist.models import *
 
 
 class MasterCheckListSerializer(serializers.ModelSerializer):
-	checklist_data = serializers.SerializerMethodField()
+    class Meta:
+        model = MasterCheckList
+        fields = ('checklist',)
 
-	class Meta:
-		model = MasterCheckList
-		fields = ( 'checklist_data',)
+class DailyCheckedSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
 
-	def get_checklist_data(self, obj):
-		return obj.data.split(",")
+    class Meta:
+        model = DailyChecked
+        fields = ('user', 'selected', 'created_at')
+
+    def get_user(self, instance):
+        return instance.user.username
 
 class UserDailyCheckListSerializer(serializers.ModelSerializer):
-	selected_data = serializers.SerializerMethodField()
-	user = serializers.SerializerMethodField()
+    checked = serializers.SerializerMethodField()
+    checklist = serializers.SerializerMethodField()
 
-	class Meta:
-		model = UserDailyCheckList
-		fields = ( 'user', 'selected_data', 'created_at')
+    class Meta:
+        model = UserDailyCheckList
+        fields = ('uuid', 'checklist', 'checked')
 
-	def get_selected_data(self, obj):
-		return obj.selected.split(",")
+    def get_checklist(self, instance):
+    	return instance.master_checklist.checklist
 
-	def get_user(self, obj):
-		return obj.user.username
+    def get_checked(self, instance):
+        checked_objects = instance.dailychecked_set.all()
+        grouped_checked = {}
+
+        for checked in checked_objects:
+            selected_key = checked.selected
+            if selected_key not in grouped_checked:
+                grouped_checked[selected_key] = []
+            grouped_checked[selected_key].append(DailyCheckedSerializer(checked).data)
+
+        return grouped_checked
+

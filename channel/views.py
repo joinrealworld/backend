@@ -33,6 +33,8 @@ from constants.commons import handle_exceptions
 from user.permissions import IsUserAuthenticated
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
+from user.serializers import UserSimpleSerializer
+from user.models import User
 
 class FetchMasterCategoryAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
@@ -241,3 +243,20 @@ class FetchInProgressCoursesAPIView(APIView):
             status=status.HTTP_200_OK
         )
 
+
+class FetchCategoryUsersAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def get(self, request, master_category_id):
+        category = Category.objects.filter(master_category__uuid = master_category_id)
+        context = {"user_id":request.user.id, 'request': self.request}
+        user = User.objects.all()
+        return Response(
+                status=status.HTTP_200_OK,
+                data={
+                    KEY_MESSAGE: "category data sent successfully.",
+                    KEY_PAYLOAD: UserSimpleSerializer(user, many = True, context=context).data,
+                    KEY_STATUS: 1
+                },
+            )
