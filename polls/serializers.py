@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from polls.models import *
+from user.serializers import UserSimpleSerializer
 
 class OptionSerializer(serializers.Serializer):
 	options = serializers.CharField()
@@ -27,10 +28,15 @@ class MasterPollOptionSerializer(serializers.ModelSerializer):
 
 class MasterPollQuetionSerializer(serializers.ModelSerializer):
 	options = MasterPollOptionSerializer(source='masterpolloption_set', many=True)
+	admin_data = serializers.SerializerMethodField()
 
 	class Meta:
 		model = MasterPollQuetion
-		fields = ('id', 'uuid','quetion', 'options', 'created_at')
+		fields = ('id', 'uuid','quetion', 'options', 'admin_data','created_at')
+
+	def get_admin_data(self, obj):
+		admin_users = User.objects.filter(is_admin=True)
+		return UserSimpleSerializer(admin_users, many=True).data
 
 class AnswerPollSerializer(serializers.Serializer):
 	question_id = serializers.CharField()

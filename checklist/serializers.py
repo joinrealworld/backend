@@ -6,7 +6,7 @@ from checklist.models import *
 class MasterCheckListSerializer(serializers.ModelSerializer):
     class Meta:
         model = MasterCheckList
-        fields = ('checklist',)
+        fields = ('checklist', 'options')
 
 class DailyCheckedSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
@@ -21,13 +21,17 @@ class DailyCheckedSerializer(serializers.ModelSerializer):
 class UserDailyCheckListSerializer(serializers.ModelSerializer):
     checked = serializers.SerializerMethodField()
     checklist = serializers.SerializerMethodField()
+    options = serializers.SerializerMethodField()
 
     class Meta:
         model = UserDailyCheckList
-        fields = ('uuid', 'checklist', 'checked')
+        fields = ('uuid', 'checklist', 'options','checked')
 
     def get_checklist(self, instance):
     	return instance.master_checklist.checklist
+
+    def get_options(self, instance):
+    	return instance.master_checklist.options.split(',')
 
     def get_checked(self, instance):
         checked_objects = instance.dailychecked_set.all()

@@ -19,7 +19,8 @@ class EmailLoginSerializer(ModelSerializer):
 class UserSimpleSerializer(ModelSerializer):
     """ User Basic Information Serializer """
     customer_id = serializers.SerializerMethodField()
-    selected_emoji = serializers.SerializerMethodField()
+    username = serializers.SerializerMethodField()
+    # selected_emoji = serializers.SerializerMethodField()
     selected_tune = serializers.SerializerMethodField()
     selected_wallpaper = serializers.SerializerMethodField()
 
@@ -30,6 +31,9 @@ class UserSimpleSerializer(ModelSerializer):
     def get_avatar(self, obj):
         return obj.avatar.url if obj.avatar else obj.dummy_avatar
 
+    def get_username(self, obj):
+        return obj.username+obj.selected_emoji if obj.selected_emoji else obj.username
+
     def get_customer_id(self, obj):
         try:
             return CustomerDetails.objects.filter(user = obj).last().customer_id
@@ -37,11 +41,11 @@ class UserSimpleSerializer(ModelSerializer):
             print("get_customer_id serializer method exception -->", e)
             return ""
 
-    def get_selected_emoji(self, obj):
-        user_emoji = UserPurchesedEmoji.objects.filter(user = obj, selected = True)
-        if user_emoji.exists():
-            return user_emoji.last().emoji
-        return ""
+    # def get_selected_emoji(self, obj):
+    #     user_emoji = UserPurchesedEmoji.objects.filter(user = obj, selected = True)
+    #     if user_emoji.exists():
+    #         return user_emoji.last().emoji
+    #     return ""
 
     def get_selected_tune(self, obj):
         user_tune = UserPurchesedTune.objects.filter(user = obj, selected = True)

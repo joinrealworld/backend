@@ -35,7 +35,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
 from checklist.serializers import *
 from datetime import datetime, date
-
+from checklist.management.commands.scheduler import *
 
 class FetchCheckListAPIView(APIView):
 	permission_classes = [IsUserAuthenticated]
@@ -72,3 +72,19 @@ class SubmitCheckListAPIView(APIView):
 		    },
 		    status=status.HTTP_200_OK
 		)
+
+class CopyChecklistAPIView(APIView):
+	permission_classes = []
+
+	@handle_exceptions
+	def get(self, request):
+		create_copy_daily_checklist()
+		return Response(
+		    {
+		        KEY_MESSAGE: "Success",
+		        KEY_PAYLOAD: "Checklist Copied Successfully",
+		        KEY_STATUS: 1
+		    },
+		    status=status.HTTP_200_OK
+		)
+

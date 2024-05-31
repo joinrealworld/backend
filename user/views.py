@@ -1092,6 +1092,36 @@ class PurchesEmojiAPIView(APIView):
             }
         )
 
+class PurchaseIdentityBoosterAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def post(self, request):
+        user_coin = request.user.coin
+
+        if user_coin < 200:
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "You should have atleast 200 coins.",
+                    KEY_STATUS: 0
+                }
+            )
+
+        request.user.coin -= 200
+        request.user.identity_booster = True
+        request.user.save()
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: f"identity Booster purchased successfully.",
+                KEY_STATUS: 1
+            }
+        )
+
 class PurchesTuneAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
@@ -1278,13 +1308,17 @@ class ChangeEmojiAPIView(APIView):
 
     @handle_exceptions
     def patch(self, request):
-        emoji_uuid = request.data.get('uuid', None)
-        if UserPurchesedEmoji.objects.filter(uuid = emoji_uuid).exists():
-            user_emoji = UserPurchesedEmoji.objects.get(uuid = emoji_uuid)
-            selected_emoji = UserPurchesedEmoji.objects.get(uuid = emoji_uuid)
-            selected_emoji.selected = True
-            selected_emoji.save()
-            request.user.username = str(request.user.username) + str(selected_emoji.emoji)
+        # emoji_uuid = request.data.get('uuid', None)
+        emoji = request.data.get('emoji', None)
+        user = request.user
+        # if UserPurchesedEmoji.objects.filter(uuid = emoji_uuid).exists():
+        if user.identity_booster:
+            # user_emoji = UserPurchesedEmoji.objects.get(uuid = emoji_uuid)
+            # selected_emoji = UserPurchesedEmoji.objects.get(uuid = emoji_uuid)
+            # selected_emoji.selected = True
+            # selected_emoji.save()
+            # request.user.username = str(request.user.username) + str(selected_emoji.emoji)
+            request.user.selected_emoji = str(emoji)
             request.user.save()
         else:
             return Response(

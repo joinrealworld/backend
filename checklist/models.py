@@ -9,6 +9,7 @@ from django.utils import timezone
 class MasterCheckList(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	checklist = models.TextField()
+	options = models.CharField(max_length=255, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	copied_at = models.DateTimeField(default=timezone.now)
 

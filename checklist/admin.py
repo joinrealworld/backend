@@ -3,8 +3,8 @@ from checklist.models import *
 
 # Register your models here.
 class MasterCheckListAdmin(admin.ModelAdmin):
-    fields = ['checklist']
-    list_display = ('id','uuid','checklist','created_at')
+    fields = ['checklist', 'options']
+    list_display = ('id','uuid','checklist','options','created_at')
     list_per_page = 25
 
 admin.site.register(MasterCheckList, MasterCheckListAdmin)
