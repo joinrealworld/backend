@@ -1338,3 +1338,20 @@ class ChangeEmojiAPIView(APIView):
                 KEY_STATUS: 1
             }
         )
+
+class SetOfflineAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def patch(self, request):
+        user = request.user
+        user.is_online = False 
+        user.save()
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: "Set User Offline Successfully.",
+                KEY_STATUS: 1
+            }
+        )

@@ -54,8 +54,8 @@ class IsUserAuthenticated(permissions.IsAuthenticated):
                     user.save()
                     # Update last award time
                     user.last_coins_award_time = timezone.now()
-                    user.is_online = True
-                    user.save()
+                user.is_online = True
+                user.save()
                 return True
 
 

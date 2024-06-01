@@ -11,10 +11,11 @@ from channel.scripts import count_completed_category, count_completed_course
 class MasterCategorySerializer(serializers.ModelSerializer):
 	# category_pic = serializers.SerializerMethodField()
 	no_of_category = serializers.SerializerMethodField()
+	online_users = serializers.SerializerMethodField()
     
 	class Meta:
 		model = MasterCategory
-		fields = ('id', 'uuid','name', 'category_pic', 'category_pic2','description', 'no_of_category')
+		fields = ('id', 'uuid','name', 'category_pic', 'category_pic2','description', 'no_of_category', 'online_users')
 
 	# def get_category_pic(self, obj):
 		# # request = self.context.get('request')
@@ -30,6 +31,9 @@ class MasterCategorySerializer(serializers.ModelSerializer):
 
 	def get_no_of_category(self, obj):
 		return Category.objects.filter(master_category = obj).count()
+
+	def get_online_users(self, obj):
+		return User.objects.filter(is_online = True).count()
 
 
 class CategorySerializer(serializers.ModelSerializer):
