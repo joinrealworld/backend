@@ -7,6 +7,7 @@ class OptionSerializer(serializers.Serializer):
 	options = serializers.CharField()
 
 class CreatePollSerializer(serializers.Serializer):
+	master_category = serializers.UUIDField()
 	question = serializers.CharField()
 	options = serializers.ListField(child=serializers.CharField())
 

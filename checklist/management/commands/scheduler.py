@@ -6,16 +6,18 @@ from user.models import User
 from django.utils import timezone
 import pytz
 import time
+from channel.models import *
 
 def create_copy_daily_checklist():
     master_checklist = MasterCheckList.objects.all()  # Adjust as per your logic
     users = User.objects.all()
 
     for checklist in master_checklist:
-        UserDailyCheckList.objects.create(
-            master_checklist=checklist,
-        )
-        checklist.copied_at = timezone.now()
-        checklist.save()
+        for master_category in MasterCategory.objects.all():
+            UserDailyCheckList.objects.create(
+                master_checklist=checklist, master_category = master_category
+            )
+            checklist.copied_at = timezone.now()
+            checklist.save()
 
     print('Daily checklists copied successfully! '+ str(timezone.now()))

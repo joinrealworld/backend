@@ -3,6 +3,7 @@ import string
 import uuid
 from user.models import User
 from django.utils import timezone
+from channel.models import MasterCategory
 
 
 # Create your models here.
@@ -21,6 +22,7 @@ class MasterCheckList(models.Model):
 class UserDailyCheckList(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	master_checklist = models.ForeignKey(MasterCheckList, on_delete=models.CASCADE, null=False, blank = False)
+	master_category = models.ForeignKey(MasterCategory, on_delete=models.CASCADE, null=True, blank = True)
 	created_at = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
@@ -30,6 +32,7 @@ class DailyChecked(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank = False)
 	checklist = models.ForeignKey(UserDailyCheckList, on_delete=models.CASCADE, null=True, blank = True)
+	master_category = models.ForeignKey(MasterCategory, on_delete=models.CASCADE, null=True, blank = True)
 	selected = models.CharField(max_length=20, null=True, blank = True)
 	created_at = models.DateTimeField(auto_now_add=True)
 

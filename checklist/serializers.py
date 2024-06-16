@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from checklist.models import *
-
+from user.serializers import UserSimpleSerializer
 
 class MasterCheckListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,7 +16,7 @@ class DailyCheckedSerializer(serializers.ModelSerializer):
         fields = ('user', 'selected', 'created_at')
 
     def get_user(self, instance):
-        return instance.user.username
+        return UserSimpleSerializer(instance.user).data
 
 class UserDailyCheckListSerializer(serializers.ModelSerializer):
     checked = serializers.SerializerMethodField()

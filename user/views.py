@@ -1099,17 +1099,17 @@ class PurchaseIdentityBoosterAPIView(APIView):
     def post(self, request):
         user_coin = request.user.coin
 
-        if user_coin < 200:
+        if user_coin < 20:
             return Response(
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 data={
                     KEY_MESSAGE: "Error",
-                    KEY_PAYLOAD: "You should have atleast 200 coins.",
+                    KEY_PAYLOAD: "You should have atleast 20 coins.",
                     KEY_STATUS: 0
                 }
             )
 
-        request.user.coin -= 200
+        request.user.coin -= 20
         request.user.identity_booster = True
         request.user.save()
 

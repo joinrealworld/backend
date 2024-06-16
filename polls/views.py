@@ -33,6 +33,7 @@ from user.permissions import IsUserAuthenticated
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
 from polls.serializers import *
+from channel.models import MasterCategory
 # Create your views here.
 
 class CreatePollAPIView(APIView):
@@ -54,7 +55,8 @@ class CreatePollAPIView(APIView):
 
 		question = serializer.validated_data.get("question")
 		options = serializer.validated_data.get("options")
-		master_poll_quetion = MasterPollQuetion.objects.create(quetion = question)
+		master_category = serializer.validated_data.get("master_category")
+		master_poll_quetion = MasterPollQuetion.objects.create(quetion = question, master_category = MasterCategory.objects.get(uuid=master_category))
 		for opt in options:
 			master_poll_option = MasterPollOption.objects.create(poll_quetion = master_poll_quetion, option = opt)
 
@@ -71,8 +73,8 @@ class PollListAPIView(APIView):
 	permission_classes = [IsUserAuthenticated]
 
 	@handle_exceptions
-	def get(self, request):
-		master_poll_quetion = MasterPollQuetion.objects.all().order_by("-created_at")
+	def get(self, request, master_category):
+		master_poll_quetion = MasterPollQuetion.objects.filter(master_category=MasterCategory.objects.get(uuid=master_category)).order_by("-created_at")
 		return Response(
 		    {
 		        KEY_MESSAGE: "Success",

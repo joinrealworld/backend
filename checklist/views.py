@@ -41,8 +41,8 @@ class FetchCheckListAPIView(APIView):
 	permission_classes = [IsUserAuthenticated]
 
 	@handle_exceptions
-	def get(self, request):
-		user_daily_checklist = UserDailyCheckList.objects.all().order_by('id')
+	def get(self, request, master_category):
+		user_daily_checklist = UserDailyCheckList.objects.filter(master_category__uuid=master_category).order_by('id')
 		return Response(
 		    {
 		        KEY_MESSAGE: "Success",

@@ -3,8 +3,8 @@ from polls.models import *
 
 # Register your models here.
 class MasterPollQuetionAdmin(admin.ModelAdmin):
-    fields = ['quetion']
-    list_display = ('id', 'quetion', 'created_at')
+    fields = ['quetion', 'master_category']
+    list_display = ('id', 'quetion', 'master_category','created_at')
     list_per_page = 25
 
 admin.site.register(MasterPollQuetion, MasterPollQuetionAdmin)

@@ -26,7 +26,7 @@ class UserSimpleSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'uuid','avatar', 'email','background', 'coin','theme', 'fa', 'is_admin','fa_type', 'username', 'first_name', 'last_name', 'bio','email_verified', 'status', 'invisible', 'customer_id','referral_code', 'selected_emoji','selected_tune', 'selected_wallpaper')
+        fields = ('id', 'uuid','avatar', 'email', 'identity_booster','background', 'coin','theme', 'fa', 'is_admin','fa_type', 'is_online','username', 'first_name', 'last_name', 'bio','email_verified', 'status', 'invisible', 'customer_id','referral_code', 'selected_emoji','selected_tune', 'selected_wallpaper')
 
     def get_avatar(self, obj):
         return obj.avatar.url if obj.avatar else obj.dummy_avatar
