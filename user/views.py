@@ -1043,17 +1043,17 @@ class CheckEmailAPIView(APIView):
             return Response(
                 status=status.HTTP_404_NOT_FOUND,
                 data={
-                    KEY_MESSAGE: "Error",
-                    KEY_PAYLOAD: "Email doesn't exist! Please register first.",
-                    KEY_STATUS: 0
+                    KEY_MESSAGE: "Success",
+                    KEY_PAYLOAD: "Email doesn't exist!.",
+                    KEY_STATUS: 1
                 }
             )
         return Response(
             status=status.HTTP_200_OK,
             data={
-                KEY_MESSAGE: "Success",
-                KEY_PAYLOAD: "Email Exists.",
-                KEY_STATUS: 1
+                KEY_MESSAGE: "Error",
+                KEY_PAYLOAD: "Email already exists! Please try with another email address.",
+                KEY_STATUS: 0
             }
         )
 
