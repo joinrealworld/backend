@@ -13,7 +13,7 @@ class DailyCheckedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DailyChecked
-        fields = ('user', 'selected', 'created_at')
+        fields = ('uuid','user', 'selected', 'created_at')
 
     def get_user(self, instance):
         return UserSimpleSerializer(instance.user).data

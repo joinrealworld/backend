@@ -61,9 +61,7 @@ class SubmitCheckListAPIView(APIView):
 		data = request.data.get('selected', None)
 		user_checklist = request.data.get('user_checklist', None)
 		user_checklist = UserDailyCheckList.objects.get(uuid=user_checklist)
-		selected_checklist, created = DailyChecked.objects.update_or_create(checklist=user_checklist, user = request.user)
-		selected_checklist.selected = data
-		selected_checklist.save()
+		selected_checklist = DailyChecked.objects.create(checklist=user_checklist, user = request.user,  selected = data)
 		return Response(
 		    {
 		        KEY_MESSAGE: "Success",
@@ -83,6 +81,22 @@ class CopyChecklistAPIView(APIView):
 		    {
 		        KEY_MESSAGE: "Success",
 		        KEY_PAYLOAD: "Checklist Copied Successfully",
+		        KEY_STATUS: 1
+		    },
+		    status=status.HTTP_200_OK
+		)
+
+class UnSelectCheckListAPIView(APIView):
+	permission_classes = []
+
+	@handle_exceptions
+	def post(self, request):
+		check_id = request.data.get("check_id", None)
+		DailyChecked.objects.get(uuid=check_id).delete()
+		return Response(
+		    {
+		        KEY_MESSAGE: "Success",
+		        KEY_PAYLOAD: "Unselected Successfully",
 		        KEY_STATUS: 1
 		    },
 		    status=status.HTTP_200_OK
