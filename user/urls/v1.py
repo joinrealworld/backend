@@ -34,4 +34,5 @@ urlpatterns = [
     path('change/tune', views.ChangeTuneAPIView.as_view(), name='change-tune'),
     path('change/emoji', views.ChangeEmojiAPIView.as_view(), name='change-emoji'),
     path('set/offline', views.SetOfflineAPIView.as_view(), name='set-offline'),
+    path('list/tune', views.ListTuneAPIView.as_view(), name='list-tune'),
 	]

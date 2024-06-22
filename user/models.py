@@ -255,6 +255,14 @@ class UserPurchesedEmoji(models.Model):
 	def __str__(self):
 	    return f"{self.id}"
 
+class Tune(models.Model):
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+	tune = models.CharField(max_length=255)
+	price = models.PositiveIntegerField(default=0)
+
+	def __str__(self):
+	    return f"{self.id}"
+
 class UserPurchesedTune(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	tune = models.CharField(max_length=255)

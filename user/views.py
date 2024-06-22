@@ -1355,3 +1355,19 @@ class SetOfflineAPIView(APIView):
                 KEY_STATUS: 1
             }
         )
+
+class ListTuneAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def get(self, request):
+       
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: TuneSerializer(Tune.objects.all(), many=True).data,
+                KEY_STATUS: 1
+            }
+        )
+

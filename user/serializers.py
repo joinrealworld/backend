@@ -130,6 +130,11 @@ class UserPurchesedEmojiSerializer(serializers.ModelSerializer):
         model = UserPurchesedEmoji
         fields = ['id', 'uuid','emoji', 'price', 'selected','timestamp']
 
+class TuneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tune
+        fields = "__all__"
+
 class UserPurchesedTuneSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPurchesedTune

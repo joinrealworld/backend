@@ -101,6 +101,7 @@ class FeebackAdmin(admin.ModelAdmin):
 admin.site.register(FeedBack, FeebackAdmin)
 
 admin.site.register(FAVerification)
+admin.site.register(Tune)
 
 
 class WallPaperAdmin(admin.ModelAdmin):
