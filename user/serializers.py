@@ -130,15 +130,33 @@ class UserPurchesedEmojiSerializer(serializers.ModelSerializer):
         model = UserPurchesedEmoji
         fields = ['id', 'uuid','emoji', 'price', 'selected','timestamp']
 
-class TuneSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tune
-        fields = "__all__"
-
 class UserPurchesedTuneSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = UserPurchesedTune
         fields = ['id', 'uuid','tune', 'price', 'selected','timestamp']
+
+class TuneSerializer(serializers.ModelSerializer):
+    selected = serializers.SerializerMethodField()
+    is_purchased = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Tune
+        fields = ['uuid', 'tune', 'price', 'selected', 'is_purchased']
+
+    def get_selected(self, obj):
+        user = self.context.get('user')
+        if user:
+            return UserPurchesedTune.objects.filter(tune=obj, user=user, selected=True).exists()
+        return False
+
+    def get_is_purchased(self, obj):
+        user = self.context.get('user')
+        if user:
+            return UserPurchesedTune.objects.filter(tune=obj, user=user).exists()
+        return False
+
+
 
 class WallPaperSerializer(serializers.ModelSerializer):
     is_purchase = serializers.SerializerMethodField()
@@ -161,3 +179,4 @@ class WallPaperSerializer(serializers.ModelSerializer):
             if user_wallpaper:
                 return user_wallpaper.selected
         return False
+

@@ -1143,7 +1143,16 @@ class PurchesTuneAPIView(APIView):
                     KEY_STATUS: 0
                 }
             )
-
+        # Check if the tune has already been purchased by the user
+        if UserPurchasedTune.objects.filter(tune=tune, user=request.user).exists():
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    KEY_PAYLOAD: f"{tune} already purchased",
+                    KEY_MESSAGE: "Error",
+                    KEY_STATUS: 0
+                }
+            )
         user_tune = UserPurchesedTune.objects.create(tune=tune, price=price, user=request.user)
         request.user.coin -= price
         request.user.save()
@@ -1181,7 +1190,7 @@ class ListMyTuneAPIView(APIView):
             status=status.HTTP_200_OK,
             data={
                 KEY_MESSAGE: "Success",
-                KEY_PAYLOAD: UserPurchesedTuneSerializer(user_tune, many=True).data,
+                KEY_PAYLOAD: UserPurchesedTuneSerializer(user_tune, many=True, context={'user': request.user}).data,
                 KEY_STATUS: 1
             }
         )
@@ -1197,6 +1206,7 @@ class FetchWallPapaerAPIView(APIView):
             status=status.HTTP_200_OK,
             data={
                 KEY_MESSAGE: "Success",
+                "default_wallpaper": WallPaperSerializer(wallpapers[0]).data,
                 KEY_PAYLOAD: WallPaperSerializer(wallpapers, many=True, context={'user': request.user}).data,
                 KEY_STATUS: 1
             }
@@ -1361,12 +1371,11 @@ class ListTuneAPIView(APIView):
 
     @handle_exceptions
     def get(self, request):
-       
         return Response(
             status=status.HTTP_200_OK,
             data={
                 KEY_MESSAGE: "Success",
-                KEY_PAYLOAD: TuneSerializer(Tune.objects.all(), many=True).data,
+                KEY_PAYLOAD: TuneSerializer(Tune.objects.all(), context={'user': request.user}, many=True).data,
                 KEY_STATUS: 1
             }
         )
