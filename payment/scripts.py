@@ -16,7 +16,11 @@ def create_stripe_customer(user, name, email):
 	if existing_customer:
 		return existing_customer.data
 	stripe_customer_data = stripe.Customer.create(name=name, email=email)
-	existing_customer = CustomerDetails.objects.create(user=user, customer_id=stripe_customer_data['id'], data=stripe_customer_data)
+	existing_customer = CustomerDetails.objects.get_or_create(user=user)
+	existing_customer.customer_id = stripe_customer_data['id']
+	existing_customer.data = stripe_customer_data
+	existing_customer.save()
+	# existing_customer = CustomerDetails.objects.create(user=user, customer_id=stripe_customer_data['id'], data=stripe_customer_data)
 	return existing_customer.data
 	 
 def generate_card_token(cardnumber, expmonth, expyear, cvv):
@@ -151,13 +155,10 @@ def fetch_stripe_customer(customer_id):
 	return stripe.Customer.retrieve(customer_id)
 
 def attache_stripe_customer_source(user, customer_id, card_token):
-	print("151------", customer_id)
-	print("152------", card_token)
 	try:
 		res = stripe.Customer.create_source(customer_id,source=card_token)
 	except Exception as e:
 		print("156----", e)
-	print("153----", res)
 	customer_details = CustomerDetails.objects.filter(user = user)
 	if customer_details:
 		customer_details = customer_details.last()

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from checklist.models import *
 from user.serializers import UserSimpleSerializer
+from user.models import User
 
 class MasterCheckListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,13 +23,17 @@ class UserDailyCheckListSerializer(serializers.ModelSerializer):
     checked = serializers.SerializerMethodField()
     checklist = serializers.SerializerMethodField()
     options = serializers.SerializerMethodField()
+    admin_data = serializers.SerializerMethodField()
 
     class Meta:
         model = UserDailyCheckList
-        fields = ('uuid', 'checklist', 'options','checked')
+        fields = ('uuid', 'checklist', 'options','checked', 'admin_data')
 
     def get_checklist(self, instance):
     	return instance.master_checklist.checklist
+
+    def get_admin_data(self, instance):
+        return UserSimpleSerializer(User.objects.filter(is_superuser = True).last()).data
 
     def get_options(self, instance):
     	return instance.master_checklist.options.split(',')

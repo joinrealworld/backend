@@ -1125,16 +1125,22 @@ class PurchaseIdentityBoosterAPIView(APIView):
 class PurchesTuneAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
-    @handle_exceptions
+    # @handle_exceptions
     def post(self, request):
-        serializer = PurchesTuneSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        tune_uuid = request.data.get('uuid', None)
+        # price = serializer.validated_data.get('price')
 
-        tune = serializer.validated_data.get('tune')
-        price = serializer.validated_data.get('price')
-        user_coin = request.user.coin
-
-        if user_coin < price:
+        tune = Tune.objects.get(uuid = tune_uuid)
+        if UserPurchesedTune.objects.filter(tune=tune, user=request.user).exists():
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "You have already bought this tune.",
+                    KEY_STATUS: 0
+                }
+            )
+        if tune.price > request.user.coin:
             return Response(
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 data={
@@ -1143,27 +1149,51 @@ class PurchesTuneAPIView(APIView):
                     KEY_STATUS: 0
                 }
             )
-        # Check if the tune has already been purchased by the user
-        if UserPurchasedTune.objects.filter(tune=tune, user=request.user).exists():
-            return Response(
-                status=status.HTTP_400_BAD_REQUEST,
-                data={
-                    KEY_PAYLOAD: f"{tune} already purchased",
-                    KEY_MESSAGE: "Error",
-                    KEY_STATUS: 0
-                }
-            )
-        user_tune = UserPurchesedTune.objects.create(tune=tune, price=price, user=request.user)
-        request.user.coin -= price
+        UserPurchesedTune.objects.get_or_create(tune=tune, price=tune.price, user=request.user)
+        request.user.coin -= tune.price
         request.user.save()
         return Response(
             status=status.HTTP_200_OK,
             data={
                 KEY_MESSAGE: "Success",
-                KEY_PAYLOAD: f"{tune} purchased successfully.",
+                KEY_PAYLOAD: "Tune Purchsed Successfully.",
                 KEY_STATUS: 1
             }
         )
+        # tune_uuid = request.data.get('uuid', None)
+        # price = serializer.validated_data.get('price')
+        # user_coin = request.user.coin
+
+        # if user_coin < price:
+        #     return Response(
+        #         status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        #         data={
+        #             KEY_MESSAGE: "Error",
+        #             KEY_PAYLOAD: "You don't have enough coins.",
+        #             KEY_STATUS: 0
+        #         }
+        #     )
+        # # Check if the tune has already been purchased by the user
+        # if UserPurchasedTune.objects.filter(tune=tune, user=request.user).exists():
+        #     return Response(
+        #         status=status.HTTP_400_BAD_REQUEST,
+        #         data={
+        #             KEY_PAYLOAD: f"{tune} already purchased",
+        #             KEY_MESSAGE: "Error",
+        #             KEY_STATUS: 0
+        #         }
+        #     )
+        # user_tune = UserPurchesedTune.objects.create(tune=tune, price=price, user=request.user)
+        # request.user.coin -= price
+        # request.user.save()
+        # return Response(
+        #     status=status.HTTP_200_OK,
+        #     data={
+        #         KEY_MESSAGE: "Success",
+        #         KEY_PAYLOAD: f"{tune} purchased successfully.",
+        #         KEY_STATUS: 1
+        #     }
+        # )
 
 class ListMyEmojiAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
@@ -1255,15 +1285,31 @@ class ChangeWallPapaerAPIView(APIView):
     @handle_exceptions
     def patch(self, request):
         wallpaper_uuid = request.data.get('uuid', None)
-        wallpaper = WallPaper.objects.get(uuid = wallpaper_uuid)
+        is_default = request.data.get('is_default', False)
+        print("1259----", is_default)
+        try:
+            wallpaper = WallPaper.objects.get(uuid=wallpaper_uuid)
+        except WallPaper.DoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "Wallpaper not found.",
+                    KEY_STATUS: -1
+                }
+            )
+        
         if UserWallPaper.objects.filter(user=request.user, wallpaper=wallpaper).exists():
-            user_wallpapers = UserWallPaper.objects.filter(user=request.user, is_purchase=True, selected = True)
-            for wallpaper in user_wallpapers:
-                wallpaper.selected = False
-                wallpaper.save()
-            selected_wallpaper = UserWallPaper.objects.get(user=request.user, wallpaper=wallpaper)
-            selected_wallpaper.selected = True
-            selected_wallpaper.save()
+            user_wallpapers = UserWallPaper.objects.filter(user=request.user, is_purchase=True, selected=True)
+            for user_wallpaper in user_wallpapers:
+                user_wallpaper.selected = False
+                user_wallpaper.save()
+
+            if is_default == False:
+                print("1278-----")
+                selected_wallpaper = UserWallPaper.objects.get(user=request.user, wallpaper=wallpaper)
+                selected_wallpaper.selected = True
+                selected_wallpaper.save()
         else:
             return Response(
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -1283,15 +1329,16 @@ class ChangeWallPapaerAPIView(APIView):
             }
         )
 
+
 class ChangeTuneAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
     @handle_exceptions
     def patch(self, request):
         tune_uuid = request.data.get('uuid', None)
-        if UserPurchesedTune.objects.filter(uuid = tune_uuid).exists():
-            user_tune = UserPurchesedTune.objects.get(uuid = tune_uuid)
-            selected_tune = UserPurchesedTune.objects.get(uuid = tune_uuid)
+        if UserPurchesedTune.objects.filter(tune = Tune.objects.get(uuid = tune_uuid), user = request.user).exists():
+            user_tune = UserPurchesedTune.objects.get(tune =Tune.objects.get(uuid = tune_uuid), user = request.user)
+            selected_tune = UserPurchesedTune.objects.get(tune =Tune.objects.get(uuid = tune_uuid), user = request.user)
             selected_tune.selected = True
             selected_tune.save()
         else:

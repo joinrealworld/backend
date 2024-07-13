@@ -236,12 +236,11 @@ class CustomerCardTokenAPIView(APIView):
 class FetchAllStripeCustomerAPIView(APIView):
 	permission_classes = [IsUserAuthenticated]
 
-	@handle_exceptions
+	# @handle_exceptions
 	def get(self, request, entity=None):
 		user = request.user
-		customer_details = CustomerDetails.objects.get(user = user)
+		customer_details = CustomerDetails.objects.filter(user = user).last()
 		customer_id = customer_details.customer_id
-		print("244---", entity)
 		if entity == 'all':
 			customer_list = fetch_all_stripe_customer()
 		else:

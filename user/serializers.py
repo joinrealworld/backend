@@ -23,6 +23,7 @@ class UserSimpleSerializer(ModelSerializer):
     # selected_emoji = serializers.SerializerMethodField()
     selected_tune = serializers.SerializerMethodField()
     selected_wallpaper = serializers.SerializerMethodField()
+    # payment_status = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -30,6 +31,9 @@ class UserSimpleSerializer(ModelSerializer):
 
     def get_avatar(self, obj):
         return obj.avatar.url if obj.avatar else obj.dummy_avatar
+
+    # def get_payment_status(self, obj):
+    #     return CustomerPayment.objects.filter(user = obj).last().status
 
     def get_username(self, obj):
         return obj.username+obj.selected_emoji if obj.selected_emoji else obj.username
@@ -50,7 +54,7 @@ class UserSimpleSerializer(ModelSerializer):
     def get_selected_tune(self, obj):
         user_tune = UserPurchesedTune.objects.filter(user = obj, selected = True)
         if user_tune.exists():
-            return user_tune.last().tune
+            return user_tune.last().tune.tune
         return ""
 
     def get_selected_wallpaper(self, obj):
