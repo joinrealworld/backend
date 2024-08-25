@@ -65,7 +65,7 @@ THIRD_PARTY_APPS = (
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    'django_celery_beat'
+    # 'django_celery_beat'
 )
 
 LOCAL_APPS = (
@@ -75,7 +75,9 @@ LOCAL_APPS = (
     'payment',
     'polls',
     'checklist',
-    'streams'
+    'blackhall',
+    'content'
+    # 'streams'
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -245,18 +247,18 @@ else:
     STRIPE_BASE_URL = env('LIVE_STRIPE_BASE_URL')
     STRIPE_PRODUCT_ID = env("PRODUCT_ID")
     
-CELERY_BROKER_URL = 'redis://:12345@localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://:12345@localhost:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
+# CELERY_BROKER_URL = 'redis://:12345@localhost:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://:12345@localhost:6379/0'
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = 'UTC'
 
-CELERY_BEAT_SCHEDULE = {
-    'fetch-live-streams-every-minute': {
-        'task': 'streams.tasks.fetch_live_streams_task',
-        'schedule': 60.0,  # every 60 seconds
-    },
-}
+# CELERY_BEAT_SCHEDULE = {
+#     'fetch-live-streams-every-minute': {
+#         'task': 'streams.tasks.fetch_live_streams_task',
+#         'schedule': 60.0,  # every 60 seconds
+#     },
+# }
 
 
