@@ -32,6 +32,7 @@ class Content(models.Model):
 
     CHANNEL_TYPE = (
     		("blackhall", "Blackhall"),
+    		("media", "media")
     	)
 
     uploader = models.ForeignKey("user.User", on_delete=models.CASCADE,

@@ -34,14 +34,33 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
 from user.serializers import UserSimpleSerializer
 from user.models import User
+from django.utils.timezone import make_aware
 
 
 class SendMessageAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
     @handle_exceptions
-    def get(self, request):
-        
+    def post(self, request):
+        data = request.data.get("data", None)
+        today = make_aware(datetime.now()).date()
+        user = request.user
+        # Check if there is already a chat object for today
+        chat, created = BlackhallChat.objects.get_or_create(
+            user=user,
+            timestamp__date=today,
+            defaults={"message": []},
+        )
+
+        # Update the chat object with the new message
+        chat_message = data
+
+        if isinstance(chat.message, list):
+            chat.message.append(chat_message)
+        else:
+            chat.message = [chat_message]
+
+        chat.save()
         return Response(
                 status=status.HTTP_200_OK,
                 data={
@@ -50,3 +69,33 @@ class SendMessageAPIView(APIView):
                     KEY_STATUS: 1
                 },
             )
+
+class FetchMessagesAPIView(APIView):
+	permission_classes = [IsUserAuthenticated]
+
+	@handle_exceptions
+	def get(self, request):
+		user = request.user
+		# Get today's date
+		today = make_aware(datetime.now()).date()
+
+		# Retrieve today's chat messages for the user
+		try:
+		    chat = BlackhallChat.objects.get(user=user, timestamp__date=today)
+		except BlackhallChat.DoesNotExist:
+		    return Response(
+		        status=status.HTTP_404_NOT_FOUND,
+		        data={
+		            "message": "No messages found for today.",
+		            "status": 0
+		        },
+		    )
+
+		return Response(
+		    status=status.HTTP_200_OK,
+		    data={
+		        "message": "Messages retrieved successfully.",
+		        "status": 1,
+		        "data": chat.message  # Returning the list of messages
+		    },
+		)

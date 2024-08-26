@@ -3,21 +3,45 @@ from rest_framework.serializers import (ModelSerializer,
                                         )
 from rest_framework import serializers
 from content.models import *
-import io
+
 
 class UploadContentSerializer(serializers.ModelSerializer):
-	content_name = serializers.SerializerMethodField()
+    content_name = serializers.SerializerMethodField()
 
-	class Meta:
-		model = Content
-		fields = ('id', 'type_of_content', 'content_name', 'content', 'thumbnail', 'extention', 'duration')
+    class Meta:
+        model = Content
+        fields = (
+            'id', 
+            'type_of_content', 
+            'content_name', 
+            'channel_type', 
+            'content', 
+            'thumbnail', 
+            'extention', 
+            'duration'
+        )
 
-	def create(self, validated_data):
-		user = self.context['request'].user
-		content = Content(**validated_data)
-		content.uploader = user
-		content.save()
-		return content
+    def create(self, validated_data):
+        # Fetch the current user from the request context
+        user = self.context['request'].user
 
-	def get_content_name(self, data):
-		return data.content.name.split("/")[-1]
+        # Create a new Content instance with the validated data
+        content = Content(**validated_data)
+
+        # Assign the uploader to the current user
+        content.uploader = user
+        
+        # Save the content instance
+        content.save()
+        
+        return content
+
+    def get_content_name(self, data):
+        # Safely extract the file name from the content field
+        return data.content.name.split("/")[-1] if data.content else None
+
+
+class ContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Content
+        fields = ['id', 'type_of_content', 'content', 'extention', 'duration', 'thumbnail', 'channel_type']
