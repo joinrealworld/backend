@@ -147,3 +147,37 @@ class CourseQuizDataSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = CourseQuiz
 		fields = ('id', 'uuid', 'course', 'index', 'data')
+class LastCourseContentSerializer(serializers.ModelSerializer):
+    course = serializers.SlugRelatedField(slug_field='uuid', queryset=Courses.objects.all())
+    content_uuid = serializers.CharField()
+
+    class Meta:
+        model = LastCourseContent
+        fields = ['uuid', 'content_uuid', 'course', 'user']
+        read_only_fields = ['user']
+
+    def validate(self, data):
+        # Ensure the provided course UUID exists
+        course_uuid = data.get('course')
+        print("162-----", course_uuid)
+        try:
+            course = Courses.objects.get(uuid=course_uuid)
+            print("164----", course)
+            data['course'] = course
+        except Courses.DoesNotExist:
+            raise serializers.ValidationError({"course": "Course with this UUID does not exist."})
+
+        return data
+
+    def create(self, validated_data):
+        course = validated_data.get('course')
+        print("171----", self.context['request'].user)
+        user = self.context['request'].user
+
+        # Delete any existing LastCourseContent object with the same course and user
+        LastCourseContent.objects.filter(course=course, user=user).delete()
+
+        # Create and return the new LastCourseContent object
+        return LastCourseContent.objects.create(**validated_data)
+
+

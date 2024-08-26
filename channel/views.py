@@ -35,6 +35,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
 from user.serializers import UserSimpleSerializer
 from user.models import User
+from django.shortcuts import get_object_or_404
+
 
 class FetchMasterCategoryAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
@@ -260,3 +262,44 @@ class FetchCategoryUsersAPIView(APIView):
                     KEY_STATUS: 1
                 },
             )
+
+class StoreLastCourseContentAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def post(self, request):
+        user = request.user
+        course_uuid = request.data.get('course')
+        content_uuid = request.data.get('content_uuid')
+
+        # Validate the course UUID
+        try:
+            course = get_object_or_404(Courses, uuid=course_uuid)
+        except ObjectDoesNotExist:
+            return Response(
+                {"message": "Course with the provided UUID does not exist.", "status": 0},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        # Delete any existing LastCourseContent object with the same course and user
+        LastCourseContent.objects.filter(course=course, user=user).delete()
+
+        # Create and save the new LastCourseContent object
+        last_course_content = LastCourseContent.objects.create(
+            content_uuid=content_uuid,
+            course=course,
+            user=user
+        )
+
+        return Response(
+            {
+                "message": "Last course content stored successfully.",
+                "status": 1,
+                "data": {
+                    "uuid": last_course_content.uuid,
+                    "content_uuid": last_course_content.content_uuid,
+                    "course": str(last_course_content.course.uuid),
+                    "user": last_course_content.user.id
+                }
+            },
+            status=status.HTTP_201_CREATED
+        )

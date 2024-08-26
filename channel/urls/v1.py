@@ -14,4 +14,5 @@ urlpatterns = [
     path('mark/complete/course', views.MarkCompleteContentAPIView.as_view(), name='mark-complete-content'),
     path('fetch/favourite/courses', views.FetchFavouriteCoursesAPIView.as_view(), name='fetch-favourite-courses'),
     path('fetch/inprogress/courses', views.FetchInProgressCoursesAPIView.as_view(), name='fetch-favourite-courses'),
+    path('store/last/course/content', views.StoreLastCourseContentAPIView.as_view(), name='store-last-content'),
 	]

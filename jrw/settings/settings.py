@@ -77,7 +77,8 @@ LOCAL_APPS = (
     'checklist',
     'blackhall',
     'content',
-    'media_channel'
+    'media_channel',
+    'feedback'
     # 'streams'
 )
 
