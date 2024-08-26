@@ -74,10 +74,11 @@ class CoursesSerializer(serializers.ModelSerializer):
 	is_favorite = serializers.SerializerMethodField()
 	lessons = serializers.SerializerMethodField()
 	category_uuid = serializers.SerializerMethodField()
+	last_saved = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Courses
-		fields = ('id', 'uuid','name', 'completed', 'is_favorite', 'pic', 'category_uuid','lessons')
+		fields = ('id', 'uuid','name', 'completed', 'is_favorite', 'pic', 'category_uuid', 'last_saved','lessons')
 
 	def get_completed(self, obj):
 		user_id = self.context.get('user_id')
@@ -97,15 +98,25 @@ class CoursesSerializer(serializers.ModelSerializer):
 	def get_category_uuid(self, obj):
 		return obj.category.uuid
 
+	def get_last_saved(self, obj):
+		user_id = self.context.get('user_id')
+		last_saved = LastCourseContent.objects.filter(user = User.objects.get(pk=user_id), course__uuid = obj.uuid)
+		if last_saved:
+			return last_saved.last().content_uuid
+		else:
+			None
+
+
 class CoursesDataSerializer(serializers.ModelSerializer):
 	completed = serializers.SerializerMethodField()
 	is_favorite = serializers.SerializerMethodField()
 	data = serializers.SerializerMethodField()
 	last_checked = serializers.SerializerMethodField()
+	last_saved = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Courses
-		fields = ('id', 'uuid', 'name', 'description', 'completed', 'pic', 'is_favorite', 'last_checked','data')
+		fields = ('id', 'uuid', 'name', 'description', 'completed', 'pic', 'is_favorite', 'last_checked', 'last_saved','data')
 
 	def get_completed(self, obj):
 		user_id = self.context.get('user_id')
@@ -142,11 +153,23 @@ class CoursesDataSerializer(serializers.ModelSerializer):
 	def get_data(self, obj):
 		return self.fomat_data(obj.data, obj)
 
+	def get_last_saved(self, obj):
+		user_id = self.context.get('user_id')
+		last_saved = LastCourseContent.objects.filter(user = User.objects.get(pk=user_id), course__uuid = obj.uuid)
+		if last_saved:
+			return last_saved.last().content_uuid
+		else:
+			None
+
+
 class CourseQuizDataSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = CourseQuiz
 		fields = ('id', 'uuid', 'course', 'index', 'data')
+
+
+
 class LastCourseContentSerializer(serializers.ModelSerializer):
     course = serializers.SlugRelatedField(slug_field='uuid', queryset=Courses.objects.all())
     content_uuid = serializers.CharField()
