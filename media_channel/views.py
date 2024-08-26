@@ -37,6 +37,7 @@ from user.models import User
 from django.utils.timezone import make_aware
 from media_channel.serializers import *
 from rest_framework.pagination import PageNumberPagination
+from django.shortcuts import get_object_or_404
 
 
 class SendMessageAPIView(APIView):
@@ -82,3 +83,45 @@ class FetchMessagesAPIView(APIView):
 
 
 
+class LikeMessagesAPIView(APIView):
+    permission_classes = [IsLoggedInUser]
+
+    def post(self, request):
+        user = request.user
+        message_uuid = request.data.get("message_uuid")
+
+        if not message_uuid:
+            return Response(
+                {
+                    "message": "Message UUID is required.",
+                    "status": 0,
+                    "errors": {"message_uuid": ["This field is required."]}
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Get the MediaChannel message object or return 404 if not found
+        media_channel = get_object_or_404(MediaChannel, uuid=message_uuid)
+
+        # Check if the user has already liked this message
+        if MediaChannelLike.objects.filter(media_channel=media_channel, user=user).exists():
+            return Response(
+                {
+                    "message": "You have already liked this message.",
+                    "status": 0,
+                    "data": "Already liked."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Create a new like
+        MediaChannelLike.objects.create(media_channel=media_channel, user=user)
+
+        return Response(
+            {
+                "message": "Message liked successfully.",
+                "status": 1,
+                "data": "Message liked successfully."
+            },
+            status=status.HTTP_201_CREATED
+        )
