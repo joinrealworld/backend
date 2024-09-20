@@ -57,7 +57,7 @@ class SendFeedbackAPIView(APIView):
 
         # Create Feedback instance and save
         feedback = Feedback.objects.create(
-            content_uuid=data.get("content_uuid", None),
+            content = data.get("content", None),
             user=user,
             description=data.get("description", "")
         )

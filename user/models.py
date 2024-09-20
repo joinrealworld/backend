@@ -130,6 +130,8 @@ class User(AbstractBaseUser):
 	fa_code = models.CharField(max_length=6,null=True, blank=True)
 	identity_booster = models.BooleanField(default=False)
 	selected_emoji = models.CharField(max_length=128,null=True, blank=True)
+	xp = models.IntegerField(default=0)
+	level = models.IntegerField(default=1)
 
 	objects = UserManager()
 
