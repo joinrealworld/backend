@@ -59,6 +59,7 @@ class SendFeedbackAPIView(APIView):
         feedback = Feedback.objects.create(
             content = data.get("content", None),
             user=user,
+            course = data.get("course", None),
             description=data.get("description", "")
         )
 

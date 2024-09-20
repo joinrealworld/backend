@@ -13,6 +13,7 @@ from user.models import User
 # Create your models here.
 class Feedback(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+	course = models.CharField(max_length=128,null=True, blank=True)
 	content = models.JSONField(null=True, blank=True)
 	user = models.ForeignKey(User, related_name='user_feedback',null=False, blank=False, on_delete=models.CASCADE)
 	description = RichTextField(blank = True)
