@@ -7,7 +7,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
 
 	class Meta:
 	    model = Feedback
-	    fields = ['uuid', 'content_uuid', 'user', 'description', 'created_at']
+	    fields = ['uuid', 'content', 'user', 'description', 'created_at']
 	    read_only_fields = ['uuid', 'user', 'created_at']  # Prevent users from modifying these fields
 
 	def get_user(self, instance):
