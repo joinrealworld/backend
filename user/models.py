@@ -132,6 +132,7 @@ class User(AbstractBaseUser):
 	selected_emoji = models.CharField(max_length=128,null=True, blank=True)
 	xp = models.IntegerField(default=0)
 	level = models.IntegerField(default=1)
+	ai_picture = models.CharField(max_length=128, null=True, blank=True)
 
 	objects = UserManager()
 

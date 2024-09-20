@@ -32,6 +32,7 @@ app_urls_v1 = [
     path('api/v1/content/', include('content.urls.v1')),
     path('api/v1/media/', include('media_channel.urls.v1')),
     path('api/v1/feedback/', include('feedback.urls.v1')),
+    path('api/v1/support/', include('support.urls.v1')),
 ]
 
 urlpatterns = app_urls_v1

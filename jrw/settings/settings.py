@@ -78,7 +78,8 @@ LOCAL_APPS = (
     'blackhall',
     'content',
     'media_channel',
-    'feedback'
+    'feedback',
+    'support'
     # 'streams'
 )
 
