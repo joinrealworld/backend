@@ -133,6 +133,7 @@ class User(AbstractBaseUser):
 	xp = models.IntegerField(default=0)
 	level = models.IntegerField(default=1)
 	ai_picture = models.CharField(max_length=128, null=True, blank=True)
+	is_dummy = models.BooleanField(default=False)
 
 	objects = UserManager()
 

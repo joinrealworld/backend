@@ -36,6 +36,7 @@ django-timezone-field==7.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 drf-yasg==1.17.1
+Faker==29.0.0
 gunicorn==21.2.0
 hyperlink==21.0.0
 idna==2.9
