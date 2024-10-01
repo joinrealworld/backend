@@ -102,3 +102,18 @@ class UnSelectCheckListAPIView(APIView):
 		    status=status.HTTP_200_OK
 		)
 
+class CheckListOptionsAPIView(APIView):
+	permission_classes = [IsUserAuthenticated]
+
+	@handle_exceptions
+	def get(self, request):
+		check_id = request.data.get("check_id", None)
+		master_checklist = MasterCheckList.objects.last()
+		return Response(
+		    {
+		        KEY_MESSAGE: "Success",
+		        KEY_PAYLOAD: master_checklist.options.split(','),
+		        KEY_STATUS: 1
+		    },
+		    status=status.HTTP_200_OK
+		)

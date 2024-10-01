@@ -277,9 +277,14 @@ class StoreLastCourseContentAPIView(APIView):
             course = get_object_or_404(Courses, uuid=course_uuid)
         except ObjectDoesNotExist:
             return Response(
-                {"message": "Course with the provided UUID does not exist.", "status": 0},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    KEY_MESSAGE: "Course with the provided UUID does not exist.",
+                    KEY_PAYLOAD: "",
+                    KEY_STATUS: 0
+                },
             )
+           
         # Delete any existing LastCourseContent object with the same course and user
         LastCourseContent.objects.filter(course=course, user=user).delete()
 
@@ -291,18 +296,19 @@ class StoreLastCourseContentAPIView(APIView):
         )
 
         return Response(
-            {
-                "message": "Last course content stored successfully.",
-                "status": 1,
-                "data": {
+                status=status.HTTP_201_CREATED,
+                data={
+                    KEY_MESSAGE: "Last course content stored successfully.",
+                    KEY_PAYLOAD: {
                     "uuid": last_course_content.uuid,
                     "content_uuid": last_course_content.content_uuid,
                     "course": str(last_course_content.course.uuid),
                     "user": last_course_content.user.id
-                }
-            },
-            status=status.HTTP_201_CREATED
-        )
+                    },
+                    KEY_STATUS: 1
+                },
+            )
+       
 
 class SaveProgressChannelAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
@@ -317,8 +323,12 @@ class SaveProgressChannelAPIView(APIView):
             course = get_object_or_404(Courses, uuid=course_uuid)
         except ObjectDoesNotExist:
             return Response(
-                {"message": "Course with the provided UUID does not exist.", "status": 0},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    KEY_MESSAGE: "Course with the provided UUID does not exist.",
+                    KEY_PAYLOAD: "",
+                    KEY_STATUS: 0
+                },
             )
         # Delete any existing LastCourseContent object with the same course and user
         last_content = LastCourseContent.objects.filter(course=course, user=user)
@@ -327,13 +337,13 @@ class SaveProgressChannelAPIView(APIView):
             data = SavedProgressContentSerializer(last_content).data
 
         return Response(
-            {
-                "message": "Saved Progress fetched successfully.",
-                "status": 1,
-                "data": data
-            },
-            status=status.HTTP_201_CREATED
-        )
+                status=status.HTTP_200_OK,
+                data={
+                    KEY_MESSAGE: "Saved Progress fetched successfully.",
+                    KEY_PAYLOAD: data,
+                    KEY_STATUS: 1
+                },
+            )
 
 
 class RandomButtonAPIView(APIView):
@@ -348,8 +358,12 @@ class RandomButtonAPIView(APIView):
 
         if not all_courses:
             return Response(
-                {"message": "No courses available.", "status": 0},
-                status=404
+                status=status.HTTP_404_NOT_FOUND,
+                data={
+                    KEY_MESSAGE: "No courses available.",
+                    KEY_PAYLOAD: "",
+                    KEY_STATUS: 0
+                },
             )
 
         random.shuffle(all_courses)  # Shuffle the course list to pick randomly
@@ -369,28 +383,32 @@ class RandomButtonAPIView(APIView):
             if available_content:
                 random_content = random.choice(available_content)
                 return Response(
-                    {
-                        "message": "Random Content fetched successfully.",
-                        "status": 1,
-                        "data": {
+                status=status.HTTP_200_OK,
+                data={
+                    KEY_MESSAGE: "Random Content fetched successfully.",
+                    KEY_PAYLOAD: {
                             "course_id": course.uuid,
                             "content_uuid": random_content['uuid'],
                             "category_uuid": course.category.uuid,
                             "category_id": course.category.pk,
                             "master_categroy_uuid": course.category.master_category.uuid,
                             "master_categroy_id": course.category.master_category.pk,
-                            }
-                        },
-                    status=status.HTTP_201_CREATED
+                            },
+                    KEY_STATUS: 1
+                    },
                 )
                 
 
+
         # If no available content is found in any course
         return Response(
-                {"message": "No available content found", "status": 0},
-                status=404
+                status=status.HTTP_404_NOT_FOUND,
+                data={
+                    KEY_MESSAGE: "No available content found.",
+                    KEY_PAYLOAD: "",
+                    KEY_STATUS: 0
+                },
             )
-
 
 
 
