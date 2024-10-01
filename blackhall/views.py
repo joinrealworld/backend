@@ -35,37 +35,29 @@ from django.db.models import Count
 from user.serializers import UserSimpleSerializer
 from user.models import User
 from django.utils.timezone import make_aware
-
+from blackhall.serializers import *
 
 class SendMessageAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
     @handle_exceptions
     def post(self, request):
-        data = request.data.get("data", None)
+        content = request.data.get("content", None)
         today = make_aware(datetime.now()).date()
         user = request.user
-        # Check if there is already a chat object for today
-        chat, created = BlackhallChat.objects.get_or_create(
+        chat = BlackhallChat.objects.create(
             user=user,
-            timestamp__date=today,
-            defaults={"message": []},
+            timestamp=today,
+            message = content,
         )
-
-        # Update the chat object with the new message
-        chat_message = data
-
-        if isinstance(chat.message, list):
-            chat.message.append(chat_message)
-        else:
-            chat.message = [chat_message]
-
-        chat.save()
+        user.coin = user.coin+50
+        user.save()
+        print(user.coin)
         return Response(
                 status=status.HTTP_200_OK,
                 data={
                     KEY_MESSAGE: "category data sent successfully.",
-                    KEY_PAYLOAD: "on working", #MasterCategorySerializer(category, many = True, context=context).data,
+                    KEY_PAYLOAD: "Success", #MasterCategorySerializer(category, many = True, context=context).data,
                     KEY_STATUS: 1
                 },
             )
@@ -81,7 +73,7 @@ class FetchMessagesAPIView(APIView):
 
 		# Retrieve today's chat messages for the user
 		try:
-		    chat = BlackhallChat.objects.get(user=user, timestamp__date=today)
+		    chat = BlackhallChat.objects.filter(timestamp__date=today)
 		except BlackhallChat.DoesNotExist:
 		    return Response(
 		        status=status.HTTP_404_NOT_FOUND,
@@ -96,6 +88,6 @@ class FetchMessagesAPIView(APIView):
 		    data={
 		        "message": "Messages retrieved successfully.",
 		        "status": 1,
-		        "data": chat.message  # Returning the list of messages
+		        "data": BlackHallSerializer(chat, many=True).data  # Returning the list of messages
 		    },
 		)

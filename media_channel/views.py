@@ -45,7 +45,18 @@ class SendMessageAPIView(APIView):
 
     def post(self, request):
         serializer = MediaChannelSerializer(data=request.data, context={'request': request})
+        user = request.user
+        if user.coin < 200:
+             return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={
+                    "message": "User Does not have enough coin to send Message.",
+                    "status": 0
+                },
+            )
 
+        user.coin = user.coin-200
+        user.save()
         if serializer.is_valid():
             serializer.save()
             return Response(

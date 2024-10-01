@@ -182,10 +182,8 @@ class LastCourseContentSerializer(serializers.ModelSerializer):
     def validate(self, data):
         # Ensure the provided course UUID exists
         course_uuid = data.get('course')
-        print("162-----", course_uuid)
         try:
             course = Courses.objects.get(uuid=course_uuid)
-            print("164----", course)
             data['course'] = course
         except Courses.DoesNotExist:
             raise serializers.ValidationError({"course": "Course with this UUID does not exist."})
@@ -194,7 +192,6 @@ class LastCourseContentSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         course = validated_data.get('course')
-        print("171----", self.context['request'].user)
         user = self.context['request'].user
 
         # Delete any existing LastCourseContent object with the same course and user
@@ -203,4 +200,21 @@ class LastCourseContentSerializer(serializers.ModelSerializer):
         # Create and return the new LastCourseContent object
         return LastCourseContent.objects.create(**validated_data)
 
+class SavedProgressContentSerializer(serializers.ModelSerializer):
+    category = serializers.SerializerMethodField()
+    master_category = serializers.SerializerMethodField()
+    course_uuid = serializers.SerializerMethodField()
+
+    class Meta:
+        model = LastCourseContent
+        fields = ['uuid', 'content_uuid', 'course_uuid','category', 'master_category','course', 'user']
+
+    def get_course_uuid(self, obj):
+    	return obj.course.uuid
+    	
+    def get_category(self, obj):
+    	return obj.course.category.uuid
+
+    def get_master_category(self, obj):
+    	return obj.course.category.master_category.uuid
 

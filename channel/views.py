@@ -303,3 +303,95 @@ class StoreLastCourseContentAPIView(APIView):
             },
             status=status.HTTP_201_CREATED
         )
+
+class SaveProgressChannelAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def get(self, request):
+        user = request.user
+        course_uuid = request.data.get('course')
+
+        # Validate the course UUID
+        try:
+            course = get_object_or_404(Courses, uuid=course_uuid)
+        except ObjectDoesNotExist:
+            return Response(
+                {"message": "Course with the provided UUID does not exist.", "status": 0},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        # Delete any existing LastCourseContent object with the same course and user
+        last_content = LastCourseContent.objects.filter(course=course, user=user)
+        if last_content:
+            last_content = last_content.last()
+            data = SavedProgressContentSerializer(last_content).data
+
+        return Response(
+            {
+                "message": "Saved Progress fetched successfully.",
+                "status": 1,
+                "data": data
+            },
+            status=status.HTTP_201_CREATED
+        )
+
+
+class RandomButtonAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        
+        # Fetch all courses that have at least one content
+        all_courses = list(Courses.objects.all())
+
+        if not all_courses:
+            return Response(
+                {"message": "No courses available.", "status": 0},
+                status=404
+            )
+
+        random.shuffle(all_courses)  # Shuffle the course list to pick randomly
+
+        for course in all_courses:
+            # Filter out the completed content for the user
+            available_content = [
+                content for content in course.data
+                if not CompleteContent.objects.filter(
+                    user=user,
+                    course=course,
+                    content_uuid=content.get('uuid')
+                ).exists()
+            ]
+
+            # If there's available content in this course, pick a random one
+            if available_content:
+                random_content = random.choice(available_content)
+                return Response(
+                    {
+                        "message": "Random Content fetched successfully.",
+                        "status": 1,
+                        "data": {
+                            "course_id": course.uuid,
+                            "content_uuid": random_content['uuid'],
+                            "category_uuid": course.category.uuid,
+                            "category_id": course.category.pk,
+                            "master_categroy_uuid": course.category.master_category.uuid,
+                            "master_categroy_id": course.category.master_category.pk,
+                            }
+                        },
+                    status=status.HTTP_201_CREATED
+                )
+                
+
+        # If no available content is found in any course
+        return Response(
+                {"message": "No available content found", "status": 0},
+                status=404
+            )
+
+
+
+
+

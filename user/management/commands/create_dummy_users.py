@@ -20,10 +20,12 @@ class Command(BaseCommand):
             is_admin = False
             is_staff = False
             is_superuser = False
+            is_online = random.choice([True, False])
             theme = random.choice(['dark', 'light'])
             fa_type = random.choice(['code', 'email'])
             level = random.randint(1, 50)
             xp = random.randint(0, 1000)
+            ai_pic = random.choice['pic_1', 'pic_2', 'pic_3']
 
             user = User(
                 first_name=first_name,
@@ -39,7 +41,10 @@ class Command(BaseCommand):
                 fa_type=fa_type,
                 level=level,
                 xp=xp,
-                is_dummy = True
+                is_dummy = True,
+                ai_picture = ai_pic,
+                is_online = is_online
+
                 # You can fill more fields if required
             )
             dummy_users.append(user)

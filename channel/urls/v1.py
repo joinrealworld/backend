@@ -15,4 +15,6 @@ urlpatterns = [
     path('fetch/favourite/courses', views.FetchFavouriteCoursesAPIView.as_view(), name='fetch-favourite-courses'),
     path('fetch/inprogress/courses', views.FetchInProgressCoursesAPIView.as_view(), name='fetch-favourite-courses'),
     path('store/last/course/content', views.StoreLastCourseContentAPIView.as_view(), name='store-last-content'),
+    path('save/progress/channel', views.SaveProgressChannelAPIView.as_view(), name='save-progress-channel'),
+    path('random/button', views.RandomButtonAPIView.as_view(), name='random-button'),
 	]

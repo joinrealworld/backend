@@ -2,11 +2,12 @@ from django.db import models
 from user.models import User
 import uuid
 from content.models import Content
+from ckeditor.fields import RichTextField
 
 class BlackhallChat(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
-    message = models.JSONField(null=True, blank=True)
+    message = RichTextField(blank = True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
