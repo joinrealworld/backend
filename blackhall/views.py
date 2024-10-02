@@ -45,6 +45,17 @@ class SendMessageAPIView(APIView):
         content = request.data.get("content", None)
         today = make_aware(datetime.now()).date()
         user = request.user
+        message_exists = BlackhallChat.objects.filter(user=user, timestamp__date=today).exists()
+
+        if message_exists:
+            return Response(
+                status=status.HTTP_200_OK,
+                data={
+                    KEY_MESSAGE: "You have already sent a message today. Please try again tomorrow.",
+                    KEY_PAYLOAD: "Success",
+                    KEY_STATUS: 0
+                },
+            )
         chat = BlackhallChat.objects.create(
             user=user,
             timestamp=today,
