@@ -349,30 +349,69 @@ class SaveProgressChannelAPIView(APIView):
 class RandomButtonAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
-    @handle_exceptions
-    def get(self, request, *args, **kwargs):
+    # @handle_exceptions
+    def get(self, request):
         user = request.user
-        
-        # Fetch all courses that have at least one content
-        all_courses = list(Courses.objects.all())
+        master_category_uuid = request.query_params.get('master_category_uuid', None)
+        # Check if master_category_uuid is provided
+        if not master_category_uuid:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    "message": "Master category UUID is required.",
+                    "payload": "",
+                    "status": 0
+                },
+            )
+
+        # Fetch the master category based on the provided UUID
+        try:
+            master_category = MasterCategory.objects.get(uuid=master_category_uuid)
+        except MasterCategory.DoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={
+                    "message": "Master category not found.",
+                    "payload": "",
+                    "status": 0
+                },
+            )
+
+        # Get all categories under the master category
+        categories = Category.objects.filter(master_category=master_category)
+
+        if not categories:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={
+                    "message": "No categories found for the provided master category.",
+                    "payload": "",
+                    "status": 0
+                },
+            )
+
+        # Get all courses under the categories that have content
+        all_courses = Courses.objects.filter(category__in=categories).exclude(data__isnull=True)
 
         if not all_courses:
             return Response(
                 status=status.HTTP_404_NOT_FOUND,
                 data={
-                    KEY_MESSAGE: "No courses available.",
-                    KEY_PAYLOAD: "",
-                    KEY_STATUS: 0
+                    "message": "No courses available in the provided master category.",
+                    "payload": "",
+                    "status": 0
                 },
             )
 
-        random.shuffle(all_courses)  # Shuffle the course list to pick randomly
+       # Convert QuerySet to list before shuffling
+        all_courses_list = list(all_courses)
+        random.shuffle(all_courses_list)  # Shuffle the course list to pick randomly
 
         for course in all_courses:
             # Filter out the completed content for the user
             available_content = [
                 content for content in course.data
-                if not CompleteContent.objects.filter(
+                if content.get('section') == 'video' and not CompleteContent.objects.filter(
                     user=user,
                     course=course,
                     content_uuid=content.get('uuid')

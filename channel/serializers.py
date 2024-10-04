@@ -211,10 +211,14 @@ class SavedProgressContentSerializer(serializers.ModelSerializer):
 
     def get_course_uuid(self, obj):
     	return obj.course.uuid
-    	
+
     def get_category(self, obj):
     	return obj.course.category.uuid
 
     def get_master_category(self, obj):
     	return obj.course.category.master_category.uuid
+
+class CourseContentSerializer(serializers.Serializer):
+    course_id = serializers.UUIDField()
+    content_uuid = serializers.CharField()
 
