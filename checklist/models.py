@@ -10,7 +10,7 @@ from channel.models import MasterCategory
 class MasterCheckList(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 	checklist = models.TextField()
-	options = models.CharField(max_length=255, null=True, blank=True)
+	options = models.TextField()
 	created_at = models.DateTimeField(auto_now_add=True)
 	copied_at = models.DateTimeField(default=timezone.now)
 
