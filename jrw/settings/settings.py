@@ -79,7 +79,8 @@ LOCAL_APPS = (
     'content',
     'media_channel',
     'feedback',
-    'support'
+    'support',
+    'clan'
     # 'streams'
 )
 
