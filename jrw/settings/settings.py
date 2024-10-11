@@ -80,7 +80,8 @@ LOCAL_APPS = (
     'media_channel',
     'feedback',
     'support',
-    'clan'
+    'clan',
+    'raffel'
     # 'streams'
 )
 

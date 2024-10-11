@@ -18,8 +18,8 @@ class UserDailyCheckListAdmin(admin.ModelAdmin):
 admin.site.register(UserDailyCheckList, UserDailyCheckListAdmin)
 
 class DailyCheckedAdmin(admin.ModelAdmin):
-    fields = ['user', 'checklist', 'selected']
-    list_display = ('id','uuid', 'user', 'checklist', 'selected', 'created_at')
+    fields = ['user', 'data']
+    list_display = ('id','uuid', 'user', 'data', 'created_at')
     list_per_page = 25
 
 admin.site.register(DailyChecked, DailyCheckedAdmin)

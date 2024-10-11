@@ -36,18 +36,19 @@ from django.db.models import Count
 from checklist.serializers import *
 from datetime import datetime, date
 from checklist.management.commands.scheduler import *
-
+from django.utils.timezone import now
+from channel.models import *
 class FetchCheckListAPIView(APIView):
 	permission_classes = [IsUserAuthenticated]
 
 	@handle_exceptions
 	def get(self, request, master_category):
-		user_daily_checklist = UserDailyCheckList.objects.filter(master_category__uuid=master_category).order_by('id')
+		user_daily_checklist = DailyChecked.objects.filter(master_category__uuid=master_category).order_by('id')
 		return Response(
 		    {
 		        KEY_MESSAGE: "Success",
-		        KEY_PAYLOAD: UserDailyCheckListSerializer(user_daily_checklist, many=True).data,
-		       
+		        KEY_PAYLOAD: DailyCheckedSerializer(user_daily_checklist, many=True).data,
+		       	KEY_STATUS: 1
 		    },
 		    status=status.HTTP_200_OK
 		)
@@ -58,10 +59,36 @@ class SubmitCheckListAPIView(APIView):
 
 	@handle_exceptions
 	def post(self, request):
-		data = request.data.get('selected', None)
-		user_checklist = request.data.get('user_checklist', None)
-		user_checklist = UserDailyCheckList.objects.get(uuid=user_checklist)
-		selected_checklist = DailyChecked.objects.create(checklist=user_checklist, user = request.user,  selected = data)
+		data = request.data.get('data', None)
+		master_category = request.data.get('master_category', None)
+		user = request.user
+		today = now().date()
+
+		if data is None or master_category is None:
+			return Response(
+		    {
+		        KEY_MESSAGE: "Error",
+		        KEY_PAYLOAD: "Request Body parameter is missing.",
+		       	KEY_STATUS: 0
+		    },
+		    status=status.HTTP_404_NOT_FOUND
+		)
+
+		master_category = MasterCategory.objects.get(uuid = master_category)
+		user_checklist = DailyChecked.objects.filter(user = user, master_category=master_category, created_at__date=today)
+		if user_checklist:
+			user_checklist = user_checklist.last()
+			user_checklist.data = data
+			user_checklist.save()
+			return Response(
+		    {
+		        KEY_MESSAGE: "Success",
+		        KEY_PAYLOAD: "Checklist Submitted Successfully",
+		        KEY_STATUS: 1
+		    },
+		    status=status.HTTP_200_OK
+		)
+		checklist = DailyChecked.objects.create(master_category=master_category, user = request.user,  data = data)
 		return Response(
 		    {
 		        KEY_MESSAGE: "Success",
