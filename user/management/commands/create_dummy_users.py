@@ -25,7 +25,7 @@ class Command(BaseCommand):
             fa_type = random.choice(['code', 'email'])
             level = random.randint(1, 50)
             xp = random.randint(0, 1000)
-            ai_pic = random.choice['pic_1', 'pic_2', 'pic_3']
+            ai_pic = random.choice(['pic_1', 'pic_2', 'pic_3'])
 
             user = User(
                 first_name=first_name,

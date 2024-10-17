@@ -1427,3 +1427,45 @@ class ListTuneAPIView(APIView):
             }
         )
 
+class UserListAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def get(self, request):
+        users = list(User.objects.filter(is_dummy=True))
+        random.shuffle(users)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: UserSimpleSerializer(users, many=True).data,
+                KEY_STATUS: 1
+            }
+        )
+
+class ChangeAIPicAPIView(APIView):
+
+    @handle_exceptions
+    def patch(self, request):
+        ai_pic = request.data.get("ai_pic", None)
+        if ai_pic is None:
+            return Response(
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                data={
+                    KEY_MESSAGE: "Error",
+                    KEY_PAYLOAD: "AI Pic Parameter is missing.",
+                    KEY_STATUS: 0
+                }
+            )
+        user = request.user
+        user.ai_picture = ai_pic
+        user.save()
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: UserSimpleSerializer(user, many=False).data,
+                KEY_STATUS: 1
+            }
+        )
+

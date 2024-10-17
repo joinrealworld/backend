@@ -4,4 +4,4 @@ from .models import Stream
 class StreamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stream
-        fields = ['title', 'url']
+        fields = ['server_name', 'title', 'start_time', 'end_time']

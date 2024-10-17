@@ -35,4 +35,6 @@ urlpatterns = [
     path('change/emoji', views.ChangeEmojiAPIView.as_view(), name='change-emoji'),
     path('set/offline', views.SetOfflineAPIView.as_view(), name='set-offline'),
     path('list/tune', views.ListTuneAPIView.as_view(), name='list-tune'),
+    path('list', views.UserListAPIView.as_view(), name='user-list'),
+    path('change/ai_pic', views.ChangeAIPicAPIView.as_view(), name='change-ai-pic'),
 	]

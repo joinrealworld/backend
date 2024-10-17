@@ -17,4 +17,6 @@ urlpatterns = [
     path('store/last/course/content', views.StoreLastCourseContentAPIView.as_view(), name='store-last-content'),
     path('save/progress/channel', views.SaveProgressChannelAPIView.as_view(), name='save-progress-channel'),
     path('random/button', views.RandomButtonAPIView.as_view(), name='random-button'),
+    # path('average/quiz/score', views.AverageQuizScoreAPIView.as_view(), name='average-quizz-score'),
+    # path('quiz/fail', views.QuizFailAPIView.as_view(), name='quiz-fail'),
 	]
