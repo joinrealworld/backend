@@ -130,7 +130,6 @@ def create_user_subscription(user, data):
 	}
 	response = requests.post(url, headers=headers, data=data)
 	CustomerPayment.objects.create(user = user, price_id=data['items[0][price]'], customer_id=data['customer'], subscription_id=response.json()['id'], plan=response.json()['plan']['id'], currency=response.json()['plan']['currency'], amount=response.json()['plan']['amount'], data=response.json(), status=response.json()['status'])
-	print("125-----",response.json()['status'])
 	if response.json()['status'] == 'active':
 		user.email_verified = True
 		user.save()

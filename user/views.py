@@ -136,7 +136,7 @@ class SignUpAPIViewAPIView(APIView):
     """End point To Generate/ReGenerate the OTP. Send contact_number and country_code [country_code:str] in parameters"""
     permission_classes = [AllowAny]
 
-    @handle_exceptions
+    # @handle_exceptions
     def post(self, request):
         first_name = request.data.get("first_name", None)
         last_name = request.data.get("last_name", None)
@@ -251,16 +251,24 @@ class SignUpAPIViewAPIView(APIView):
                 'off_session': 'true'
             }
 
-            subscription_data = create_user_subscription(user, subscription_data)
-            # verification_token = generate_verification_token()
-            # verification_link = generate_user_account_verification_link(verification_token, "verify-email?e=")
-            # EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
-            # send_account_verification_mail("Verify your email to create your Join Real World Account",first_name, verification_link, email)
-            data = {
-                'data': subscription_data,
-                "customer_id": customer_id,
-                "price_id": price_id
-            }
+            try:
+                subscription_data = create_user_subscription(user, subscription_data)
+
+                # verification_token = generate_verification_token()
+                # verification_link = generate_user_account_verification_link(verification_token, "verify-email?e=")
+                # EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
+                # send_account_verification_mail("Verify your email to create your Join Real World Account",first_name, verification_link, email)
+                data = {
+                    'data': subscription_data,
+                    "customer_id": customer_id,
+                    "price_id": price_id
+                }
+            except Exception as e:
+                data = {
+                    # 'data': subscription_data,
+                    "customer_id": customer_id,
+                    "price_id": price_id
+                }
             return Response(
                     status=status.HTTP_200_OK,
                     data={
