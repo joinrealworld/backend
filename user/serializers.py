@@ -4,6 +4,7 @@ from rest_framework.serializers import (ModelSerializer,
 from user.models import *
 from django.contrib.auth.password_validation import validate_password
 from payment.models import *
+from media_channel.fake_user_profile import *
 
 class EmailLoginSerializer(ModelSerializer):
     """ Login Serializer """
@@ -23,6 +24,7 @@ class UserSimpleSerializer(ModelSerializer):
     # selected_emoji = serializers.SerializerMethodField()
     selected_tune = serializers.SerializerMethodField()
     selected_wallpaper = serializers.SerializerMethodField()
+    avatar = serializers.SerializerMethodField()
     # payment_status = serializers.SerializerMethodField()
 
     class Meta:
@@ -30,7 +32,10 @@ class UserSimpleSerializer(ModelSerializer):
         fields = ('id', 'uuid','xp','avatar', 'email', 'identity_booster','background', 'coin','theme', 'fa', 'is_admin','fa_type', 'is_online','username', 'first_name', 'last_name', 'bio','email_verified', 'status', 'invisible', 'customer_id','referral_code', 'selected_emoji','selected_tune', 'ai_picture','selected_wallpaper')
 
     def get_avatar(self, obj):
-        return obj.avatar.url if obj.avatar else obj.dummy_avatar
+        if obj.is_dummy:
+            return get_robohash_avatar()
+        else:
+            return obj.avatar.url if obj.avatar else None
 
     # def get_payment_status(self, obj):
     #     return CustomerPayment.objects.filter(user = obj).last().status
