@@ -82,7 +82,7 @@ LOCAL_APPS = (
     'support',
     'clan',
     'raffel',
-    # 'streams'
+    'streams'
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

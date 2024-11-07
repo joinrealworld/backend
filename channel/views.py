@@ -175,14 +175,44 @@ class MarkCompleteContentAPIView(APIView):
         user = request.user
         course = Courses.objects.get(uuid=course_id)
         CompleteContent.objects.get_or_create(course = course, user=user, content_uuid=content_id)
-        return Response(
-                status=status.HTTP_200_OK,
+
+        # Validate the course UUID
+        try:
+            course = get_object_or_404(Courses, uuid=course_id)
+        except ObjectDoesNotExist:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    KEY_MESSAGE: "Success",
-                    KEY_PAYLOAD: "Section Marked Completed.",
+                    KEY_MESSAGE: "Course with the provided UUID does not exist.",
+                    KEY_PAYLOAD: "",
+                    KEY_STATUS: 0
+                },
+            )
+
+        # Delete any existing LastCourseContent object with the same course and user
+        LastCourseContent.objects.filter(course=course, user=user).delete()
+
+        # Create and save the new LastCourseContent object
+        last_course_content = LastCourseContent.objects.create(
+            content_uuid=content_id,
+            course=course,
+            user=user
+        )
+
+        return Response(
+                status=status.HTTP_201_CREATED,
+                data={
+                    KEY_MESSAGE: "Last course content stored successfully.",
+                    KEY_PAYLOAD: {
+                    "uuid": last_course_content.uuid,
+                    "content_uuid": last_course_content.content_uuid,
+                    "course": str(last_course_content.course.uuid),
+                    "user": last_course_content.user.id
+                    },
                     KEY_STATUS: 1
                 },
             )
+        
 
 class FetchFavouriteCoursesAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
@@ -316,8 +346,7 @@ class SaveProgressChannelAPIView(APIView):
     @handle_exceptions
     def get(self, request):
         user = request.user
-        course_uuid = request.data.get('course')
-
+        course_uuid = request.query_params.get('course')
         # Validate the course UUID
         try:
             course = get_object_or_404(Courses, uuid=course_uuid)
@@ -334,7 +363,8 @@ class SaveProgressChannelAPIView(APIView):
         last_content = LastCourseContent.objects.filter(course=course, user=user)
         if last_content:
             last_content = last_content.last()
-            data = SavedProgressContentSerializer(last_content).data
+            context = {"user_id":request.user.id, "course_id": course_uuid}
+            data = SavedProgressContentSerializer(last_content, context=context).data
 
         return Response(
                 status=status.HTTP_200_OK,

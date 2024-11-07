@@ -203,20 +203,22 @@ class LastCourseContentSerializer(serializers.ModelSerializer):
 class SavedProgressContentSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
     master_category = serializers.SerializerMethodField()
-    course_uuid = serializers.SerializerMethodField()
+    course = serializers.SerializerMethodField()
 
     class Meta:
         model = LastCourseContent
-        fields = ['uuid', 'content_uuid', 'course_uuid','category', 'master_category','course', 'user']
+        fields = ['uuid', 'content_uuid', 'course','category', 'master_category','course', 'user']
 
-    def get_course_uuid(self, obj):
-    	return obj.course.uuid
+    def get_course(self, obj):
+    	context = {"user_id":self.context.get('user_id'), "course_id": self.context.get('course_id')}
+    	return CoursesDataSerializer(obj.course, context=context).data
 
     def get_category(self, obj):
-    	return obj.course.category.uuid
+    	context = {"user_id":self.context.get('user_id')}
+    	return CategorySerializer(obj.course.category, context=context).data
 
     def get_master_category(self, obj):
-    	return obj.course.category.master_category.uuid
+    	return MasterCategorySerializer(obj.course.category.master_category).data
 
 class CourseContentSerializer(serializers.Serializer):
     course_id = serializers.UUIDField()

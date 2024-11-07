@@ -17,9 +17,10 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 class CoursesAdmin(admin.ModelAdmin):
-    fields = ['category', 'name', 'pic', 'data', 'description']
-    list_display = ('id','category', 'name', 'pic', 'description')
+    fields = ['category','name', 'pic', 'data', 'description']
+    list_display = ('id','uuid','category','name', 'pic', 'description')
     list_per_page = 25
+    read_only_fields = ['uuid']
 
 admin.site.register(Courses, CoursesAdmin)
 
