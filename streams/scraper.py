@@ -25,7 +25,7 @@ def fetch_live_streams():
     # Try to get the cached token and its expiration time
     token = cache.get(TOKEN_CACHE_KEY)
     token_expiration = cache.get(TOKEN_EXPIRATION_KEY)
-
+    print("28----", token)
     if token and token_expiration and now < token_expiration - TOKEN_EXPIRATION_BUFFER:
         print("Using cached token.")
     else: 

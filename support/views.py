@@ -106,7 +106,10 @@ class FetchMessageAPIView(APIView):
 		if support_chat_id is None:
 			support_chat, created = Support.objects.get_or_create(user=user)
 		else:
-			support_chat = Support.objects.get(uuid = support_chat_id)
+			if user.is_admin==True or user.is_super_admin == True:
+				support_chat = Support.objects.get(uuid = support_chat_id)
+			else:
+				support_chat = Support.objects.get(user = user)
 		return Response(
 		    status=status.HTTP_200_OK,
 		    data={

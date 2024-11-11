@@ -6,6 +6,7 @@ from django.conf import settings
 
 
 def send_mail_with_template(mail_content, txt_template_path, html_template_path, subject, from_email, to_emails):
+    print("9----", mail_content)
     mail_content = mail_content
     try:
         with open(settings.ROOT_DIR + txt_template_path) as f:

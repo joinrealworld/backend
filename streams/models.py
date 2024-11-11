@@ -1,4 +1,3 @@
-# models.py
 from django.db import models
 
 class Stream(models.Model):
@@ -23,3 +22,4 @@ class Stream(models.Model):
             f"Start: {self.start_time}, "
             f"End: {self.end_time}, "
             f"Live: {self.is_live}")
+

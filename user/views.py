@@ -220,6 +220,7 @@ class SignUpAPIViewAPIView(APIView):
                 )
 
         user = None
+
         if email:
             user = User.objects.create(email = email, first_name = first_name, last_name = last_name, referral_code = User.generate_random_string(7))
             user.set_password(password)
@@ -250,20 +251,19 @@ class SignUpAPIViewAPIView(APIView):
                 'payment_behavior': 'error_if_incomplete',
                 'off_session': 'true'
             }
-
             try:
                 subscription_data = create_user_subscription(user, subscription_data)
-
-                # verification_token = generate_verification_token()
-                # verification_link = generate_user_account_verification_link(verification_token, "verify-email?e=")
-                # EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
-                # send_account_verification_mail("Verify your email to create your Join Real World Account",first_name, verification_link, email)
+                verification_token = generate_verification_token()
+                verification_link = generate_user_account_verification_link(verification_token, "verify-email?e=")
+                EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
+                send_account_verification_mail("Verify your email to create your Join Real World Account",first_name, verification_link, email)
                 data = {
                     'data': subscription_data,
                     "customer_id": customer_id,
                     "price_id": price_id
                 }
             except Exception as e:
+                print("271----", e)
                 data = {
                     # 'data': subscription_data,
                     "customer_id": customer_id,
