@@ -210,7 +210,7 @@ class SavedProgressContentSerializer(serializers.ModelSerializer):
         fields = ['uuid', 'content_uuid', 'course','category', 'master_category','course', 'user']
 
     def get_course(self, obj):
-    	context = {"user_id":self.context.get('user_id'), "course_id": self.context.get('course_id')}
+    	context = {"user_id":self.context.get('user_id')}
     	return CoursesDataSerializer(obj.course, context=context).data
 
     def get_category(self, obj):

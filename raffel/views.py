@@ -43,7 +43,7 @@ class RaffelCheckoutView(APIView):
 	permission_classes = [IsUserAuthenticated]
 
 	@handle_exceptions
-	def get(self, request):
+	def post(self, request):
 		user = request.user 
 		today = now().date()
 		existing_raffel = Raffel.objects.filter(user=user, timestamp__date=today).first()
@@ -61,11 +61,20 @@ class RaffelCheckoutView(APIView):
 
 		 # Get the maximum number for today from the Raffel model
 		max_number_today = Raffel.objects.filter(timestamp__date=today).aggregate(Max('index'))['index__max'] or 0
-
+		total_index = 1
+		if max_number_today == 0:
+			index = 1
+			pass
+		else:
+			random_number = random.randint(1, 40)
+			total_index = Raffel.objects.filter(timestamp__date=today).first().total_index
+			total_index = total_index + random_number
+			index = total_index
 		# Create a new Raffel object with the next number (incremental index)
 		new_raffel = Raffel.objects.create(
 		    user=user,
-		    index=max_number_today + 1  # Incremental index
+		    index=index,  # Incremental index,
+		    total_index = total_index
 		)
 		user_coin = user.coin
 		user_coin = user_coin+50
@@ -79,3 +88,36 @@ class RaffelCheckoutView(APIView):
 		                KEY_STATUS: 1
 		            },
 		        )
+
+class RaffelPositionAPIView(APIView):
+	permission_classes = [IsUserAuthenticated]
+
+	@handle_exceptions
+	def get(self, request):
+		user = request.user 
+		today = now().date()
+		existing_raffel = Raffel.objects.filter(user=user, timestamp__date=today).first()
+		today_raffel = Raffel.objects.filter(timestamp__date=today)
+
+		if existing_raffel:
+			rafel_status_data = RaffelSerializer(existing_raffel).data
+			rafel_status_data["checked"] = True
+			# If a Raffel object exists for today, return the existing object
+			return Response(
+			        status=status.HTTP_200_OK,
+			        data={
+			            KEY_MESSAGE: "You've already checkedout today for the Raffel.",
+			            KEY_PAYLOAD: rafel_status_data,
+			            KEY_STATUS: 1
+			        },
+			    )
+
+		else:
+			return Response(
+				status=status.HTTP_200_OK,
+		            data={
+		                KEY_MESSAGE: "You've to checkedout today for the Raffel.",
+		                KEY_PAYLOAD:  {"checked":False,"total_index": today_raffel.last().total_index},
+		                KEY_STATUS: 1
+		            },
+				)

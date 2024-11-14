@@ -346,25 +346,24 @@ class SaveProgressChannelAPIView(APIView):
     @handle_exceptions
     def get(self, request):
         user = request.user
-        course_uuid = request.query_params.get('course')
+        # course_uuid = request.query_params.get('course')
         # Validate the course UUID
-        try:
-            course = get_object_or_404(Courses, uuid=course_uuid)
-        except ObjectDoesNotExist:
-            return Response(
-                status=status.HTTP_400_BAD_REQUEST,
-                data={
-                    KEY_MESSAGE: "Course with the provided UUID does not exist.",
-                    KEY_PAYLOAD: "",
-                    KEY_STATUS: 0
-                },
-            )
+        # try:
+        #     course = get_object_or_404(Courses, uuid=course_uuid)
+        # except ObjectDoesNotExist:
+        #     return Response(
+        #         status=status.HTTP_400_BAD_REQUEST,
+        #         data={
+        #             KEY_MESSAGE: "Course with the provided UUID does not exist.",
+        #             KEY_PAYLOAD: "",
+        #             KEY_STATUS: 0
+        #         },
+        #     )
         # Delete any existing LastCourseContent object with the same course and user
-        last_content = LastCourseContent.objects.filter(course=course, user=user)
+        last_content = LastCourseContent.objects.filter(user=user)
         if last_content:
-            last_content = last_content.last()
-            context = {"user_id":request.user.id, "course_id": course_uuid}
-            data = SavedProgressContentSerializer(last_content, context=context).data
+            context = {"user_id":request.user.id}
+            data = SavedProgressContentSerializer(last_content, context=context, many=True).data
 
         return Response(
                 status=status.HTTP_200_OK,

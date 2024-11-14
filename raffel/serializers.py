@@ -11,7 +11,10 @@ class RaffelSerializer(serializers.ModelSerializer):
         fields = ['uuid', 'user', 'index', 'total_index', 'timestamp']  # Specify the fields to be serialized
 
     def get_total_index(self, obj):
-        today = now().date()
-        return len(Raffel.objects.filter(timestamp__date=today))
+        try:
+            today = now().date()
+            return (Raffel.objects.filter(timestamp__date=today).first().total_index)
+        except Exception as e:
+            return 0
 
 

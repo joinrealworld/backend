@@ -6,7 +6,9 @@ class Raffel(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
 	index = models.PositiveIntegerField(default=1, blank=False, null=False)
+	total_index = models.PositiveIntegerField(default=1, blank=False, null=False)
 	timestamp = models.DateTimeField(auto_now_add=True)
+
 
 	class Meta:
 	    ordering = ['-timestamp']
