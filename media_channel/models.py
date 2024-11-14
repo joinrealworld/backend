@@ -25,6 +25,7 @@ class MediaChannel(models.Model):
 
 
 class MediaChannelLike(models.Model):
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
 	media_channel = models.ForeignKey(MediaChannel, null = False, blank=False, on_delete=models.CASCADE)
 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
 	timestamp = models.DateTimeField(auto_now_add=True)
@@ -39,3 +40,14 @@ class MediaChannelLike(models.Model):
 	    constraints = [
             models.UniqueConstraint(fields=['media_channel', 'user'], name='unique_media_like')
         ]
+
+class MediaChannelNotifications(models.Model):
+	uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+	media_channel = models.ForeignKey(MediaChannel, null=True, blank=True, on_delete=models.CASCADE)
+	media_channel_like = models.ForeignKey(MediaChannelLike, null=True, blank=True, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+	timestamp = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+	    ordering = ['-timestamp']
+

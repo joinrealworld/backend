@@ -117,22 +117,40 @@ class LikeMessagesAPIView(APIView):
         # Check if the user has already liked this message
         if MediaChannelLike.objects.filter(media_channel=media_channel, user=user).exists():
             return Response(
-                {
-                    "message": "You have already liked this message.",
-                    "status": 0,
-                    "data": "Already liked."
-                },
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    KEY_MESSAGE: "You have already liked this message.",
+                    KEY_PAYLOAD: "Already liked.",
+                    KEY_STATUS: 0
+                }
             )
 
         # Create a new like
-        MediaChannelLike.objects.create(media_channel=media_channel, user=user)
-
+        media_channel_like = MediaChannelLike.objects.create(media_channel=media_channel, user=user)
+        media_channel_like = get_object_or_404(MediaChannelLike, uuid=media_channel_like.uuid)
+        MediaChannelNotifications.objects.create(user = user, media_channel_like = media_channel_like)
         return Response(
-            {
-                "message": "Message liked successfully.",
-                "status": 1,
-                "data": "Message liked successfully."
-            },
-            status=status.HTTP_201_CREATED
+            status=status.HTTP_201_CREATED,
+            data={
+                KEY_MESSAGE: "Message liked successfully.",
+                KEY_PAYLOAD: "Message liked successfully.",
+                KEY_STATUS: 1
+            }
         )
+
+class NotificationsAPIView(APIView):
+    permission_classes = [IsLoggedInUser]
+
+    @handle_exceptions
+    def get(self, request):
+        user = request.user
+        notifications = MediaChannelNotifications.objects.exclude(user=user)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "success",
+                KEY_PAYLOAD: MediaNotificationSerializer(notifications, many=True).data,
+                KEY_STATUS: 1
+            },
+        )
+

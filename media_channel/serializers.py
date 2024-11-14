@@ -27,6 +27,7 @@ class MediaChannelSerializer(serializers.ModelSerializer):
 
 		# Create MediaChannel instance
 		media_channel = MediaChannel.objects.create(user=user, **validated_data)
+		MediaChannelNotifications.objects.create(user = user, media_channel = media_channel)
 		return media_channel
 
 class MediaChannelDataSerializer(serializers.ModelSerializer):
@@ -41,3 +42,22 @@ class MediaChannelDataSerializer(serializers.ModelSerializer):
     def get_likes_count(self, obj):
         # Return the total number of likes for the MediaChannel instance
         return MediaChannelLike.objects.filter(media_channel=obj).count()
+
+class MediaChannelLikeSerializer(serializers.ModelSerializer):
+    media_channel = MediaChannelSerializer()
+    user = serializers.StringRelatedField()
+
+    class Meta:
+        model = MediaChannelLike
+        fields = ['uuid', 'media_channel', 'user', 'timestamp']
+        
+
+class MediaNotificationSerializer(serializers.ModelSerializer):
+	user = serializers.StringRelatedField()
+	media_channel = MediaChannelSerializer()
+	media_channel_like = MediaChannelLikeSerializer()
+
+	class Meta:
+	    model = MediaChannelNotifications
+	    fields = ['uuid', 'media_channel', 'media_channel_like', 'user', 'timestamp']
+	    read_only_fields = ['timestamp']
