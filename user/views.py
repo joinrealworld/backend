@@ -1477,3 +1477,18 @@ class ChangeAIPicAPIView(APIView):
             }
         )
 
+
+class FetchUserProfileAPIView(APIView):
+    permission_classes = [IsUserAuthenticated]
+
+    @handle_exceptions
+    def get(self, request):
+        user = request.user
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                KEY_MESSAGE: "Success",
+                KEY_PAYLOAD: UserProfileSerializer(user).data,
+                KEY_STATUS: 1
+            }
+        )

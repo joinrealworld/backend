@@ -5,7 +5,8 @@ from user.models import *
 from django.contrib.auth.password_validation import validate_password
 from payment.models import *
 from media_channel.fake_user_profile import *
-
+from media_channel.models import MediaChannel
+from media_channel.serializers import MediaChannelDataSerializer
 class EmailLoginSerializer(ModelSerializer):
     """ Login Serializer """
 
@@ -188,4 +189,24 @@ class WallPaperSerializer(serializers.ModelSerializer):
             if user_wallpaper:
                 return user_wallpaper.selected
         return False
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    no_of_posts = serializers.SerializerMethodField()
+    posts = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['id','username', 'no_of_posts', 'avatar', 'posts', 'email', 'first_name','last_name']
+
+    def get_no_of_posts(self, obj):
+        media = MediaChannel.objects.filter(user=obj).filter(content__isnull=False)
+        return len(media)
+
+    def get_posts(self, obj):
+        media = MediaChannel.objects.filter(user=obj).filter(content__isnull=False)
+        return MediaChannelDataSerializer(media, many=True).data
+
+
+
+
 

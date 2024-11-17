@@ -37,4 +37,5 @@ urlpatterns = [
     path('list/tune', views.ListTuneAPIView.as_view(), name='list-tune'),
     path('list', views.UserListAPIView.as_view(), name='user-list'),
     path('change/ai_pic', views.ChangeAIPicAPIView.as_view(), name='change-ai-pic'),
+    path('fetch/user_profile', views.FetchUserProfileAPIView.as_view(), name='fetch-user-profile'),
 	]
