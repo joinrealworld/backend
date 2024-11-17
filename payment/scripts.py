@@ -123,21 +123,24 @@ def create_card_customer(user, data):
 	return response.json()
 
 def create_user_subscription(user, data):
-	url = stripe_base_url+'/v1/subscriptions'
-	headers = {
-	    'Authorization': 'Bearer '+settings.STRIPE_SECRET_KEY,
-	    'Content-Type': 'application/x-www-form-urlencoded'
-	}
-	response = requests.post(url, headers=headers, data=data)
-	CustomerPayment.objects.create(user = user, price_id=data['items[0][price]'], customer_id=data['customer'], subscription_id=response.json()['id'], plan=response.json()['plan']['id'], currency=response.json()['plan']['currency'], amount=response.json()['plan']['amount'], data=response.json(), status=response.json()['status'])
-	if response.json()['status'] == 'active':
-		user.email_verified = True
-		user.save()
-		res = user.get_tokens_for_user()
-		user_serializer = UserSimpleSerializer(user, many=False)
-		return {"token": res['access'], "user": user_serializer.data}
-	else:
-		return response.json()
+	try:
+		url = stripe_base_url+'/v1/subscriptions'
+		headers = {
+		    'Authorization': 'Bearer '+settings.STRIPE_SECRET_KEY,
+		    'Content-Type': 'application/x-www-form-urlencoded'
+		}
+		response = requests.post(url, headers=headers, data=data)
+		CustomerPayment.objects.create(user = user, price_id=data['items[0][price]'], customer_id=data['customer'], subscription_id=response.json()['id'], plan=response.json()['plan']['id'], currency=response.json()['plan']['currency'], amount=response.json()['plan']['amount'], data=response.json(), status=response.json()['status'])
+		if response.json()['status'] == 'active':
+			user.email_verified = True
+			user.save()
+			res = user.get_tokens_for_user()
+			user_serializer = UserSimpleSerializer(user, many=False)
+			return {"token": res['access'], "user": user_serializer.data}
+		else:
+			return response.json()
+	except Exception as e:
+		print(e)
 
 def create_stripe_customer_source(user, data):
 	response = stripe.Source.create(type="ach_credit_transfer",currency="usd",owner={"email": user.email},)
