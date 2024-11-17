@@ -9,11 +9,14 @@ from ckeditor.fields import RichTextField
 import string
 import uuid
 from user.models import User
+from channel.models import *
 
 # Create your models here.
 class Feedback(models.Model):
 	uuid = models.UUIDField(default=uuid.uuid4, editable=False)
-	course = models.CharField(max_length=128,null=True, blank=True)
+	course = models.ForeignKey(Courses, on_delete=models.CASCADE,null=True, blank=True)
+	category = models.ForeignKey(Category, on_delete=models.CASCADE,null=True, blank=True)
+	master_category = models.ForeignKey(MasterCategory, on_delete=models.CASCADE,null=True, blank=True)
 	content = models.JSONField(null=True, blank=True)
 	user = models.ForeignKey(User, related_name='user_feedback',null=False, blank=False, on_delete=models.CASCADE)
 	description = RichTextField(blank = True)

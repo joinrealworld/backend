@@ -79,7 +79,7 @@ def generate_casual_messages(num_messages=10000):
         messages.add(create_casual_message())
     return list(messages)
 
-# # Example usage
-# messages = generate_casual_messages(10)  # Generate 10 for demonstration
-# for msg in messages[:10]:  # Display the first 10
-#     print(msg)
+# Example usage
+messages = generate_casual_messages(100)  # Generate 10 for demonstration
+for msg in messages[:100]:  # Display the first 10
+    print(msg)

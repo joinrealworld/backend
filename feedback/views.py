@@ -36,41 +36,48 @@ from user.serializers import UserSimpleSerializer
 from user.models import User
 from django.utils.timezone import make_aware
 from feedback.serializers import *
+from channel.models import *
 
 class SendFeedbackAPIView(APIView):
     permission_classes = [IsUserAuthenticated]
 
-    @handle_exceptions
+    # @handle_exceptions
     def post(self, request):
-        data = request.data.get("data", None)
-        user = request.user
-
-        # Validate incoming data
-        if not data:
+        serializer = SendFeedbackSerializer(data=request.data)
+        if not serializer.is_valid():
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    KEY_MESSAGE: "No feedback data provided.",
-                    KEY_STATUS: 0,
+                KEY_MESSAGE: "Invalid feedback data.",
+                KEY_PAYLOAD: serializer.errors,
+                KEY_STATUS: 0
                 },
             )
 
+        validated_data = serializer.validated_data
+        user = request.user
+        course_uuid = validated_data["course"]
+        category_uuid = validated_data["category"]
+        master_category_uuid = validated_data["master_category"]
+        course = Courses.objects.get(uuid = course_uuid)
+        category = Category.objects.get(uuid = category_uuid)
+        master_category = MasterCategory.objects.get(uuid = master_category_uuid)
+
         # Create Feedback instance and save
         feedback = Feedback.objects.create(
-            content = data.get("content", None),
+            content = validated_data["content"],
+            course = course,
+            category=category,
+            master_category = master_category,
             user=user,
-            course = data.get("course", None),
-            description=data.get("description", "")
+            description=validated_data["description"]
         )
 
         return Response(
             status=status.HTTP_201_CREATED,
             data={
                 KEY_MESSAGE: "Feedback sent successfully.",
-                KEY_PAYLOAD: {
-                    "uuid": str(feedback.uuid),
-                    "description": feedback.description,
-                },
+                KEY_PAYLOAD: FeedbackSerializer(feedback).data,
                 KEY_STATUS: 1,
             },
         )
