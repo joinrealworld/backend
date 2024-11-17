@@ -35,6 +35,7 @@ app_urls_v1 = [
     path('api/v1/support/', include('support.urls.v1')),
     path('api/v1/clan/', include('clan.urls.v1')),
     path('api/v1/raffel/', include('raffel.urls.v1')),
+    path('api/v1/quiz/', include('quiz.urls.v1')),
 ]
 
 urlpatterns = app_urls_v1

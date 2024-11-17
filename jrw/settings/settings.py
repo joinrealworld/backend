@@ -82,6 +82,7 @@ LOCAL_APPS = (
     'support',
     'clan',
     'raffel',
+    'quiz'
     # 'streams'
 )
 
