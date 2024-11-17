@@ -16,5 +16,3 @@ class RaffelSerializer(serializers.ModelSerializer):
             return (Raffel.objects.filter(timestamp__date=today).first().total_index)
         except Exception as e:
             return 0
-
-

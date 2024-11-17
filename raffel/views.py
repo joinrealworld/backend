@@ -117,7 +117,7 @@ class RaffelPositionAPIView(APIView):
 				status=status.HTTP_200_OK,
 		            data={
 		                KEY_MESSAGE: "You've to checkedout today for the Raffel.",
-		                KEY_PAYLOAD:  {"checked":False,"total_index": today_raffel.last().total_index},
+		                KEY_PAYLOAD:  {"checked":False,"total_index": today_raffel.last().total_index if today_raffel else 0},
 		                KEY_STATUS: 1
 		            },
 				)
