@@ -95,10 +95,11 @@ class FetchFeedbackAPIView(APIView):
 
         if not feedback_list.exists():
             return Response(
-                status=status.HTTP_404_NOT_FOUND,
+                status=status.HTTP_200_OK,
                 data={
-                    KEY_MESSAGE: "No feedback found for the user.",
-                    KEY_STATUS: 0,
+                    KEY_MESSAGE: "Feedback retrieved successfully.",
+                    KEY_PAYLOAD: [],
+                    KEY_STATUS: 1,
                 },
             )
 
