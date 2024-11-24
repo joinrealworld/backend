@@ -128,7 +128,7 @@ class LikeMessagesAPIView(APIView):
         # Create a new like
         media_channel_like = MediaChannelLike.objects.create(media_channel=media_channel, user=user)
         media_channel_like = get_object_or_404(MediaChannelLike, uuid=media_channel_like.uuid)
-        MediaChannelNotifications.objects.create(user = user, media_channel_like = media_channel_like)
+        MediaChannelNotifications.objects.create(user = user, media_channel=media_channel, media_channel_like = media_channel_like)
         return Response(
             status=status.HTTP_201_CREATED,
             data={
