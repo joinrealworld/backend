@@ -274,8 +274,8 @@ class SignUpAPIViewAPIView(APIView):
             return Response(
                     status=status.HTTP_200_OK,
                     data={
-                        KEY_MESSAGE: "Sucess",
-                        KEY_PAYLOAD: data,
+                        KEY_MESSAGE: "Success",
+                        KEY_PAYLOAD: user,
                         KEY_STATUS: 1
                     },
                 )
