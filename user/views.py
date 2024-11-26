@@ -259,8 +259,9 @@ class SignUpAPIViewAPIView(APIView):
                 EmailVerification.objects.get_or_create(email_to = user, verification_token = verification_token)
                 print("260----sending mail")
                 send_account_verification_mail("Verify your email to create your Join Real World Account",first_name, verification_link, email)
+                user_serializer = UserSimpleSerializer(user, many=False)
                 data = {
-                    'data': subscription_data,
+                    'data': user_serializer.data,
                     "customer_id": customer_id,
                     "price_id": price_id
                 }
@@ -275,7 +276,7 @@ class SignUpAPIViewAPIView(APIView):
                     status=status.HTTP_200_OK,
                     data={
                         KEY_MESSAGE: "Success",
-                        KEY_PAYLOAD: user,
+                        KEY_PAYLOAD: data,
                         KEY_STATUS: 1
                     },
                 )
